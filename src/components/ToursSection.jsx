@@ -109,7 +109,7 @@ export const ToursSection = ({
     <section
       id="tours"
       ref={sectionRef}
-      className="relative h-[300vh] bg-[#F3F6EE] border-t border-[#E7ECE0]"
+      className="relative h-[180vh] bg-[#F3F6EE] border-t border-[#E7ECE0]"
     >
       {/* Pinned Sticky Stage - Stays locked in viewport while scrolling through the 3 cards */}
       <div className="sticky top-0 min-h-screen h-[100dvh] flex flex-col justify-center overflow-hidden py-8 sm:py-12">
@@ -141,7 +141,7 @@ export const ToursSection = ({
                       onSelectTour(tour.title);
                     }
                   }}
-                  className={`group relative bg-white rounded-3xl overflow-hidden cursor-pointer transition-all duration-700 ease-out flex flex-col justify-between ${
+                  className={`group relative bg-white rounded-3xl overflow-hidden cursor-pointer transition-all duration-400 ease-out flex flex-col justify-between ${
                     isFocused
                       ? 'scale-[1.03] lg:scale-[1.05] z-30 border-2 border-[#0a515b] shadow-[0_25px_60px_-15px_rgba(10,81,91,0.22),0_10px_25px_rgba(0,0,0,0.06)]'
                       : 'scale-[0.98] z-10 opacity-75 hover:opacity-95 hover:scale-[0.99] border border-[#E0E6DA] shadow-xs'
@@ -194,7 +194,7 @@ export const ToursSection = ({
 
                       {/* Expanded Highlight Detail in Focused State */}
                       <div
-                        className={`overflow-hidden transition-all duration-500 ease-in-out rounded-xl ${
+                        className={`overflow-hidden transition-all duration-300 ease-in-out rounded-xl ${
                           isFocused
                             ? 'max-h-24 opacity-100 p-3 mb-4 bg-[#EAF2E8] border border-[#CDE0CB]'
                             : 'max-h-0 opacity-0 p-0 mb-0 pointer-events-none'
