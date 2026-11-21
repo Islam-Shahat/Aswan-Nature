@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import {
   Compass,
   Bird,
@@ -10,9 +10,6 @@ import {
 } from 'lucide-react';
 
 export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
-  const [activeCard, setActiveCard] = useState(0);
-  const cardRefs = useRef([]);
-
   const isAr = currentLang === 'AR';
 
   const cards = [
@@ -41,9 +38,9 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
       image: '/assets/white-egret-shore.jpg',
       badge: isAr ? 'محميات الشلال الأول' : 'First Cataract Reserves',
       accent: 'emerald',
-      bgClass: 'bg-[#FCFDFB] border-[#E1E8DC] text-[#16241B]',
-      tagBg: 'bg-[#EEF6EB] text-[#245D33] border-[#D4E8CD]',
-      pillBg: 'bg-[#F2F7EE] text-[#2C4A35] border-[#E0ECDB]',
+      bgClass: 'bg-white border-2 border-[#CBDCCB] border-t-4 border-t-[#2BE019] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(20,40,25,0.18)]',
+      tagBg: 'bg-[#EEF6EB] text-[#245D33] border border-[#D0E5C9]',
+      pillBg: 'bg-[#F1F7EE] text-[#244C30] border border-[#D6E6D1]',
     },
     {
       id: 'what-we-offer',
@@ -70,9 +67,9 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
       image: '/assets/pied-kingfisher-perched.jpg',
       badge: isAr ? 'رصد فائق القرب بدون إزعاج' : 'Zero-Disruption Observation',
       accent: 'blue',
-      bgClass: 'bg-[#F4F9F2] border-[#D5E5CF] text-[#16241B]',
-      tagBg: 'bg-[#E3F2DF] text-[#1C5528] border-[#C8E4BF]',
-      pillBg: 'bg-[#EBF5E8] text-[#224A2D] border-[#D7EBD0]',
+      bgClass: 'bg-[#FDFEFA] border-2 border-[#CBDCCB] border-t-4 border-t-[#189B1A] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(20,40,25,0.18)]',
+      tagBg: 'bg-[#E3F2DF] text-[#1C5528] border border-[#C5E2BC]',
+      pillBg: 'bg-[#EBF5E7] text-[#1F482A] border border-[#D2E7CB]',
     },
     {
       id: 'what-sets-us-apart',
@@ -99,9 +96,9 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
       image: '/assets/yellow-billed-stork.jpg',
       badge: isAr ? 'سياحة بيئية متجددة 100%' : '100% Regenerative Tourism',
       accent: 'amber',
-      bgClass: 'bg-[#FAFBF6] border-[#E3EAE0] text-[#16241B]',
-      tagBg: 'bg-[#EFF5EA] text-[#265B33] border-[#D6E8CF]',
-      pillBg: 'bg-[#F2F7ED] text-[#2A4C34] border-[#E0EBD9]',
+      bgClass: 'bg-[#F8FAF4] border-2 border-[#CBDCCB] border-t-4 border-t-[#227438] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(20,40,25,0.18)]',
+      tagBg: 'bg-[#EFF5EA] text-[#265B33] border border-[#D3E5CC]',
+      pillBg: 'bg-[#EEF5E9] text-[#234A2E] border border-[#D5E6CF]',
     },
     {
       id: 'our-mission',
@@ -128,48 +125,18 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
       image: '/assets/nile-birds-flight.jpg',
       badge: isAr ? 'إرث نيل حي ومستدام' : 'Living Heritage Sanctuary',
       accent: 'night',
-      bgClass: 'bg-[#0B1E14] border-[#2BE019]/40 text-white shadow-[0_30px_70px_-15px_rgba(0,0,0,0.5)]',
-      tagBg: 'bg-[#2BE019]/15 text-[#2BE019] border-[#2BE019]/35',
-      pillBg: 'bg-white/10 text-white/90 border-white/15',
+      bgClass: 'bg-[#0B1E14] border-2 border-[#2BE019]/50 border-t-4 border-t-[#2BE019] text-white shadow-[0_30px_70px_-15px_rgba(0,0,0,0.5)]',
+      tagBg: 'bg-[#2BE019]/15 text-[#2BE019] border border-[#2BE019]/40',
+      pillBg: 'bg-white/10 text-white/90 border border-white/20',
     },
   ];
 
-  // Track active card on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      cardRefs.current.forEach((el, index) => {
-        if (!el) return;
-        const rect = el.getBoundingClientRect();
-        // If card top is near or passed the sticky threshold
-        if (rect.top <= 200 && rect.bottom >= 200) {
-          setActiveCard(index);
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToCard = (index) => {
-    const el = cardRefs.current[index];
-    if (el) {
-      const topOffset = 130;
-      const elementPosition = el.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: elementPosition - topOffset,
-        behavior: 'smooth',
-      });
-    }
-  };
-
   return (
-    <section id="about" className="py-20 lg:py-28 bg-[#F8FAF5] relative">
+    <section id="about" className="py-20 lg:py-28 bg-[#EAF0E5] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#EBF5E7] border border-[#D5E9CE] text-[#256337] text-xs font-bold uppercase tracking-[0.2em] mb-4">
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#CADBC4] text-[#256337] text-xs font-bold uppercase tracking-[0.2em] mb-4 shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-[#2BE019]" />
             <span>{isAr ? 'ليست أسوان التقليدية' : 'NOT YOUR USUAL ASWAN'}</span>
           </div>
@@ -193,34 +160,6 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
               ? 'هناك أسوان أخرى تنتظر من يكتشفها. جزر هادئة، وحياة برية غير متوقعة، واتصال أعمق بعالم الطبيعة عبر 4 ركائز تصنع هويتنا.'
               : 'There is another Aswan waiting to be discovered. Quiet islands, unexpected wildlife, and a deeper connection to nature across four core pillars.'}
           </p>
-
-          {/* Interactive Deck Tabs Navigation */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-2.5 mt-6 sm:mt-8">
-            {cards.map((card, idx) => {
-              const isActive = activeCard === idx;
-              return (
-                <button
-                  key={card.id}
-                  onClick={() => scrollToCard(idx)}
-                  className={`px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer ${
-                    isActive
-                      ? 'bg-[#16241B] text-white shadow-md scale-105'
-                      : 'bg-white/80 hover:bg-white text-[#4A5D50] border border-[#E0E6DA]'
-                  }`}
-                  aria-label={`Jump to ${card.tag}`}
-                >
-                  <span
-                    className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                      isActive ? 'bg-[#2BE019]' : 'bg-[#98ABA0]'
-                    }`}
-                  />
-                  <span>
-                    {card.num}. {card.tag}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
         </div>
 
         {/* Stacking Cards Deck Container */}
@@ -233,7 +172,6 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
             return (
               <div
                 key={card.id}
-                ref={(el) => (cardRefs.current[idx] = el)}
                 style={{
                   top: `calc(105px + ${idx * 24}px)`,
                   zIndex: 10 + idx,
@@ -244,18 +182,15 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
               >
                 {/* Large Card Shell */}
                 <div
-                  className={`relative rounded-3xl border p-6 sm:p-8 lg:p-10 shadow-[0_18px_50px_-10px_rgba(20,40,25,0.14)] backdrop-blur-xs transition-transform duration-300 ${card.bgClass}`}
+                  className={`relative rounded-3xl p-6 sm:p-8 lg:p-10 backdrop-blur-xs transition-transform duration-300 ${card.bgClass}`}
                 >
-                  {/* Subtle Card Accent Gradient on Hover */}
-                  <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/10 via-transparent to-black/5 pointer-events-none" />
-
                   <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-                    {/* Left / Content Column (7 cols) */}
+                    {/* Content Column (7 cols) */}
                     <div className="lg:col-span-7 space-y-4 sm:space-y-5">
                       {/* Top Header Badge & Number */}
                       <div className="flex items-center justify-between">
                         <span
-                          className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase border ${card.tagBg}`}
+                          className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase ${card.tagBg}`}
                         >
                           <Icon className="w-3.5 h-3.5 stroke-[2.2]" />
                           <span>{card.tag}</span>
@@ -282,7 +217,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                       {/* Description */}
                       <p
                         className={`text-xs sm:text-sm lg:text-[14.5px] leading-relaxed ${
-                          isNight ? 'text-[#C5D8CA]' : 'text-[#506354]'
+                          isNight ? 'text-[#C5D8CA]' : 'text-[#485C4D]'
                         }`}
                       >
                         {card.desc}
@@ -293,7 +228,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                         {card.pills.map((pillText, pIdx) => (
                           <div
                             key={pIdx}
-                            className={`inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl border ${card.pillBg}`}
+                            className={`inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl ${card.pillBg}`}
                           >
                             <CheckCircle2 className="w-3.5 h-3.5 text-[#2BE019] flex-shrink-0" />
                             <span>{pillText}</span>
@@ -303,14 +238,14 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
 
                       {/* Scroll Hint on Cards Before the Last One */}
                       {!isLast && (
-                        <div className="pt-2 flex items-center gap-2 text-[11px] font-bold text-[#869A8B] uppercase tracking-wider">
+                        <div className="pt-2 flex items-center gap-2 text-[11px] font-bold text-[#7A8E80] uppercase tracking-wider">
                           <span>{isAr ? 'مرر للأسفل للكشف عن التالي' : 'Scroll down for next pillar'}</span>
                           <ChevronDown className="w-3.5 h-3.5 animate-bounce text-[#2BE019]" />
                         </div>
                       )}
                     </div>
 
-                    {/* Right / Visual Column (5 cols) */}
+                    {/* Visual Column (5 cols) */}
                     <div className="lg:col-span-5 relative">
                       <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-black/10 group">
                         <img
