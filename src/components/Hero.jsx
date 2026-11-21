@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, Play } from 'lucide-react';
 
 export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
@@ -72,27 +72,20 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
           </button>
 
           <button
-            className="inline-flex items-center gap-2.5 sm:gap-3 text-white hover:text-[#75ee43] text-xs sm:text-[13px] font-medium transition-colors group cursor-pointer"
+            className="inline-flex items-center gap-3 sm:gap-3.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/25 hover:border-white/50 text-white min-h-[48px] sm:min-h-[50px] shadow-[0_4px_20px_rgba(0,0,0,0.25)] hover:shadow-[0_6px_24px_rgba(0,0,0,0.35)] hover:-translate-y-0.5 active:scale-95 transition-all duration-300 group cursor-pointer"
             type="button"
             onClick={() => setVideoModalOpen(true)}
+            aria-label={currentLang === 'AR' ? 'شاهد قصتنا' : 'Watch Our Story'}
           >
-            <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-white/40 flex items-center justify-center group-hover:scale-110 group-hover:border-[#75ee43] transition-all duration-200">
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="ml-0.5 fill-current"
-                aria-hidden="true"
-              >
-                <path d="m9 5 11 7-11 7Z" />
-              </svg>
+            {/* Elevated Play Icon Badge */}
+            <span className="relative flex items-center justify-center">
+              <span className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/20 group-hover:bg-[#2BE019] text-white group-hover:text-[#0A1810] flex items-center justify-center transition-all duration-300 shadow-inner group-hover:scale-105 group-hover:shadow-[0_0_12px_#2BE019]">
+                <Play className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current ml-0.5 rtl:ml-0 rtl:mr-0.5" />
+              </span>
             </span>
-            <span>{currentLang === 'AR' ? 'شاهد قصتنا' : 'Watch Our Story'}</span>
+            <span className="text-xs sm:text-[13.5px] font-semibold tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] whitespace-nowrap">
+              {currentLang === 'AR' ? 'شاهد قصتنا' : 'Watch Our Story'}
+            </span>
           </button>
         </div>
       </div>
