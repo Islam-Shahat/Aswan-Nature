@@ -37,10 +37,11 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
           ],
       image: '/assets/white-egret-shore.jpg',
       badge: isAr ? 'محميات الشلال الأول' : 'First Cataract Reserves',
-      accent: 'emerald',
-      bgClass: 'bg-white border-2 border-[#CBDCCB] border-t-4 border-t-[#2BE019] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(20,40,25,0.18)]',
-      tagBg: 'bg-[#EEF6EB] text-[#245D33] border border-[#D0E5C9]',
-      pillBg: 'bg-[#F1F7EE] text-[#244C30] border border-[#D6E6D1]',
+      accent: 'teal',
+      bgClass: 'bg-gradient-to-br from-white via-[#f0f6f7] to-white border-2 border-[#0a515b] border-t-4 border-t-[#0a515b] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(10,81,91,0.22)]',
+      tagBg: 'bg-[#0a515b]/10 text-[#0a515b] border border-[#0a515b]/30',
+      pillBg: 'bg-[#0a515b]/[0.06] text-[#0a515b] border border-[#0a515b]/20',
+      checkColor: 'text-[#0a515b]',
     },
     {
       id: 'what-we-offer',
@@ -66,10 +67,11 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
           ],
       image: '/assets/pied-kingfisher-perched.jpg',
       badge: isAr ? 'رصد فائق القرب بدون إزعاج' : 'Zero-Disruption Observation',
-      accent: 'blue',
-      bgClass: 'bg-[#FDFEFA] border-2 border-[#CBDCCB] border-t-4 border-t-[#189B1A] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(20,40,25,0.18)]',
-      tagBg: 'bg-[#E3F2DF] text-[#1C5528] border border-[#C5E2BC]',
-      pillBg: 'bg-[#EBF5E7] text-[#1F482A] border border-[#D2E7CB]',
+      accent: 'teal',
+      bgClass: 'bg-gradient-to-br from-white via-[#eef6f7] to-white border-2 border-[#0a515b] border-t-4 border-t-[#0a515b] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(10,81,91,0.22)]',
+      tagBg: 'bg-[#0a515b]/10 text-[#0a515b] border border-[#0a515b]/30',
+      pillBg: 'bg-[#0a515b]/[0.06] text-[#0a515b] border border-[#0a515b]/20',
+      checkColor: 'text-[#0a515b]',
     },
     {
       id: 'what-sets-us-apart',
@@ -95,10 +97,11 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
           ],
       image: '/assets/yellow-billed-stork.jpg',
       badge: isAr ? 'سياحة بيئية متجددة 100%' : '100% Regenerative Tourism',
-      accent: 'amber',
-      bgClass: 'bg-[#F8FAF4] border-2 border-[#CBDCCB] border-t-4 border-t-[#227438] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(20,40,25,0.18)]',
-      tagBg: 'bg-[#EFF5EA] text-[#265B33] border border-[#D3E5CC]',
-      pillBg: 'bg-[#EEF5E9] text-[#234A2E] border border-[#D5E6CF]',
+      accent: 'teal',
+      bgClass: 'bg-gradient-to-br from-white via-[#edf5f6] to-white border-2 border-[#0a515b] border-t-4 border-t-[#0a515b] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(10,81,91,0.22)]',
+      tagBg: 'bg-[#0a515b]/10 text-[#0a515b] border border-[#0a515b]/30',
+      pillBg: 'bg-[#0a515b]/[0.06] text-[#0a515b] border border-[#0a515b]/20',
+      checkColor: 'text-[#0a515b]',
     },
     {
       id: 'our-mission',
@@ -125,19 +128,20 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
       image: '/assets/nile-birds-flight.jpg',
       badge: isAr ? 'إرث نيل حي ومستدام' : 'Living Heritage Sanctuary',
       accent: 'night',
-      bgClass: 'bg-[#0B1E14] border-2 border-[#2BE019]/50 border-t-4 border-t-[#2BE019] text-white shadow-[0_30px_70px_-15px_rgba(0,0,0,0.5)]',
-      tagBg: 'bg-[#2BE019]/15 text-[#2BE019] border border-[#2BE019]/40',
+      bgClass: 'bg-gradient-to-br from-[#06181b] via-[#0a383f] to-[#041214] border-2 border-[#0a515b] border-t-4 border-t-[#2BE019] text-white shadow-[0_30px_70px_-15px_rgba(0,0,0,0.6)]',
+      tagBg: 'bg-[#0a515b]/50 text-[#2BE019] border border-[#2BE019]/40',
       pillBg: 'bg-white/10 text-white/90 border border-white/20',
+      checkColor: 'text-[#2BE019]',
     },
   ];
 
   return (
-    <section id="about" className="py-20 lg:py-28 bg-[#EAF0E5] relative">
+    <section id="about" className="py-20 lg:py-28 bg-[#EBF0E5] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#CADBC4] text-[#256337] text-xs font-bold uppercase tracking-[0.2em] mb-4 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#2BE019]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#0a515b]/30 text-[#0a515b] text-xs font-bold uppercase tracking-[0.2em] mb-4 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#0a515b]" />
             <span>{isAr ? 'ليست أسوان التقليدية' : 'NOT YOUR USUAL ASWAN'}</span>
           </div>
 
@@ -145,12 +149,12 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
             {isAr ? (
               <>
                 أقل تقليدية.{' '}
-                <span className="text-[#64796B]">وأكثر استثنائية.</span>
+                <span className="text-[#0a515b]">وأكثر استثنائية.</span>
               </>
             ) : (
               <>
                 Less ordinary.{' '}
-                <span className="text-[#64796B]">More extraordinary.</span>
+                <span className="text-[#0a515b]">More extraordinary.</span>
               </>
             )}
           </h2>
@@ -182,8 +186,17 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
               >
                 {/* Large Card Shell */}
                 <div
-                  className={`relative rounded-3xl p-6 sm:p-8 lg:p-10 backdrop-blur-xs transition-transform duration-300 ${card.bgClass}`}
+                  className={`relative rounded-3xl p-6 sm:p-8 lg:p-10 backdrop-blur-xs transition-transform duration-300 overflow-hidden ${card.bgClass}`}
                 >
+                  {/* Subtle Gradient Glow in the center of the card (#0a515b) */}
+                  <div
+                    className={`absolute inset-0 rounded-3xl pointer-events-none ${
+                      isNight
+                        ? 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.5)_0%,transparent_75%)]'
+                        : 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.12)_0%,rgba(10,81,91,0.03)_50%,transparent_80%)]'
+                    }`}
+                  />
+
                   <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
                     {/* Content Column (7 cols) */}
                     <div className="lg:col-span-7 space-y-4 sm:space-y-5">
@@ -198,7 +211,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
 
                         <span
                           className={`text-sm sm:text-base font-extrabold tracking-wider font-mono ${
-                            isNight ? 'text-[#2BE019]' : 'text-[#7D9183]'
+                            isNight ? 'text-[#2BE019]' : 'text-[#0a515b]'
                           }`}
                         >
                           {card.num} / 04
@@ -230,7 +243,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                             key={pIdx}
                             className={`inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl ${card.pillBg}`}
                           >
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[#2BE019] flex-shrink-0" />
+                            <CheckCircle2 className={`w-3.5 h-3.5 ${card.checkColor} flex-shrink-0`} />
                             <span>{pillText}</span>
                           </div>
                         ))}
@@ -238,16 +251,16 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
 
                       {/* Scroll Hint on Cards Before the Last One */}
                       {!isLast && (
-                        <div className="pt-2 flex items-center gap-2 text-[11px] font-bold text-[#7A8E80] uppercase tracking-wider">
+                        <div className="pt-2 flex items-center gap-2 text-[11px] font-bold text-[#0a515b]/80 uppercase tracking-wider">
                           <span>{isAr ? 'مرر للأسفل للكشف عن التالي' : 'Scroll down for next pillar'}</span>
-                          <ChevronDown className="w-3.5 h-3.5 animate-bounce text-[#2BE019]" />
+                          <ChevronDown className="w-3.5 h-3.5 animate-bounce text-[#0a515b]" />
                         </div>
                       )}
                     </div>
 
                     {/* Visual Column (5 cols) */}
                     <div className="lg:col-span-5 relative">
-                      <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border border-black/10 group">
+                      <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border-2 border-[#0a515b]/30 group">
                         <img
                           src={card.image}
                           alt={card.title}
@@ -262,7 +275,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                           <span className="px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md text-[11px] font-semibold text-white border border-white/20 shadow-md">
                             🌿 {card.badge}
                           </span>
-                          <span className="w-8 h-8 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center text-white group-hover:bg-[#2BE019] group-hover:text-black group-hover:border-[#2BE019] transition-all">
+                          <span className="w-8 h-8 rounded-full bg-[#0a515b]/40 backdrop-blur-md border border-[#0a515b]/50 flex items-center justify-center text-white group-hover:bg-[#0a515b] group-hover:text-white transition-all">
                             <ArrowUpRight className="w-4 h-4 rtl:rotate-90" />
                           </span>
                         </div>
