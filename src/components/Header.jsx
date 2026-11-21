@@ -108,13 +108,13 @@ export const Header = ({
                       : 'text-[#35463B] hover:text-[#16241B] hover:bg-black/5'
                     : isActive
                       ? 'font-bold text-white bg-white/20 shadow-xs'
-                      : 'text-white/90 hover:text-white hover:bg-white/15 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]'
+                      : 'text-white hover:text-white hover:bg-white/15 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]'
                 }`}
               >
                 {item.label}
                 {/* Luminous Green Active Underline Bar */}
                 {isActive && (
-                  <span className="absolute -bottom-0.5 inset-x-2.5 h-[3px] rounded-full bg-[#2BE019] shadow-[0_0_8px_#2BE019]" />
+                  <span className="absolute -bottom-1 inset-x-2 h-[3.5px] rounded-full bg-[#2BE019] shadow-[0_0_10px_#2BE019]" />
                 )}
               </a>
             );
@@ -188,20 +188,27 @@ export const Header = ({
       {mobileMenuOpen && (
         <div className="pointer-events-auto absolute top-full mt-2 w-[calc(100%-24px)] sm:w-[calc(100%-48px)] max-w-md bg-white/95 backdrop-blur-xl rounded-3xl border border-[#E2E8DC] p-5 shadow-2xl space-y-3 animate-in slide-in-from-top-3 duration-200 z-50">
           <nav className="flex flex-col space-y-2">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item.label, item.href);
-                }}
-                className="text-sm font-semibold text-[#2C3B30] hover:text-[#16241B] hover:bg-[#F3F6EE] px-3.5 py-2.5 rounded-xl flex items-center justify-between transition-colors"
-              >
-                <span>{item.label}</span>
-                <span className="text-xs text-[#8A9C8E] rtl:rotate-180">→</span>
-              </a>
-            ))}
+            {navItems.map((item) => {
+              const isActive = activeNav === item.label;
+              return (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick(item.label, item.href);
+                  }}
+                  className={`text-sm font-semibold px-3.5 py-2.5 rounded-xl flex items-center justify-between transition-colors ${
+                    isActive
+                      ? 'bg-[#EBFBE7] text-[#16241B] border-r-4 rtl:border-r-0 rtl:border-l-4 border-[#2BE019]'
+                      : 'text-[#2C3B30] hover:text-[#16241B] hover:bg-[#F3F6EE]'
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  <span className="text-xs text-[#8A9C8E] rtl:rotate-180">→</span>
+                </a>
+              );
+            })}
           </nav>
           <div className="pt-2 border-t border-[#EAEFE6]">
             <button
