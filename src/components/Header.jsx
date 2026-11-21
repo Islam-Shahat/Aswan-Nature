@@ -90,6 +90,7 @@ export const Header = ({
             className="w-9 h-9 sm:w-10 sm:h-10 object-contain group-hover:scale-105 transition-transform drop-shadow-xs"
           />
           <span
+            dir="ltr"
             className={`text-lg sm:text-xl tracking-tight font-medium flex items-baseline transition-all duration-500 ease-out ${
               isScrolled ? 'text-[#16241B]' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]'
             }`}

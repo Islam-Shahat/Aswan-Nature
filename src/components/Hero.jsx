@@ -6,17 +6,25 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
 
   return (
     <section id="hero" className="relative min-h-screen h-[100dvh] bg-[#2c281a] text-white isolate overflow-hidden flex flex-col justify-between">
-      {/* Background Nile Boat & Flying Birds in Aswan Image */}
+      {/* Background Nile Boat & Flying Birds in Aswan Image (mirrors dynamically based on language direction) */}
       <img
-        className="absolute inset-0 w-full h-full object-cover -z-30"
+        className={`absolute inset-0 w-full h-full object-cover -z-30 transition-transform duration-700 ease-in-out ${
+          currentLang === 'AR' ? 'scale-x-[-1]' : 'scale-x-100'
+        }`}
         src="/assets/hero-aswan-nile-2x.webp"
         alt="Nile boat tour and flying birds in Aswan"
         fetchPriority="high"
         style={{ objectPosition: '78% 30%' }}
       />
       
-      {/* Dynamic atmospheric gradient shade */}
-      <div className="absolute inset-0 -z-20 bg-gradient-to-r from-[#0C1812]/90 via-[#0F180F]/70 to-[#10150C]/10" />
+      {/* Dynamic atmospheric gradient shade matching reading direction */}
+      <div
+        className={`absolute inset-0 -z-20 transition-all duration-700 ${
+          currentLang === 'AR'
+            ? 'bg-gradient-to-l from-[#0C1812]/90 via-[#0F180F]/70 to-[#10150C]/10'
+            : 'bg-gradient-to-r from-[#0C1812]/90 via-[#0F180F]/70 to-[#10150C]/10'
+        }`}
+      />
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#09120C]/40 via-transparent to-transparent" />
 
       {/* Main Hero Content */}
