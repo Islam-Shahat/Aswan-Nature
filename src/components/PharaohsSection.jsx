@@ -148,29 +148,24 @@ export const PharaohsSection = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 items-center">
           {/* Left Column Content - Pharaonic Narrative */}
           <div className="lg:col-span-6 max-w-xl">
-            {/* Pharaonic Signature Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-[#D4AF37]/50 bg-[#D4AF37]/10 backdrop-blur-md mb-7 shadow-[0_0_20px_rgba(212,175,55,0.18)]">
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#E5C365"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-                className="flex-shrink-0">
-                
-                <path d="M3 17c5-1 7-4 8-8 1-4 4-5 6-3l4 1-4 2c0 5-4 10-10 10H3l4-4M10 12C6 12 3 8 2 4c6 1 10 4 11 7" />
-                <circle cx="16" cy="6.5" r="1.5" fill="#E5C365" />
-              </svg>
-              <span className="text-[11px] sm:text-xs uppercase tracking-[0.22em] font-bold text-[#F3E2B2]">
-                {isArabic ?
-                'سر طيور الفراعنة · تجربة حصرية' :
-                'PHARAONIC BIRDS · SACRED HERITAGE'}
+            {/* Pharaonic Hieroglyphic Inscription (Replaced pill badge with authentic Pharaonic script) */}
+            <div className="flex items-center gap-3 mb-6 select-none">
+              <span
+                className="text-2xl sm:text-3xl text-[#E5C365] drop-shadow-[0_0_14px_rgba(229,195,101,0.65)] tracking-widest font-serif leading-none"
+                style={{ fontFamily: "'Segoe UI Historic', 'Noto Sans Egyptian Hieroglyphs', serif" }}
+              >
+                𓍹 𓅃 𓅂 𓅄 𓅠 𓍻
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-[#E5C365] shadow-[0_0_8px_#E5C365]" />
+              <span className="text-xs sm:text-[13px] uppercase tracking-[0.24em] font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#F3E2B2] via-[#E5C365] to-[#D4AF37]">
+                {isArabic ? 'نقوش وأسرار طيور الفراعنة' : 'PHARAONIC BIRDS · SACRED HERITAGE'}
+              </span>
+              <span
+                className="text-xl text-[#E5C365]/80 drop-shadow-[0_0_8px_rgba(229,195,101,0.5)] leading-none"
+                style={{ fontFamily: "'Segoe UI Historic', 'Noto Sans Egyptian Hieroglyphs', serif" }}
+              >
+                𓋹
+              </span>
             </div>
 
             {/* Grand Pharaonic Heading */}
