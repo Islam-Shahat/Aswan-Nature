@@ -183,10 +183,10 @@ export const TourDetailModal = ({
                 onClose();
                 onBookTour(tour.title);
               }}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#2BE019] hover:bg-[#25C715] text-[#0A1810] font-bold text-sm px-6 py-3 rounded-xl shadow transition-all duration-200">
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#1EAA13] hover:bg-[#18930F] text-white font-bold text-sm px-6 py-3 rounded-xl shadow-md transition-all duration-200 cursor-pointer">
               
               <span>{currentLang === 'AR' ? 'احجز هذه الجولة الآن' : 'Book This Tour'}</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 rtl:rotate-180 text-white" />
             </button>
           </div>
         </div>

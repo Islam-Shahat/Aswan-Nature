@@ -59,7 +59,7 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
         <div className="flex items-center gap-5 sm:gap-7 mt-7 sm:mt-8 rtl:gap-4">
           <button
             onClick={onExploreTours}
-            className="inline-flex items-center justify-center gap-4 sm:gap-6 px-5 sm:px-6 py-3.5 sm:py-4 bg-[#48e714] text-[#183015] hover:bg-[#39d50a] font-semibold text-xs sm:text-[13px] rounded-md leading-normal whitespace-nowrap min-h-[48px] sm:min-h-[50px] shadow-lg shadow-[#48e714]/20 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 cursor-pointer"
+            className="inline-flex items-center justify-center gap-3 sm:gap-4 px-6 sm:px-7 py-3.5 sm:py-4 bg-[#1EAA13] hover:bg-[#18930F] text-white font-bold text-sm sm:text-[14px] rounded-xl leading-normal whitespace-nowrap min-h-[48px] sm:min-h-[50px] shadow-lg shadow-[#1EAA13]/25 hover:-translate-y-0.5 active:scale-95 transition-all duration-200 cursor-pointer"
             type="button"
           >
             <span>{currentLang === 'AR' ? 'استكشف جولاتنا' : 'Explore Our Tours'}</span>
@@ -69,10 +69,10 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              strokeWidth="2"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="rtl:rotate-180 transition-transform"
+              className="rtl:rotate-180 transition-transform text-white"
               aria-hidden="true"
             >
               <path d="M4 12h15M13 6l6 6-6 6" />

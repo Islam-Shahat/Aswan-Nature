@@ -238,12 +238,12 @@ export const ToursSection = ({
                     <div
                       className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full transition-all duration-300 ${
                         isFocused
-                          ? 'bg-[#2BE019] text-[#0A1810] shadow-xs'
+                          ? 'bg-[#1EAA13] text-white shadow-xs'
                           : 'text-[#16241B] group-hover:text-[#0a515b]'
                       }`}
                     >
                       <span>{isAr ? 'استكشف الجولة' : 'Explore Tour'}</span>
-                      <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180" />
+                      <ArrowRight className={`w-3.5 h-3.5 rtl:rotate-180 ${isFocused ? 'text-white' : ''}`} />
                     </div>
                   </div>
                 </div>

@@ -237,10 +237,10 @@ export const QuickBooking = ({
           <div className="md:col-span-3 lg:col-span-3 pt-2 md:pt-0">
             <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2.5 bg-[#2BE019] hover:bg-[#25C715] text-[#0A1810] font-bold text-sm lg:text-base py-4 px-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98]">
+              className="w-full flex items-center justify-center gap-2.5 bg-[#1EAA13] hover:bg-[#18930F] text-white font-bold text-sm lg:text-base py-4 px-6 rounded-xl shadow-md hover:shadow-lg shadow-[#1EAA13]/25 transition-all duration-200 active:scale-[0.98] cursor-pointer">
               
               <span>{currentLang === 'AR' ? 'تحقق من التوفر' : 'Check Availability'}</span>
-              <ArrowRight className="w-4 h-4" />
+              <ArrowRight className="w-4 h-4 rtl:rotate-180 text-white stroke-[2.5]" />
             </button>
           </div>
         </form>

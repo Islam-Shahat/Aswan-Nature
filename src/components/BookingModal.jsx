@@ -206,10 +206,10 @@ export const BookingModal = ({
 
               <button
               type="submit"
-              className="w-full flex items-center justify-center gap-2 bg-[#2BE019] hover:bg-[#25C715] text-[#0A1810] font-bold py-3.5 px-6 rounded-xl shadow-md transition-all duration-200 mt-2">
+              className="w-full flex items-center justify-center gap-2 bg-[#1EAA13] hover:bg-[#18930F] text-white font-bold py-3.5 px-6 rounded-xl shadow-md transition-all duration-200 mt-2 cursor-pointer">
               
                 <span>{currentLang === 'AR' ? 'تأكيد طلب الحجز' : 'Submit Reservation Request'}</span>
-                <Send className="w-4 h-4" />
+                <Send className="w-4 h-4 rtl:rotate-180 text-white" />
               </button>
             </form>
           </div> :

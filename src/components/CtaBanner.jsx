@@ -65,10 +65,10 @@ export const CtaBanner = ({
         <div className="flex flex-wrap items-center justify-center gap-4">
           <button
             onClick={onBookClick}
-            className="group flex items-center gap-2.5 bg-[#2BE019] hover:bg-[#25C715] text-[#0A1810] font-bold text-sm sm:text-base px-8 py-4 rounded-xl shadow-lg hover:shadow-[#2BE019]/25 transition-all duration-200 active:scale-[0.98]">
+            className="group flex items-center gap-2.5 bg-[#1EAA13] hover:bg-[#18930F] text-white font-bold text-sm sm:text-base px-8 py-4 rounded-xl shadow-lg hover:shadow-[#1EAA13]/25 transition-all duration-200 active:scale-[0.98] cursor-pointer">
             
             <span>{currentLang === 'AR' ? 'احجز رحلتك' : 'Book Your Trip'}</span>
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover:translate-x-1" />
           </button>
 
           <button

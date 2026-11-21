@@ -64,12 +64,12 @@ export const LearningCampsSection = ({
             <div>
               <button
                 onClick={onExploreCamps}
-                className="group inline-flex items-center gap-3 bg-[#2BE019] hover:bg-[#25C715] text-[#0A1810] font-bold text-sm sm:text-base px-7 py-4 rounded-xl shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98]">
+                className="group inline-flex items-center gap-3 bg-[#1EAA13] hover:bg-[#18930F] text-white font-bold text-sm sm:text-base px-7 py-4 rounded-xl shadow-md hover:shadow-lg shadow-[#1EAA13]/25 transition-all duration-200 active:scale-[0.98] cursor-pointer">
                 
                 <span>
                   {currentLang === 'AR' ? 'استكشف معسكرات التعلم' : 'Explore Learning Camps'}
                 </span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover:translate-x-1 text-white" />
               </button>
             </div>
           </div>
