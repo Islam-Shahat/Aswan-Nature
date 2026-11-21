@@ -15,7 +15,7 @@ import { EgyptianRatesModal } from './components/EgyptianRatesModal';
 import { PartnersModal } from './components/PartnersModal';
 import { AdminConceptModal } from './components/AdminConceptModal';
 import { TourDetailModal } from './components/TourDetailModal';
-import { ScrollBird } from './components/ScrollBird';
+import { ScrollBird } from './components/ScrollBird/ScrollBird';
 
 export default function App() {
   const [currentLang, setCurrentLang] = useState('EN');

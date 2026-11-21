@@ -17,6 +17,8 @@
   user-select: none;
   -webkit-user-select: none;
   perspective: 1200px;
+  background: transparent !important;
+  border: none !important;
 }
 
 /* Outer transform wrapper moved purely by translate3d and GSAP ticker */
@@ -25,14 +27,17 @@
   top: 0;
   left: 0;
   width: 175px;
-  height: 175px;
+  height: 185px;
   margin-left: -87px;
-  margin-top: -87px;
+  margin-top: -92px;
   transform-origin: 50% 50%;
   transform-style: preserve-3d;
   will-change: transform, filter;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 /* Inner hover container: produces gentle continuous 3D idle floating & sway */
@@ -46,6 +51,8 @@
   transform-style: preserve-3d;
   animation: birdIdleHover3D 2.2s ease-in-out infinite alternate;
   will-change: transform;
+  background: transparent !important;
+  border: none !important;
 }
 
 /* 2.2s sine ease 3D idle hover with subtle pitch (rotateX), yaw (rotateY), and roll (rotateZ) */
@@ -58,7 +65,7 @@
   }
 }
 
-/* Rendered real photographic bird SVG asset */
+/* Rendered real photographic bird SVG asset (transparent background) */
 .scroll-bird-img {
   width: 100%;
   height: 100%;
@@ -67,6 +74,8 @@
   pointer-events: none;
   filter: drop-shadow(0 14px 24px rgba(10, 24, 16, 0.32));
   transform-style: preserve-3d;
+  background: transparent !important;
+  border: none !important;
 }
 
 /* Accessibility: respect prefers-reduced-motion */
