@@ -236,15 +236,38 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                         {card.desc}
                       </p>
 
-                      {/* Key Highlights / Feature Badges */}
-                      <div className="pt-2 flex flex-wrap gap-2 sm:gap-2.5">
+                      {/* Key Highlights / Modern Feature Tiles */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
                         {card.pills.map((pillText, pIdx) => (
                           <div
                             key={pIdx}
-                            className={`inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-xl ${card.pillBg}`}
+                            className={`p-3 rounded-2xl border transition-all duration-200 group/tile ${
+                              isNight
+                                ? 'bg-white/5 border-white/10 hover:border-[#2BE019]/50 text-white'
+                                : 'bg-white/95 border-[#0a515b]/20 hover:border-[#0a515b] shadow-2xs hover:shadow-xs text-[#16241B]'
+                            }`}
                           >
-                            <CheckCircle2 className={`w-3.5 h-3.5 ${card.checkColor} flex-shrink-0`} />
-                            <span>{pillText}</span>
+                            <div className="flex items-center gap-1.5 mb-1.5">
+                              <span
+                                className={`w-1.5 h-1.5 rounded-full ${
+                                  isNight ? 'bg-[#2BE019]' : 'bg-[#0a515b]'
+                                } group-hover/tile:scale-125 transition-transform`}
+                              />
+                              <span
+                                className={`text-[10px] font-bold uppercase tracking-wider font-mono ${
+                                  isNight ? 'text-[#2BE019]' : 'text-[#0a515b]'
+                                }`}
+                              >
+                                {isAr ? `ركيزة 0${pIdx + 1}` : `Key 0${pIdx + 1}`}
+                              </span>
+                            </div>
+                            <p
+                              className={`text-[11.5px] sm:text-xs font-bold leading-snug ${
+                                isNight ? 'text-[#E2EBE5]' : 'text-[#1D2E22]'
+                              }`}
+                            >
+                              {pillText}
+                            </p>
                           </div>
                         ))}
                       </div>
