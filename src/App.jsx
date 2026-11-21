@@ -15,7 +15,6 @@ import { EgyptianRatesModal } from './components/EgyptianRatesModal';
 import { PartnersModal } from './components/PartnersModal';
 import { AdminConceptModal } from './components/AdminConceptModal';
 import { TourDetailModal } from './components/TourDetailModal';
-import { ScrollBird } from './components/ScrollBird/ScrollBird';
 
 export default function App() {
   const [currentLang, setCurrentLang] = useState('EN');
@@ -105,9 +104,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAF5] font-sans selection:bg-[#2BE019] selection:text-black">
-      {/* 3D Realistic Animated Hummingbird Companion */}
-      <ScrollBird />
-
       {/* 1. Header with exact Figma logo & navigation */}
       <Header
         onBookClick={() => handleOpenBooking('General Trip')}
