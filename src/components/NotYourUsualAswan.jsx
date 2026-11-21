@@ -177,7 +177,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
               <div
                 key={card.id}
                 style={{
-                  top: `calc(90px + ${idx * 22}px)`,
+                  top: `calc(125px + ${idx * 22}px)`,
                   zIndex: 10 + idx,
                 }}
                 className={`sticky transition-all duration-300 ${
