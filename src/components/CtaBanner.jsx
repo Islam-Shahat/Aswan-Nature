@@ -13,7 +13,7 @@ export const CtaBanner = ({
   currentLang = 'EN'
 }) => {
   return (
-    <section id="cta" className="relative py-24 lg:py-32 bg-[#E1EBD9] overflow-hidden">
+    <section className="relative py-24 lg:py-32 bg-[#E1EBD9] overflow-hidden">
       {/* Decorative Bird Watermark Vector in Background matching Figma */}
       <div className="absolute right-6 lg:right-24 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 text-[#256636]">
         <svg

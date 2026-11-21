@@ -15,7 +15,6 @@ import { EgyptianRatesModal } from './components/EgyptianRatesModal';
 import { PartnersModal } from './components/PartnersModal';
 import { AdminConceptModal } from './components/AdminConceptModal';
 import { TourDetailModal } from './components/TourDetailModal';
-import { ScrollBird } from './components/ScrollBird';
 
 export default function App() {
   const [currentLang, setCurrentLang] = useState('EN');
@@ -105,9 +104,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAF5] font-sans selection:bg-[#2BE019] selection:text-black">
-      {/* Animated Hummingbird Scroll Companion */}
-      <ScrollBird />
-
       {/* 1. Header with exact Figma logo & navigation */}
       <Header
         onBookClick={() => handleOpenBooking('General Trip')}
@@ -177,24 +173,24 @@ export default function App() {
 
       {/* 12. Floating "Let's talk nature" WhatsApp Button - Global across all sections */}
       <a
-        className="whatsapp"
+        className="fixed bottom-6 right-6 rtl:right-auto rtl:left-6 z-40 inline-flex items-center gap-2.5 px-5 py-3 rounded-full bg-[#183823]/95 backdrop-blur-md text-white border border-white/25 shadow-[0_8px_26px_rgba(10,24,16,0.38)] text-xs sm:text-[13.5px] font-semibold tracking-tight hover:bg-[#204c30] hover:border-[#48e714] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(72,231,20,0.28)] active:translate-y-0 active:scale-95 transition-all duration-300"
         href="https://wa.me/201144435547"
         target="_blank"
         rel="noreferrer"
-        aria-label="Contact Aswan Nature on WhatsApp">
-        
-        <span className="wa-icon">
+        aria-label="Contact Aswan Nature on WhatsApp"
+      >
+        <span className="text-[#48e714] flex-shrink-0">
           <svg
-            width="22"
-            height="22"
+            width="20"
+            height="20"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
             strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
-            aria-hidden="true">
-            
+            aria-hidden="true"
+          >
             <path d="M21 11a9 9 0 0 1-13 8l-6 2 2-6a9 9 0 1 1 17-4Z" />
           </svg>
         </span>
