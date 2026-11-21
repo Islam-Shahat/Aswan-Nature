@@ -20,7 +20,7 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#09120C]/40 via-transparent to-transparent" />
 
       {/* Main Hero Content */}
-      <div className="w-[min(1240px,calc(100%-40px))] sm:w-[min(1240px,calc(100%-80px))] lg:w-[min(1240px,calc(100%-112px))] mx-auto pt-16 sm:pt-20 2xl:pt-24">
+      <div className="w-[min(1240px,calc(100%-40px))] sm:w-[min(1240px,calc(100%-80px))] lg:w-[min(1240px,calc(100%-112px))] mx-auto pt-24 sm:pt-28 lg:pt-32 2xl:pt-36">
         <h1 className="font-heading font-extrabold text-[clamp(44px,6.15vw,87px)] tracking-[-0.04em] leading-[1.04] mt-6 sm:mt-7 rtl:font-arabic rtl:text-[clamp(40px,5.5vw,70px)] rtl:leading-[1.25] rtl:tracking-tight">
           {currentLang === 'AR' ? (
             <>
