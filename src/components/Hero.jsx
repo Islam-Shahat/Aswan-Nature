@@ -5,7 +5,7 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   return (
-    <section id="hero" className="relative min-h-[700px] h-[min(740px,calc(100svh-94px))] 2xl:h-[770px] bg-[#2c281a] text-white isolate overflow-hidden">
+    <section id="hero" className="relative min-h-screen h-[100dvh] bg-[#2c281a] text-white isolate overflow-hidden flex flex-col justify-between">
       {/* Background Nile Boat & Flying Birds in Aswan Image */}
       <img
         className="absolute inset-0 w-full h-full object-cover -z-30"
@@ -20,8 +20,8 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#09120C]/40 via-transparent to-transparent" />
 
       {/* Main Hero Content */}
-      <div className="w-[min(1240px,calc(100%-40px))] sm:w-[min(1240px,calc(100%-80px))] lg:w-[min(1240px,calc(100%-112px))] mx-auto pt-24 sm:pt-28 lg:pt-32 2xl:pt-36">
-        <h1 className="font-heading font-extrabold text-[clamp(44px,6.15vw,87px)] tracking-[-0.04em] leading-[1.04] mt-6 sm:mt-7 rtl:font-arabic rtl:text-[clamp(40px,5.5vw,70px)] rtl:leading-[1.25] rtl:tracking-tight">
+      <div className="w-[min(1240px,calc(100%-40px))] sm:w-[min(1240px,calc(100%-80px))] lg:w-[min(1240px,calc(100%-112px))] mx-auto pt-28 sm:pt-32 lg:pt-36 my-auto">
+        <h1 className="font-heading font-extrabold text-[clamp(44px,6.15vw,87px)] tracking-[-0.04em] leading-[1.04] mt-4 sm:mt-6 rtl:font-arabic rtl:text-[clamp(40px,5.5vw,70px)] rtl:leading-[1.25] rtl:tracking-tight">
           {currentLang === 'AR' ? (
             <>
               اكتشف الوجه<br />
@@ -98,7 +98,7 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
       </div>
 
       {/* Hero Bottom Bar */}
-      <div className="absolute inset-x-0 bottom-8 sm:bottom-12 w-[min(1240px,calc(100%-40px))] sm:w-[min(1240px,calc(100%-80px))] lg:w-[min(1240px,calc(100%-112px))] mx-auto flex items-center justify-between text-[10px] text-[#e6e8dc]">
+      <div className="w-[min(1240px,calc(100%-40px))] sm:w-[min(1240px,calc(100%-80px))] lg:w-[min(1240px,calc(100%-112px))] mx-auto flex items-center justify-between text-[10px] text-[#e6e8dc] pb-6 sm:pb-8 pt-4">
         <span className="inline-flex items-center gap-2">
           <svg
             width="14"
