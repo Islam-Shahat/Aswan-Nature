@@ -38,9 +38,9 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
       image: '/assets/white-egret-shore.jpg',
       badge: isAr ? 'محميات الشلال الأول' : 'First Cataract Reserves',
       accent: 'teal',
-      bgClass: 'bg-gradient-to-br from-white via-[#f0f6f7] to-white border-2 border-[#0a515b] border-t-4 border-t-[#0a515b] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(10,81,91,0.22)]',
-      tagBg: 'bg-[#0a515b]/10 text-[#0a515b] border border-[#0a515b]/30',
-      pillBg: 'bg-[#0a515b]/[0.06] text-[#0a515b] border border-[#0a515b]/20',
+      bgClass: 'bg-white border-2 border-[#CBDCCB] border-t-[5px] border-t-[#0a515b] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(10,81,91,0.2)]',
+      tagBg: 'bg-[#0a515b]/10 text-[#0a515b] border border-[#0a515b]/25',
+      pillBg: 'bg-[#0a515b]/[0.06] text-[#0a515b] border border-[#0a515b]/18',
       checkColor: 'text-[#0a515b]',
     },
     {
@@ -68,9 +68,9 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
       image: '/assets/pied-kingfisher-perched.jpg',
       badge: isAr ? 'رصد فائق القرب بدون إزعاج' : 'Zero-Disruption Observation',
       accent: 'teal',
-      bgClass: 'bg-gradient-to-br from-white via-[#eef6f7] to-white border-2 border-[#0a515b] border-t-4 border-t-[#0a515b] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(10,81,91,0.22)]',
-      tagBg: 'bg-[#0a515b]/10 text-[#0a515b] border border-[#0a515b]/30',
-      pillBg: 'bg-[#0a515b]/[0.06] text-[#0a515b] border border-[#0a515b]/20',
+      bgClass: 'bg-[#FCFDF9] border-2 border-[#CBDCCB] border-t-[5px] border-t-[#0a515b] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(10,81,91,0.2)]',
+      tagBg: 'bg-[#0a515b]/10 text-[#0a515b] border border-[#0a515b]/25',
+      pillBg: 'bg-[#0a515b]/[0.06] text-[#0a515b] border border-[#0a515b]/18',
       checkColor: 'text-[#0a515b]',
     },
     {
@@ -98,9 +98,9 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
       image: '/assets/yellow-billed-stork.jpg',
       badge: isAr ? 'سياحة بيئية متجددة 100%' : '100% Regenerative Tourism',
       accent: 'teal',
-      bgClass: 'bg-gradient-to-br from-white via-[#edf5f6] to-white border-2 border-[#0a515b] border-t-4 border-t-[#0a515b] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(10,81,91,0.22)]',
-      tagBg: 'bg-[#0a515b]/10 text-[#0a515b] border border-[#0a515b]/30',
-      pillBg: 'bg-[#0a515b]/[0.06] text-[#0a515b] border border-[#0a515b]/20',
+      bgClass: 'bg-[#F8FAF4] border-2 border-[#CBDCCB] border-t-[5px] border-t-[#0a515b] text-[#16241B] shadow-[0_24px_55px_-12px_rgba(10,81,91,0.2)]',
+      tagBg: 'bg-[#0a515b]/10 text-[#0a515b] border border-[#0a515b]/25',
+      pillBg: 'bg-[#0a515b]/[0.06] text-[#0a515b] border border-[#0a515b]/18',
       checkColor: 'text-[#0a515b]',
     },
     {
@@ -128,15 +128,15 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
       image: '/assets/nile-birds-flight.jpg',
       badge: isAr ? 'إرث نيل حي ومستدام' : 'Living Heritage Sanctuary',
       accent: 'night',
-      bgClass: 'bg-gradient-to-br from-[#06181b] via-[#0a383f] to-[#041214] border-2 border-[#0a515b] border-t-4 border-t-[#2BE019] text-white shadow-[0_30px_70px_-15px_rgba(0,0,0,0.6)]',
-      tagBg: 'bg-[#0a515b]/50 text-[#2BE019] border border-[#2BE019]/40',
+      bgClass: 'bg-[#0B1E14] border-2 border-[#0a515b]/50 border-t-[5px] border-t-[#0a515b] text-white shadow-[0_30px_70px_-15px_rgba(0,0,0,0.55)]',
+      tagBg: 'bg-[#0a515b]/40 text-[#2BE019] border border-[#2BE019]/40',
       pillBg: 'bg-white/10 text-white/90 border border-white/20',
       checkColor: 'text-[#2BE019]',
     },
   ];
 
   return (
-    <section id="about" className="py-20 lg:py-28 bg-[#EBF0E5] relative">
+    <section id="about" className="py-20 lg:py-28 bg-[#EAF0E5] relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
@@ -184,7 +184,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                   !isLast ? 'mb-[30vh] sm:mb-[42vh]' : 'mb-0'
                 }`}
               >
-                {/* Large Card Shell */}
+                {/* Large Card Shell with prominent top border and center gradient glow in #0a515b */}
                 <div
                   className={`relative rounded-3xl p-6 sm:p-8 lg:p-10 backdrop-blur-xs transition-transform duration-300 overflow-hidden ${card.bgClass}`}
                 >
@@ -192,8 +192,8 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                   <div
                     className={`absolute inset-0 rounded-3xl pointer-events-none ${
                       isNight
-                        ? 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.5)_0%,transparent_75%)]'
-                        : 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.12)_0%,rgba(10,81,91,0.03)_50%,transparent_80%)]'
+                        ? 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.45)_0%,transparent_75%)]'
+                        : 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.14)_0%,rgba(10,81,91,0.02)_45%,transparent_75%)]'
                     }`}
                   />
 
