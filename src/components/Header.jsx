@@ -54,13 +54,13 @@ export const Header = ({
   };
 
   return (
-    <header className="fixed top-2 sm:top-4 inset-x-0 z-50 px-3 sm:px-6 lg:px-8 flex justify-center pointer-events-none transition-all duration-300">
+    <header className="fixed top-2 sm:top-4 inset-x-0 z-50 px-2 sm:px-4 lg:px-6 flex justify-center pointer-events-none transition-all duration-300">
       {/* Floating Pill Island Navbar */}
       <div
-        className={`pointer-events-auto w-full max-w-[1360px] h-16 sm:h-[70px] px-4 sm:px-6 lg:px-7 rounded-full flex items-center justify-between transition-all duration-300 ${
+        className={`pointer-events-auto w-full max-w-[1620px] h-16 sm:h-[72px] px-5 sm:px-8 lg:px-10 rounded-full flex items-center justify-between transition-all duration-300 ${
           isScrolled
             ? 'bg-white/95 backdrop-blur-lg border border-[#E2E8DC] shadow-[0_12px_36px_-6px_rgba(20,40,25,0.12)]'
-            : 'bg-white/50 backdrop-blur-md border border-white/60 shadow-[0_4px_20px_rgba(0,0,0,0.05)]'
+            : 'bg-white/15 backdrop-blur-md border border-white/30 shadow-[0_4px_24px_rgba(0,0,0,0.04)]'
         }`}
       >
         {/* Brand Logo */}
@@ -109,7 +109,11 @@ export const Header = ({
           <div className="relative">
             <button
               onClick={() => setLangOpen(!langOpen)}
-              className="flex items-center gap-1.5 text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#35463B] hover:text-[#16241B] px-3.5 py-1.5 sm:py-2 rounded-full border border-[#E0E6DA] bg-white/70 hover:bg-white shadow-xs transition-colors cursor-pointer"
+              className={`flex items-center gap-1.5 text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#2C3B30] hover:text-[#16241B] px-3.5 py-1.5 sm:py-2 rounded-full border shadow-xs transition-all cursor-pointer ${
+                isScrolled
+                  ? 'border-[#E0E6DA] bg-white/80 hover:bg-white'
+                  : 'border-white/30 bg-white/20 hover:bg-white/40'
+              }`}
               aria-label={currentLang === 'EN' ? 'Switch to Arabic' : 'التبديل إلى الإنجليزية'}
             >
               <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#5A6D61]" />
