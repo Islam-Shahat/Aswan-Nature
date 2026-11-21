@@ -98,9 +98,9 @@ export const QuickBooking = ({
           >
             <defs>
               <linearGradient id="booking-beam-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#2BE019" stopOpacity="1" />
-                <stop offset="50%" stopColor="#0a515b" stopOpacity="0.9" />
-                <stop offset="100%" stopColor="#2BE019" stopOpacity="0.15" />
+                <stop offset="0%" stopColor="#0a515b" stopOpacity="1" />
+                <stop offset="60%" stopColor="#146d7a" stopOpacity="0.95" />
+                <stop offset="100%" stopColor="#0a515b" stopOpacity="0.15" />
               </linearGradient>
             </defs>
 
@@ -116,7 +116,7 @@ export const QuickBooking = ({
               strokeWidth="1.5"
             />
 
-            {/* Luminous Glow Aura */}
+            {/* Luminous Glow Aura in #0a515b */}
             <rect
               x="1.5"
               y="1.5"
@@ -124,17 +124,17 @@ export const QuickBooking = ({
               height={Math.max(0, dims.height - 3)}
               rx={22}
               fill="none"
-              stroke="#2BE019"
+              stroke="#0a515b"
               strokeWidth="6"
-              opacity="0.35"
+              opacity="0.38"
               pathLength="100"
               strokeDasharray="14 86"
               strokeDashoffset={beamOffset}
               strokeLinecap="round"
-              filter="blur(3px)"
+              filter="blur(3.5px)"
             />
 
-            {/* Sharp Core Luminous Stripe Beam */}
+            {/* Sharp Core Luminous Stripe Beam in #0a515b */}
             <rect
               x="1.5"
               y="1.5"
@@ -143,12 +143,12 @@ export const QuickBooking = ({
               rx={22}
               fill="none"
               stroke="url(#booking-beam-grad)"
-              strokeWidth="3"
+              strokeWidth="3.5"
               pathLength="100"
               strokeDasharray="14 86"
               strokeDashoffset={beamOffset}
               strokeLinecap="round"
-              filter="drop-shadow(0 0 6px #2BE019)"
+              filter="drop-shadow(0 0 6px rgba(10,81,91,0.75))"
             />
           </svg>
         )}
