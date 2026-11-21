@@ -12,7 +12,7 @@ export const Header = ({
   const [langOpen, setLangOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Track scroll state to smoothly transition background from transparent to white
+  // Track scroll state to smoothly transition background & text colors
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
@@ -70,14 +70,25 @@ export const Header = ({
             alt="Aswan Nature Logo"
             className="w-9 h-9 sm:w-10 sm:h-10 object-contain group-hover:scale-105 transition-transform drop-shadow-xs"
           />
-          <span className="text-lg sm:text-xl tracking-tight text-[#16241B] font-medium flex items-baseline">
-            aswan<span className="font-bold text-[#13231B]">nature<span className="text-[#2BE019]">.</span></span>
+          <span
+            className={`text-lg sm:text-xl tracking-tight font-medium flex items-baseline transition-colors duration-200 ${
+              isScrolled ? 'text-[#16241B]' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]'
+            }`}
+          >
+            aswan
+            <span
+              className={`font-bold transition-colors duration-200 ${
+                isScrolled ? 'text-[#13231B]' : 'text-white'
+              }`}
+            >
+              nature<span className="text-[#2BE019]">.</span>
+            </span>
           </span>
         </a>
 
         {/* Desktop Navigation */}
         <nav
-          className="hidden xl:flex items-center gap-1 2xl:gap-2 text-[14px] font-medium text-[#2C3B30] mx-2"
+          className="hidden xl:flex items-center gap-1 2xl:gap-2 text-[14.5px] font-medium mx-2"
           aria-label="Main navigation"
         >
           {navItems.map((item) => {
@@ -90,13 +101,20 @@ export const Header = ({
                   e.preventDefault();
                   handleNavClick(item.label, item.href);
                 }}
-                className={`relative px-3 py-1.5 rounded-full transition-all duration-200 hover:text-[#16241B] hover:bg-black/5 whitespace-nowrap ${
-                  isActive ? 'font-bold text-[#16241B]' : 'text-[#48564D]'
+                className={`relative px-3.5 py-2 rounded-full transition-all duration-200 whitespace-nowrap ${
+                  isScrolled
+                    ? isActive
+                      ? 'font-bold text-[#16241B] bg-black/5'
+                      : 'text-[#35463B] hover:text-[#16241B] hover:bg-black/5'
+                    : isActive
+                      ? 'font-bold text-white bg-white/20 shadow-xs'
+                      : 'text-white/90 hover:text-white hover:bg-white/15 drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]'
                 }`}
               >
                 {item.label}
+                {/* Luminous Green Active Underline Bar */}
                 {isActive && (
-                  <span className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-[#2BE019] shadow-[0_0_6px_#2BE019]" />
+                  <span className="absolute -bottom-0.5 inset-x-2.5 h-[3px] rounded-full bg-[#2BE019] shadow-[0_0_8px_#2BE019]" />
                 )}
               </a>
             );
@@ -109,30 +127,30 @@ export const Header = ({
           <div className="relative">
             <button
               onClick={() => setLangOpen(!langOpen)}
-              className={`flex items-center gap-1.5 text-xs sm:text-[13px] font-bold uppercase tracking-wider text-[#2C3B30] hover:text-[#16241B] px-3.5 py-1.5 sm:py-2 rounded-full border shadow-xs transition-all cursor-pointer ${
+              className={`flex items-center gap-1.5 text-xs sm:text-[13px] font-bold uppercase tracking-wider px-3.5 py-1.5 sm:py-2 rounded-full border shadow-xs transition-all cursor-pointer ${
                 isScrolled
-                  ? 'border-[#E0E6DA] bg-white/80 hover:bg-white'
-                  : 'border-white/30 bg-white/20 hover:bg-white/40'
+                  ? 'border-[#E0E6DA] bg-white/80 hover:bg-white text-[#2C3B30] hover:text-[#16241B]'
+                  : 'border-white/35 bg-white/20 hover:bg-white/30 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]'
               }`}
               aria-label={currentLang === 'EN' ? 'Switch to Arabic' : 'التبديل إلى الإنجليزية'}
             >
-              <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#5A6D61]" />
+              <Globe className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isScrolled ? 'text-[#5A6D61]' : 'text-white/90'}`} />
               <span>{currentLang}</span>
-              <ChevronDown className="w-3 h-3 text-[#5A6D61]" />
+              <ChevronDown className={`w-3 h-3 ${isScrolled ? 'text-[#5A6D61]' : 'text-white/90'}`} />
             </button>
 
             {langOpen && (
               <div className="absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-32 bg-white/95 backdrop-blur-md border border-[#E5EADF] rounded-2xl shadow-xl py-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
                 <button
                   onClick={() => handleSelectLang('EN')}
-                  className="w-full text-left px-3.5 py-2 text-xs font-semibold hover:bg-[#F4F7F1] flex items-center justify-between cursor-pointer"
+                  className="w-full text-left px-3.5 py-2 text-xs font-semibold hover:bg-[#F4F7F1] text-[#16241B] flex items-center justify-between cursor-pointer"
                 >
                   <span>English</span>
                   {currentLang === 'EN' && <span className="w-1.5 h-1.5 rounded-full bg-[#2BE019]" />}
                 </button>
                 <button
                   onClick={() => handleSelectLang('AR')}
-                  className="w-full text-right px-3.5 py-2 text-xs font-semibold hover:bg-[#F4F7F1] flex items-center justify-between cursor-pointer"
+                  className="w-full text-right px-3.5 py-2 text-xs font-semibold hover:bg-[#F4F7F1] text-[#16241B] flex items-center justify-between cursor-pointer"
                 >
                   {currentLang === 'AR' && <span className="w-1.5 h-1.5 rounded-full bg-[#2BE019]" />}
                   <span>العربية</span>
@@ -153,7 +171,11 @@ export const Header = ({
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="xl:hidden p-2 rounded-full text-[#2C3B30] hover:text-[#16241B] hover:bg-black/5 transition-colors cursor-pointer"
+            className={`xl:hidden p-2 rounded-full transition-colors cursor-pointer ${
+              isScrolled
+                ? 'text-[#2C3B30] hover:text-[#16241B] hover:bg-black/5'
+                : 'text-white hover:bg-white/15'
+            }`}
             aria-label="Toggle menu"
             aria-expanded={mobileMenuOpen}
           >
