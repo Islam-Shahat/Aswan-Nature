@@ -10,7 +10,7 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
   const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   return (
-    <section className="hero">
+    <section id="hero" className="hero">
       {/* Background Nile Boat & Flying Birds in Aswan Image */}
       <img
         className="hero-photo"
