@@ -1,11 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Calendar, Users, ArrowRight, Sun, Glasses, ChevronDown } from 'lucide-react';
-
-
-
-
-
-
 
 export const QuickBooking = ({
   onCheckAvailability,
@@ -15,6 +9,59 @@ export const QuickBooking = ({
   const [experience, setExperience] = useState('all');
   const [date, setDate] = useState('');
   const [guests, setGuests] = useState('2');
+
+  const containerRef = useRef(null);
+  const [beamOffset, setBeamOffset] = useState(0);
+  const [dims, setDims] = useState({ width: 0, height: 0 });
+
+  // Measure card dimensions for pixel-perfect SVG border beam
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const updateDims = () => {
+      if (containerRef.current) {
+        setDims({
+          width: containerRef.current.offsetWidth,
+          height: containerRef.current.offsetHeight,
+        });
+      }
+    };
+
+    updateDims();
+    const observer = new ResizeObserver(updateDims);
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  // Track scroll position to drive traveling border beam along the perimeter
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            
+            // Total distance from when the card enters bottom of viewport until it leaves top
+            const totalDistance = windowHeight + rect.height;
+            const currentPosition = windowHeight - rect.top;
+            const progress = Math.min(Math.max(currentPosition / totalDistance, 0), 1);
+            
+            // Loop the glowing beam around the perimeter smoothly with scroll
+            const loops = 2.5;
+            setBeamOffset(-(progress * loops * 100));
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,9 +84,76 @@ export const QuickBooking = ({
 
   return (
     <div id="booking-widget" className="relative z-20 max-w-7xl mx-auto px-6 lg:px-12 -mt-10 lg:-mt-14 mb-16">
-      {/* Floating Card matching Figma's booking-overlap quick-book */}
-      <div className="bg-white rounded-2xl lg:rounded-3xl shadow-[0_16px_40px_-12px_rgba(20,40,25,0.12)] border border-[#E6EBE1] p-4 lg:p-6 transition-all">
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-6 items-center">
+      {/* Floating Card with Scroll-Driven Traveling Border Beam */}
+      <div
+        ref={containerRef}
+        className="relative bg-white rounded-2xl lg:rounded-3xl shadow-[0_20px_50px_-12px_rgba(20,40,25,0.15)] p-4 lg:p-6 transition-all"
+      >
+        {/* Scroll-Driven Traveling Border Beam SVG */}
+        {dims.width > 0 && dims.height > 0 && (
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none rounded-2xl lg:rounded-3xl overflow-visible z-10"
+            style={{ width: dims.width, height: dims.height }}
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <defs>
+              <linearGradient id="booking-beam-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#2BE019" stopOpacity="1" />
+                <stop offset="50%" stopColor="#0a515b" stopOpacity="0.9" />
+                <stop offset="100%" stopColor="#2BE019" stopOpacity="0.15" />
+              </linearGradient>
+            </defs>
+
+            {/* Base subtle perimeter border */}
+            <rect
+              x="1.5"
+              y="1.5"
+              width={Math.max(0, dims.width - 3)}
+              height={Math.max(0, dims.height - 3)}
+              rx={22}
+              fill="none"
+              stroke="#E2E8DC"
+              strokeWidth="1.5"
+            />
+
+            {/* Luminous Glow Aura */}
+            <rect
+              x="1.5"
+              y="1.5"
+              width={Math.max(0, dims.width - 3)}
+              height={Math.max(0, dims.height - 3)}
+              rx={22}
+              fill="none"
+              stroke="#2BE019"
+              strokeWidth="6"
+              opacity="0.35"
+              pathLength="100"
+              strokeDasharray="14 86"
+              strokeDashoffset={beamOffset}
+              strokeLinecap="round"
+              filter="blur(3px)"
+            />
+
+            {/* Sharp Core Luminous Stripe Beam */}
+            <rect
+              x="1.5"
+              y="1.5"
+              width={Math.max(0, dims.width - 3)}
+              height={Math.max(0, dims.height - 3)}
+              rx={22}
+              fill="none"
+              stroke="url(#booking-beam-grad)"
+              strokeWidth="3"
+              pathLength="100"
+              strokeDasharray="14 86"
+              strokeDashoffset={beamOffset}
+              strokeLinecap="round"
+              filter="drop-shadow(0 0 6px #2BE019)"
+            />
+          </svg>
+        )}
+
+        <form onSubmit={handleSubmit} className="relative z-20 grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-6 items-center">
           {/* Column 1: Experience */}
           <div className="md:col-span-4 lg:col-span-4 px-3 py-2 border-b md:border-b-0 md:border-r border-[#E8EEE4]">
             <label className="block">
@@ -161,6 +275,6 @@ export const QuickBooking = ({
           }
         </span>
       </div>
-    </div>);
-
+    </div>
+  );
 };
