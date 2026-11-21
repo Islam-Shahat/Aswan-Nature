@@ -137,15 +137,15 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
 
   return (
     <section id="about" className="py-20 lg:py-28 bg-[#EAF0E5] relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#0a515b]/30 text-[#0a515b] text-xs font-bold uppercase tracking-[0.2em] mb-4 shadow-xs">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#0a515b]/30 text-[#0a515b] text-xs sm:text-[13px] font-bold uppercase tracking-[0.2em] mb-4 shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-[#0a515b]" />
             <span>{isAr ? 'ليست أسوان التقليدية' : 'NOT YOUR USUAL ASWAN'}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-[50px] font-extrabold tracking-[-0.03em] leading-[1.12] text-[#16241B] font-heading">
+          <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-extrabold tracking-[-0.03em] leading-[1.12] text-[#16241B] font-heading">
             {isAr ? (
               <>
                 أقل تقليدية.{' '}
@@ -159,7 +159,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
             )}
           </h2>
 
-          <p className="text-sm sm:text-base text-[#526657] mt-3.5 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-[#526657] mt-4 leading-relaxed max-w-2xl mx-auto">
             {isAr
               ? 'هناك أسوان أخرى تنتظر من يكتشفها. جزر هادئة، وحياة برية غير متوقعة، واتصال أعمق بعالم الطبيعة عبر 4 ركائز تصنع هويتنا.'
               : 'There is another Aswan waiting to be discovered. Quiet islands, unexpected wildlife, and a deeper connection to nature across four core pillars.'}
@@ -167,7 +167,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
         </div>
 
         {/* Stacking Cards Deck Container */}
-        <div className="relative space-y-12 sm:space-y-16 pb-12 sm:pb-20">
+        <div className="relative space-y-14 sm:space-y-20 pb-16 sm:pb-24">
           {cards.map((card, idx) => {
             const Icon = card.icon;
             const isLast = idx === cards.length - 1;
@@ -177,40 +177,40 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
               <div
                 key={card.id}
                 style={{
-                  top: `calc(105px + ${idx * 24}px)`,
+                  top: `calc(90px + ${idx * 22}px)`,
                   zIndex: 10 + idx,
                 }}
                 className={`sticky transition-all duration-300 ${
-                  !isLast ? 'mb-[30vh] sm:mb-[42vh]' : 'mb-0'
+                  !isLast ? 'mb-[35vh] sm:mb-[48vh]' : 'mb-0'
                 }`}
               >
-                {/* Large Card Shell with prominent top border and center gradient glow in #0a515b */}
+                {/* Large Card Shell with increased height, padding, and center gradient glow */}
                 <div
-                  className={`relative rounded-3xl p-6 sm:p-8 lg:p-10 backdrop-blur-xs transition-transform duration-300 overflow-hidden ${card.bgClass}`}
+                  className={`relative rounded-3xl sm:rounded-[32px] p-7 sm:p-10 lg:p-12 xl:p-14 min-h-[500px] sm:min-h-[550px] lg:min-h-[590px] flex flex-col justify-center backdrop-blur-xs transition-transform duration-300 overflow-hidden ${card.bgClass}`}
                 >
                   {/* Subtle Gradient Glow in the center of the card (#0a515b) */}
                   <div
-                    className={`absolute inset-0 rounded-3xl pointer-events-none ${
+                    className={`absolute inset-0 rounded-3xl sm:rounded-[32px] pointer-events-none ${
                       isNight
-                        ? 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.45)_0%,transparent_75%)]'
-                        : 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.14)_0%,rgba(10,81,91,0.02)_45%,transparent_75%)]'
+                        ? 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.5)_0%,transparent_75%)]'
+                        : 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.15)_0%,rgba(10,81,91,0.02)_45%,transparent_75%)]'
                     }`}
                   />
 
-                  <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+                  <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center my-auto">
                     {/* Content Column (7 cols) */}
-                    <div className="lg:col-span-7 space-y-4 sm:space-y-5">
+                    <div className="lg:col-span-7 space-y-5 sm:space-y-6">
                       {/* Top Header Badge & Number */}
                       <div className="flex items-center justify-between">
                         <span
-                          className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase ${card.tagBg}`}
+                          className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs sm:text-[13px] font-bold tracking-wider uppercase ${card.tagBg}`}
                         >
-                          <Icon className="w-3.5 h-3.5 stroke-[2.2]" />
+                          <Icon className="w-4 h-4 stroke-[2.2]" />
                           <span>{card.tag}</span>
                         </span>
 
                         <span
-                          className={`text-sm sm:text-base font-extrabold tracking-wider font-mono ${
+                          className={`text-base sm:text-lg lg:text-xl font-extrabold tracking-wider font-mono ${
                             isNight ? 'text-[#2BE019]' : 'text-[#0a515b]'
                           }`}
                         >
@@ -218,43 +218,43 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                         </span>
                       </div>
 
-                      {/* Main Card Title */}
+                      {/* Main Card Title - Scaled Up */}
                       <h3
-                        className={`text-xl sm:text-2xl lg:text-[28px] font-extrabold leading-tight tracking-tight font-heading ${
+                        className={`text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold leading-[1.22] tracking-tight font-heading ${
                           isNight ? 'text-white' : 'text-[#16241B]'
                         }`}
                       >
                         {card.title}
                       </h3>
 
-                      {/* Description */}
+                      {/* Description - Scaled Up for Comfortable Reading */}
                       <p
-                        className={`text-xs sm:text-sm lg:text-[14.5px] leading-relaxed ${
-                          isNight ? 'text-[#C5D8CA]' : 'text-[#485C4D]'
+                        className={`text-sm sm:text-base lg:text-[16.5px] xl:text-[17.5px] leading-[1.8] sm:leading-[1.85] ${
+                          isNight ? 'text-[#C5D8CA]' : 'text-[#445649]'
                         }`}
                       >
                         {card.desc}
                       </p>
 
-                      {/* Key Highlights / Modern Feature Tiles */}
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2">
+                      {/* Key Highlights / Modern Feature Tiles - Scaled Up */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
                         {card.pills.map((pillText, pIdx) => (
                           <div
                             key={pIdx}
-                            className={`p-3 rounded-2xl border transition-all duration-200 group/tile ${
+                            className={`p-3.5 sm:p-4 rounded-2xl border transition-all duration-200 group/tile ${
                               isNight
                                 ? 'bg-white/5 border-white/10 hover:border-[#2BE019]/50 text-white'
                                 : 'bg-white/95 border-[#0a515b]/20 hover:border-[#0a515b] shadow-2xs hover:shadow-xs text-[#16241B]'
                             }`}
                           >
-                            <div className="flex items-center gap-1.5 mb-1.5">
+                            <div className="flex items-center gap-2 mb-2">
                               <span
-                                className={`w-1.5 h-1.5 rounded-full ${
+                                className={`w-2 h-2 rounded-full ${
                                   isNight ? 'bg-[#2BE019]' : 'bg-[#0a515b]'
                                 } group-hover/tile:scale-125 transition-transform`}
                               />
                               <span
-                                className={`text-[10px] font-bold uppercase tracking-wider font-mono ${
+                                className={`text-[11px] font-bold uppercase tracking-wider font-mono ${
                                   isNight ? 'text-[#2BE019]' : 'text-[#0a515b]'
                                 }`}
                               >
@@ -262,7 +262,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                               </span>
                             </div>
                             <p
-                              className={`text-[11.5px] sm:text-xs font-bold leading-snug ${
+                              className={`text-xs sm:text-[13px] font-bold leading-snug ${
                                 isNight ? 'text-[#E2EBE5]' : 'text-[#1D2E22]'
                               }`}
                             >
@@ -274,16 +274,16 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
 
                       {/* Scroll Hint on Cards Before the Last One */}
                       {!isLast && (
-                        <div className="pt-2 flex items-center gap-2 text-[11px] font-bold text-[#0a515b]/80 uppercase tracking-wider">
+                        <div className="pt-2 flex items-center gap-2.5 text-xs font-bold text-[#0a515b]/80 uppercase tracking-wider">
                           <span>{isAr ? 'مرر للأسفل للكشف عن التالي' : 'Scroll down for next pillar'}</span>
-                          <ChevronDown className="w-3.5 h-3.5 animate-bounce text-[#0a515b]" />
+                          <ChevronDown className="w-4 h-4 animate-bounce text-[#0a515b]" />
                         </div>
                       )}
                     </div>
 
-                    {/* Visual Column (5 cols) */}
+                    {/* Visual Column (5 cols) - Scaled Up Height */}
                     <div className="lg:col-span-5 relative">
-                      <div className="relative aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/3] rounded-2xl overflow-hidden shadow-lg border-2 border-[#0a515b]/30 group">
+                      <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3.8] min-h-[300px] sm:min-h-[360px] lg:min-h-[440px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border-2 border-[#0a515b]/30 group">
                         <img
                           src={card.image}
                           alt={card.title}
@@ -291,15 +291,15 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                           loading="lazy"
                         />
                         {/* Atmospheric gradient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent pointer-events-none" />
 
                         {/* Floating Nature Tag Badge */}
-                        <div className="absolute bottom-3 inset-x-3 flex items-center justify-between">
-                          <span className="px-3 py-1.5 rounded-xl bg-black/60 backdrop-blur-md text-[11px] font-semibold text-white border border-white/20 shadow-md">
+                        <div className="absolute bottom-4 inset-x-4 flex items-center justify-between">
+                          <span className="px-3.5 sm:px-4 py-2 rounded-xl bg-black/60 backdrop-blur-md text-xs sm:text-[13px] font-semibold text-white border border-white/20 shadow-md">
                             🌿 {card.badge}
                           </span>
-                          <span className="w-8 h-8 rounded-full bg-[#0a515b]/40 backdrop-blur-md border border-[#0a515b]/50 flex items-center justify-center text-white group-hover:bg-[#0a515b] group-hover:text-white transition-all">
-                            <ArrowUpRight className="w-4 h-4 rtl:rotate-90" />
+                          <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#0a515b]/50 backdrop-blur-md border border-[#0a515b]/60 flex items-center justify-center text-white group-hover:bg-[#0a515b] group-hover:text-white transition-all">
+                            <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 rtl:rotate-90" />
                           </span>
                         </div>
                       </div>
