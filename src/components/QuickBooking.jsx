@@ -11,7 +11,8 @@ export const QuickBooking = ({
   const [guests, setGuests] = useState('2');
 
   const containerRef = useRef(null);
-  const [beamOffset, setBeamOffset] = useState(0);
+  const beamRef1 = useRef(null);
+  const beamRef2 = useRef(null);
   const [dims, setDims] = useState({ width: 0, height: 0 });
 
   // Measure card dimensions for pixel-perfect SVG border beam
@@ -50,7 +51,9 @@ export const QuickBooking = ({
             
             // Loop the glowing beam around the perimeter smoothly with scroll
             const loops = 2.5;
-            setBeamOffset(-(progress * loops * 100));
+            const offsetVal = -(progress * loops * 100);
+            if (beamRef1.current) beamRef1.current.style.strokeDashoffset = offsetVal;
+            if (beamRef2.current) beamRef2.current.style.strokeDashoffset = offsetVal;
           }
           ticking = false;
         });
@@ -118,6 +121,7 @@ export const QuickBooking = ({
 
             {/* Luminous Glow Aura in #0a515b */}
             <rect
+              ref={beamRef1}
               x="1.5"
               y="1.5"
               width={Math.max(0, dims.width - 3)}
@@ -129,13 +133,13 @@ export const QuickBooking = ({
               opacity="0.38"
               pathLength="100"
               strokeDasharray="14 86"
-              strokeDashoffset={beamOffset}
               strokeLinecap="round"
               filter="blur(3.5px)"
             />
 
             {/* Sharp Core Luminous Stripe Beam in #0a515b */}
             <rect
+              ref={beamRef2}
               x="1.5"
               y="1.5"
               width={Math.max(0, dims.width - 3)}
@@ -146,7 +150,6 @@ export const QuickBooking = ({
               strokeWidth="3.5"
               pathLength="100"
               strokeDasharray="14 86"
-              strokeDashoffset={beamOffset}
               strokeLinecap="round"
               filter="drop-shadow(0 0 6px rgba(10,81,91,0.75))"
             />

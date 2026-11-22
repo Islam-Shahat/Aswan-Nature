@@ -85,13 +85,15 @@ export const ToursSection = ({
               const currentScroll = -rect.top;
               const progress = Math.min(Math.max(currentScroll / totalScrollable, 0), 1);
 
+              let newId = centerId;
               if (progress < 1 / 3) {
-                setFocusedId(centerId);
+                newId = centerId;
               } else if (progress < 2 / 3) {
-                setFocusedId(rightId);
+                newId = rightId;
               } else {
-                setFocusedId(leftId);
+                newId = leftId;
               }
+              setFocusedId((prev) => (prev !== newId ? newId : prev));
             }
           }
           ticking = false;

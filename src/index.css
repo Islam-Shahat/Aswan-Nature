@@ -49,3 +49,17 @@ h1, h2, h3, h4 {
   background: linear-gradient(90deg, #D8C7A5, rgba(216, 199, 165, 0.2));
   border-radius: 2px;
 }
+
+/* GPU-accelerated bird float animation */
+@keyframes birdHover {
+  0%, 100% {
+    margin-top: 0px;
+  }
+  50% {
+    margin-top: -7px;
+  }
+}
+
+.animate-bird-float {
+  animation: birdHover 2.6s ease-in-out infinite;
+}

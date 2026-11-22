@@ -13,6 +13,8 @@ export const Header = ({
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
+  const lastProgressRef = useRef(-1);
+
   // Track scroll state to smoothly and gradually transition background & text colors
   useEffect(() => {
     let ticking = false;
@@ -22,9 +24,14 @@ export const Header = ({
         window.requestAnimationFrame(() => {
           const y = window.scrollY;
           // Smooth progressive transition over 20px to 260px of scroll
-          const progress = Math.min(Math.max((y - 20) / 240, 0), 1);
-          setScrollProgress(progress);
-          setIsScrolled(progress >= 0.45);
+          const rawProgress = Math.min(Math.max((y - 20) / 240, 0), 1);
+          const progress = Math.round(rawProgress * 100) / 100; // clamp micro jitter
+
+          if (Math.abs(progress - lastProgressRef.current) >= 0.02 || (progress === 0 && lastProgressRef.current !== 0) || (progress === 1 && lastProgressRef.current !== 1)) {
+            lastProgressRef.current = progress;
+            setScrollProgress(progress);
+            setIsScrolled(progress >= 0.45);
+          }
           ticking = false;
         });
         ticking = true;

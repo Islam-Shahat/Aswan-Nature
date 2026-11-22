@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
   const isAr = currentLang === 'AR';
   const birdRef = useRef(null);
+  const innerRef = useRef(null);
 
   // Section IDs across the landing page in scroll order:
   // Group 0 (Sections 0, 1): hero, about      -> LEFT side (DEFAULT)
@@ -22,21 +23,80 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
     lastScrollY: 0,
     lastTime: Date.now(),
     isDiving: false,
-    activeSide: 'left', // Default is LEFT of the screen
-    scrollTimeout: null,
+    activeSide: 'left',
     isInitialized: false,
-  });
-
-  const [displayState, setDisplayState] = useState({
-    x: 30,
-    y: 100,
-    rotation: 4,
-    facing: 1,
-    side: 'left',
+    isAnimating: false,
+    scrollTimeout: null,
   });
 
   useEffect(() => {
-    let animId;
+    let animId = null;
+
+    const updateDOM = () => {
+      const state = stateRef.current;
+      if (birdRef.current) {
+        birdRef.current.style.transform = `translate3d(${state.currentX}px, ${state.currentY}px, 0)`;
+      }
+      if (innerRef.current) {
+        const rot = state.facing === 1 ? state.rotation : -state.rotation;
+        innerRef.current.style.transform = `scaleX(${state.facing}) rotate(${rot}deg)`;
+      }
+    };
+
+    const tick = () => {
+      const state = stateRef.current;
+      const xLerpFactor = 0.055;
+      const yLerpFactor = 0.14;
+
+      const dx = state.targetX - state.currentX;
+      state.currentX += dx * xLerpFactor;
+
+      const crossingDistance = Math.abs(dx);
+      let flightArc = 0;
+
+      if (crossingDistance > 35) {
+        // Actively crossing the screen: face direction of flight!
+        state.facing = dx > 0 ? 1 : -1;
+        flightArc = Math.sin((crossingDistance / Math.max(window.innerWidth * 0.5, 1)) * Math.PI) * 22;
+        const bankTilt = dx > 0 ? 6 : -6;
+        state.rotation += (bankTilt + state.targetRotation - state.rotation) * 0.14;
+      } else {
+        // At rest on the side: look inward towards website content!
+        state.facing = state.activeSide === 'right' ? -1 : 1;
+        state.rotation += (state.targetRotation - state.rotation) * 0.16;
+      }
+
+      const dyTarget = state.targetY + flightArc - state.currentY;
+      state.currentY += dyTarget * yLerpFactor;
+
+      // Direct GPU transform update - ZERO React re-render overhead!
+      updateDOM();
+
+      // Check if settled to stop running RAF continuously when idle
+      const settledX = Math.abs(dx) < 0.3;
+      const settledY = Math.abs(dyTarget) < 0.3;
+      const settledRot = Math.abs(state.targetRotation - state.rotation) < 0.2;
+
+      if (settledX && settledY && settledRot && !state.isDiving) {
+        state.currentX = state.targetX;
+        state.currentY = state.targetY;
+        state.rotation = state.targetRotation;
+        updateDOM();
+        state.isAnimating = false;
+        animId = null;
+        return; // Sleep RAF to conserve 100% CPU!
+      }
+
+      animId = requestAnimationFrame(tick);
+    };
+
+    const wakeAnimation = () => {
+      const state = stateRef.current;
+      if (!state.isAnimating) {
+        state.isAnimating = true;
+        animId = requestAnimationFrame(tick);
+      }
+    };
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -55,7 +115,7 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
       state.lastScrollY = scrollY;
       state.lastTime = now;
 
-      // 1. Detect which section is currently active in viewport
+      // 1. Detect which section is currently active
       let currentIdx = 0;
       for (let i = 0; i < sectionIds.length; i++) {
         const el = document.getElementById(sectionIds[i]);
@@ -67,11 +127,7 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
         }
       }
 
-      // 2. Switch sides every 2 sections with LEFT as DEFAULT:
-      // Group 0 (Sec 0, 1): LEFT
-      // Group 1 (Sec 2, 3): RIGHT
-      // Group 2 (Sec 4, 5): LEFT
-      // Group 3 (Sec 6, 7): RIGHT
+      // 2. Switch sides every 2 sections (Default = LEFT)
       const group = Math.floor(currentIdx / 2);
       const targetSide = group % 2 === 0 ? 'left' : 'right';
       state.activeSide = targetSide;
@@ -81,39 +137,33 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
       const margin = winWidth < 640 ? 12 : winWidth < 1024 ? 24 : 36;
 
       // 3. Compute target horizontal position
-      if (targetSide === 'right') {
-        state.targetX = winWidth - birdWidth - margin;
-      } else {
-        state.targetX = margin;
-      }
+      state.targetX = targetSide === 'right' ? winWidth - birdWidth - margin : margin;
 
-      // Initial placement on mount: start at left
+      // Initial placement on mount
       if (!state.isInitialized) {
-        state.currentX = margin;
+        state.currentX = state.targetX;
         state.currentY = winHeight * 0.14;
         state.facing = 1;
         state.isInitialized = true;
+        updateDOM();
       }
 
-      // 4. Vertical mapping: As user scrolls down, bird flies downwards (12% to 78% of viewport)
+      // 4. Vertical mapping: As user scrolls down, bird flies downwards
       const minY = winHeight * 0.12;
       const maxY = winHeight * 0.78;
       const baseProgressY = minY + progress * (maxY - minY);
 
-      // Dive dynamic on active downward scroll
       let diveOffset = 0;
       let diveRotation = 4;
 
       if (velocity > 0.15) {
-        diveOffset = Math.min(velocity * 40, 55);
+        diveOffset = Math.min(velocity * 38, 50);
         diveRotation = Math.min(8 + velocity * 14, 20);
         state.isDiving = true;
       } else if (velocity < -0.15) {
-        diveOffset = Math.max(velocity * 25, -35);
+        diveOffset = Math.max(velocity * 24, -30);
         diveRotation = Math.max(-10, velocity * 12);
         state.isDiving = true;
-      } else {
-        diveRotation = 4;
       }
 
       state.targetY = baseProgressY + diveOffset;
@@ -123,64 +173,21 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
       state.scrollTimeout = setTimeout(() => {
         state.isDiving = false;
         state.targetRotation = 4;
-      }, 150);
-    };
+        wakeAnimation();
+      }, 140);
 
-    // Smooth aerodynamic flight loop
-    const tick = () => {
-      const state = stateRef.current;
-      const now = Date.now();
-
-      // Idle hovering float wave
-      const hoverFloat = Math.sin(now / 480) * 6;
-
-      // Smooth horizontal lerp across the screen
-      const xLerpFactor = 0.045;
-      const yLerpFactor = 0.12;
-
-      const dx = state.targetX - state.currentX;
-      state.currentX += dx * xLerpFactor;
-
-      // Aerodynamic flight arc and natural direction:
-      const crossingDistance = Math.abs(dx);
-      let flightArc = 0;
-
-      if (crossingDistance > 35) {
-        // Actively crossing the screen: face direction of flight!
-        state.facing = dx > 0 ? 1 : -1;
-        // Parabolic flight dip across the screen
-        flightArc = Math.sin((crossingDistance / Math.max(window.innerWidth * 0.5, 1)) * Math.PI) * 22;
-        // Bank into the flight direction
-        const bankTilt = dx > 0 ? 6 : -6;
-        state.rotation += (bankTilt + state.targetRotation - state.rotation) * 0.12;
-      } else {
-        // At rest on the side: look inward towards website content!
-        state.facing = state.activeSide === 'right' ? -1 : 1;
-        state.rotation += (state.targetRotation - state.rotation) * 0.15;
-      }
-
-      state.currentY += (state.targetY + hoverFloat + flightArc - state.currentY) * yLerpFactor;
-
-      setDisplayState({
-        x: state.currentX,
-        y: state.currentY,
-        rotation: state.rotation,
-        facing: state.facing,
-        side: state.activeSide,
-      });
-
-      animId = requestAnimationFrame(tick);
+      // Wake the loop on scroll
+      wakeAnimation();
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
     handleScroll();
-    animId = requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
-      cancelAnimationFrame(animId);
+      if (animId) cancelAnimationFrame(animId);
       if (stateRef.current.scrollTimeout) clearTimeout(stateRef.current.scrollTimeout);
     };
   }, []);
@@ -192,19 +199,17 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
     >
       <div
         ref={birdRef}
-        className="absolute pointer-events-auto cursor-pointer will-change-transform group"
+        className="absolute pointer-events-auto cursor-pointer will-change-transform group animate-bird-float"
         style={{
-          transform: `translate3d(${displayState.x}px, ${displayState.y}px, 0)`,
+          transform: `translate3d(${stateRef.current.currentX}px, ${stateRef.current.currentY}px, 0)`,
         }}
       >
-        {/* Animated Flying Bird Image with Instant Clean Facing & Smooth Aerodynamic Banking */}
+        {/* Animated Flying Bird Image with GPU-accelerated transform */}
         <div
-          className="relative"
+          ref={innerRef}
+          className="relative will-change-transform"
           style={{
-            // Note: NO CSS transition on transform here so it never squashes to 0-width!
-            transform: `scaleX(${displayState.facing}) rotate(${
-              displayState.facing === 1 ? displayState.rotation : -displayState.rotation
-            }deg)`,
+            transform: `scaleX(${stateRef.current.facing}) rotate(${stateRef.current.rotation}deg)`,
           }}
         >
           <img
@@ -217,11 +222,8 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
           {/* Interactive Tooltip on Hover */}
           <div
             className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none absolute -bottom-7 whitespace-nowrap bg-black/85 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-lg border border-white/10 ${
-              displayState.facing === 1 ? 'left-2' : 'right-2'
+              isAr ? 'left-2' : 'right-2'
             }`}
-            style={{
-              transform: `scaleX(${displayState.facing})`, // keep text un-reversed
-            }}
           >
             <span>{isAr ? 'رفيق النيل الطائر 𓅃' : 'Nile Hummingbird ✦'}</span>
           </div>
