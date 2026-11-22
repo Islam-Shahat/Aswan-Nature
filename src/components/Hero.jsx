@@ -98,38 +98,8 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
         </div>
       </div>
 
-      {/* Hero Bottom Bar */}
-      <div className="w-[min(1240px,calc(100%-40px))] sm:w-[min(1240px,calc(100%-80px))] lg:w-[min(1240px,calc(100%-112px))] mx-auto flex items-center justify-between text-[10px] text-[#e6e8dc] pb-6 sm:pb-8 pt-4">
-        <span className="inline-flex items-center gap-2">
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-          >
-            <path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z" />
-            <circle cx="12" cy="10" r="2.5" />
-          </svg>
-          <span>{currentLang === 'AR' ? 'النيل. الطيور. أسوان أخرى.' : 'The Nile. The birds. A different Aswan.'}</span>
-        </span>
-
-        <a
-          href="#booking-widget"
-          className="hidden sm:inline-flex items-center gap-3 text-[9px] uppercase tracking-[0.2em] text-[#e6e8dc] hover:text-[#62ed2b] transition-colors"
-        >
-          <span>{currentLang === 'AR' ? 'مرر للأسفل للاستكشاف' : 'SCROLL TO EXPLORE'}</span>
-          <span className="text-base leading-none">↓</span>
-        </a>
-
-        <span className="hidden sm:inline italic text-[#e6e8dc]/80">
-          {currentLang === 'AR' ? 'لحظة تستحق التمهل.' : 'A moment worth slowing down for.'}
-        </span>
-      </div>
+      {/* Hero Bottom Padding Spacer */}
+      <div className="w-[min(1240px,calc(100%-40px))] sm:w-[min(1240px,calc(100%-80px))] lg:w-[min(1240px,calc(100%-112px))] mx-auto pb-6 sm:pb-8 pt-4" />
 
       {/* Video Modal */}
       {videoModalOpen && (
