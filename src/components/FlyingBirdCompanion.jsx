@@ -141,18 +141,9 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
           <img
             src="/assets/flying-bird.gif"
             alt="Flying bird"
-            className="w-20 sm:w-24 md:w-28 h-auto drop-shadow-[0_8px_16px_rgba(0,0,0,0.18)] transition-transform duration-300 group-hover:scale-110"
+            className="w-28 sm:w-36 md:w-40 lg:w-44 h-auto drop-shadow-[0_10px_20px_rgba(0,0,0,0.22)] transition-transform duration-300 group-hover:scale-110"
             draggable="false"
           />
-
-          {/* Subtle Wind / Air trail particle when diving down */}
-          {displayPos.isDiving && (
-            <div
-              className={`absolute top-1/2 -translate-y-1/2 w-8 h-1 bg-gradient-to-r from-transparent to-[#2BE019]/40 rounded-full blur-[1px] animate-pulse ${
-                isAr ? '-left-6' : '-right-6'
-              }`}
-            />
-          )}
 
           {/* Interactive Tooltip on Hover */}
           <div
