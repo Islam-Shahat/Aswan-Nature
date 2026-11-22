@@ -5,7 +5,6 @@ import {
   Sparkles,
   Trees,
   CheckCircle2,
-  ArrowUpRight,
   ChevronDown,
 } from 'lucide-react';
 
@@ -290,18 +289,8 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                           loading="lazy"
                         />
-                        {/* Atmospheric gradient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent pointer-events-none" />
-
-                        {/* Floating Nature Tag Badge */}
-                        <div className="absolute bottom-4 inset-x-4 flex items-center justify-between">
-                          <span className="px-3.5 sm:px-4 py-2 rounded-xl bg-black/60 backdrop-blur-md text-xs sm:text-[13px] font-semibold text-white border border-white/20 shadow-md">
-                            🌿 {card.badge}
-                          </span>
-                          <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#0a515b]/50 backdrop-blur-md border border-[#0a515b]/60 flex items-center justify-center text-white group-hover:bg-[#0a515b] group-hover:text-white transition-all">
-                            <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 rtl:rotate-90" />
-                          </span>
-                        </div>
+                        {/* Clean atmospheric gradient overlay */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
                       </div>
                     </div>
                   </div>
