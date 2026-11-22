@@ -11,7 +11,7 @@ export const ReviewsSection = ({
   currentLang = 'EN'
 }) => {
   return (
-    <section className="py-16 lg:py-24 bg-[#F8FAF5]">
+    <section id="reviews" className="py-16 lg:py-24 bg-[#F8FAF5]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Section Heading matching Figma */}
         <div className="text-center mb-12">
