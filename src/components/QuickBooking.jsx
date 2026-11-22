@@ -49,8 +49,8 @@ export const QuickBooking = ({
             const currentPosition = windowHeight - rect.top;
             const progress = Math.min(Math.max(currentPosition / totalDistance, 0), 1);
             
-            // Loop the glowing beam around the perimeter smoothly with scroll
-            const loops = 2.5;
+            // Slower, elegant travel speed so the eye tracks the beam effortlessly
+            const loops = 1.0;
             const offsetVal = -(progress * loops * 100);
             if (beamRef1.current) beamRef1.current.style.strokeDashoffset = offsetVal;
             if (beamRef2.current) beamRef2.current.style.strokeDashoffset = offsetVal;
@@ -100,11 +100,24 @@ export const QuickBooking = ({
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
+              {/* Luminous Glowing Nile Beam Gradient with Emerald & Turquoise Accents */}
               <linearGradient id="booking-beam-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#0a515b" stopOpacity="1" />
-                <stop offset="60%" stopColor="#146d7a" stopOpacity="0.95" />
-                <stop offset="100%" stopColor="#0a515b" stopOpacity="0.15" />
+                <stop offset="0%" stopColor="#0a515b" stopOpacity="0.1" />
+                <stop offset="35%" stopColor="#0a515b" stopOpacity="0.9" />
+                <stop offset="70%" stopColor="#00c8d7" stopOpacity="1" />
+                <stop offset="100%" stopColor="#2BE019" stopOpacity="1" />
               </linearGradient>
+
+              {/* Radiant Multi-Stage Aura Glow Filter */}
+              <filter id="booking-glow-filter" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur1" />
+                <feGaussianBlur stdDeviation="8" result="blur2" />
+                <feMerge>
+                  <feMergeNode in="blur2" />
+                  <feMergeNode in="blur1" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
             </defs>
 
             {/* Base subtle perimeter border */}
@@ -119,7 +132,7 @@ export const QuickBooking = ({
               strokeWidth="1.5"
             />
 
-            {/* Luminous Glow Aura in #0a515b */}
+            {/* Radiant Ambient Aura Glow Beam */}
             <rect
               ref={beamRef1}
               x="1.5"
@@ -129,15 +142,16 @@ export const QuickBooking = ({
               rx={22}
               fill="none"
               stroke="#0a515b"
-              strokeWidth="6"
-              opacity="0.38"
+              strokeWidth="8"
+              opacity="0.45"
               pathLength="100"
-              strokeDasharray="14 86"
+              strokeDasharray="24 76"
               strokeLinecap="round"
-              filter="blur(3.5px)"
+              filter="url(#booking-glow-filter)"
+              style={{ transition: 'stroke-dashoffset 0.22s cubic-bezier(0.2, 0.8, 0.2, 1)' }}
             />
 
-            {/* Sharp Core Luminous Stripe Beam in #0a515b */}
+            {/* Sharp Core Luminous Stripe Beam with Emerald Tip */}
             <rect
               ref={beamRef2}
               x="1.5"
@@ -147,11 +161,12 @@ export const QuickBooking = ({
               rx={22}
               fill="none"
               stroke="url(#booking-beam-grad)"
-              strokeWidth="3.5"
+              strokeWidth="4"
               pathLength="100"
-              strokeDasharray="14 86"
+              strokeDasharray="24 76"
               strokeLinecap="round"
-              filter="drop-shadow(0 0 6px rgba(10,81,91,0.75))"
+              filter="drop-shadow(0 0 8px rgba(10,81,91,0.9)) drop-shadow(0 0 12px rgba(43,224,25,0.7))"
+              style={{ transition: 'stroke-dashoffset 0.22s cubic-bezier(0.2, 0.8, 0.2, 1)' }}
             />
           </svg>
         )}
