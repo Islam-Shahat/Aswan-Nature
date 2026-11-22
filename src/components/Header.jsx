@@ -182,7 +182,7 @@ export const Header = ({
           {/* Book CTA Pill Button */}
           <button
             onClick={onBookClick}
-            className="hidden sm:inline-flex items-center gap-2 bg-[#1EAA13] hover:bg-[#18930F] text-white font-bold text-xs sm:text-sm px-5 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 active:scale-95 cursor-pointer"
+            className="hidden sm:inline-flex items-center gap-2 bg-[#21c715] hover:bg-[#1cb911] text-white font-bold text-xs sm:text-sm px-5 sm:px-6 py-2.5 sm:py-3 rounded-full shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 active:scale-95 cursor-pointer"
           >
             <span>{currentLang === 'AR' ? 'احجز رحلتك' : 'Book Your Trip'}</span>
             <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 rtl:rotate-180 text-white stroke-[2.5]" />
