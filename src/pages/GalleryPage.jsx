@@ -1,89 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { X, ZoomIn, ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import { galleryPhotos } from '../data/galleryData';
 
 export const GalleryPage = () => {
   const { currentLang } = useOutletContext();
   const isAr = currentLang === 'AR';
   const [selectedIndex, setSelectedIndex] = useState(null);
 
-  const photos = [
-    {
-      src: '/assets/egrets.webp',
-      titleAr: 'سرب البلشون الأبيض عند ضفاف النيل',
-      titleEn: 'Shoreline Cattle Egrets',
-      locationAr: 'جزر الشلال الأول، أسوان',
-      locationEn: 'First Cataract Granite Banks'
-    },
-    {
-      src: '/assets/kingfisher.webp',
-      titleAr: 'الرفراف الأبقع يترصد فريسته',
-      titleEn: 'Pied Kingfisher in Hunting Focus',
-      locationAr: 'محمية سالوجا وغزال، أسوان',
-      locationEn: 'Saluga & Ghazal Sanctuary'
-    },
-    {
-      src: '/assets/stork.webp',
-      titleAr: 'اللقلق أصفر المنقار المهاجر',
-      titleEn: 'Migratory Yellow-billed Stork',
-      locationAr: 'بحيرة خزان أسوان',
-      locationEn: 'Aswan Reservoir Wetlands'
-    },
-    {
-      src: '/assets/goose.webp',
-      titleAr: 'الإوز المصري في هدوء الصباح',
-      titleEn: 'Egyptian Goose on Ancient Waters',
-      locationAr: 'جزيرة إلفنتين، أسوان',
-      locationEn: 'Elephantine Island'
-    },
-    {
-      src: '/assets/white-egret-shore.jpg',
-      titleAr: 'بلشون أبيض بين صخور الجرانيت',
-      titleEn: 'Egret on Granite Rocks',
-      locationAr: 'مضيق النيل الصخري',
-      locationEn: 'Granite Gorge'
-    },
-    {
-      src: '/assets/pied-kingfisher-perched.jpg',
-      titleAr: 'صياد السمك فوق غصن بري',
-      titleEn: 'Perched Pied Kingfisher',
-      locationAr: 'قنوات النيل الهادئة',
-      locationEn: 'Nile Channels'
-    },
-    {
-      src: '/assets/nile-birds-flight.jpg',
-      titleAr: 'تحليق حر في سماء أسوان',
-      titleEn: 'Flight over Nile Streams',
-      locationAr: 'سماء الشلال الأول',
-      locationEn: 'Cataract Skies'
-    },
-    {
-      src: '/assets/woodland-kingfisher.jpg',
-      titleAr: 'صياد السمك الشجري ذو الألوان الزاهية',
-      titleEn: 'Woodland Kingfisher Plumes',
-      locationAr: 'غابات الأثل النيلية',
-      locationEn: 'Nile Tamarisk Thickets'
-    },
-    {
-      src: '/assets/yellow-billed-stork.jpg',
-      titleAr: 'طائر اللقلق يستريح عند المغيب',
-      titleEn: 'Stork at Dusk',
-      locationAr: 'ضفاف بحيرة الخزان',
-      locationEn: 'Reservoir Marshes'
-    }
-  ];
-
-  const selectedPhoto = selectedIndex !== null ? photos[selectedIndex] : null;
+  const selectedPhoto = selectedIndex !== null ? galleryPhotos[selectedIndex] : null;
 
   const nextPhoto = () => {
     if (selectedIndex !== null) {
-      setSelectedIndex((selectedIndex + 1) % photos.length);
+      setSelectedIndex((selectedIndex + 1) % galleryPhotos.length);
     }
   };
 
   const prevPhoto = () => {
     if (selectedIndex !== null) {
-      setSelectedIndex((selectedIndex - 1 + photos.length) % photos.length);
+      setSelectedIndex((selectedIndex - 1 + galleryPhotos.length) % galleryPhotos.length);
     }
   };
 
@@ -101,39 +36,42 @@ export const GalleryPage = () => {
 
   return (
     <div className="pt-24 sm:pt-32 pb-24 bg-[#F8FAF5] min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
         {/* Centered Clean Title - No badge, no paragraph, no filter */}
-        <div className="text-center mb-12 sm:mb-16">
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#16241B]">
+        <div className="text-center mb-10 sm:mb-14">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#16241B]">
             {isAr ? 'معرض صور الحياة البرية' : 'Wildlife Photo Gallery'}
           </h1>
+          <span className="text-xs sm:text-sm font-semibold text-[#556F5C] mt-2 block">
+            {galleryPhotos.length} {isAr ? 'صورة ميدانية موثقة' : 'Documented Field Photographs'}
+          </span>
         </div>
 
-        {/* Photos Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {photos.map((photo, i) => (
+        {/* 52-Photo Responsive Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+          {galleryPhotos.map((photo, i) => (
             <div
-              key={i}
+              key={photo.id || i}
               onClick={() => setSelectedIndex(i)}
-              className="group relative rounded-3xl overflow-hidden bg-white border border-[#E2E8DC] shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer aspect-4/3"
+              className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#101D16] border border-[#E2E8DC] shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3]"
             >
               <img
                 src={photo.src}
                 alt={isAr ? photo.titleAr : photo.titleEn}
                 loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-              <div className="absolute top-4 right-4 rtl:right-auto rtl:left-4 p-2 rounded-full bg-black/40 backdrop-blur-md text-white opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 p-2 rounded-full bg-black/50 backdrop-blur-md text-white opacity-0 group-hover:opacity-100 transition-opacity">
                 <ZoomIn className="w-4 h-4" />
               </div>
 
-              <div className="absolute bottom-4 left-4 right-4 text-white">
-                <h3 className="text-base font-bold leading-snug mb-1">
+              <div className="absolute bottom-3 left-3 right-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <h3 className="text-xs sm:text-sm font-bold leading-tight mb-1 line-clamp-1">
                   {isAr ? photo.titleAr : photo.titleEn}
                 </h3>
-                <span className="text-xs text-[#CBD8CE]">
+                <span className="text-[11px] text-[#A6C0AF] line-clamp-1">
                   {isAr ? photo.locationAr : photo.locationEn}
                 </span>
               </div>
@@ -142,7 +80,7 @@ export const GalleryPage = () => {
         </div>
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Lightbox Modal with Next/Prev and Full View */}
       {selectedPhoto && (
         <div
           className="fixed inset-0 z-50 bg-black/92 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
@@ -198,7 +136,7 @@ export const GalleryPage = () => {
             <div className="p-4 sm:p-6 bg-[#08150E] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/10">
               <div>
                 <span className="text-xs font-mono font-bold text-[#48e714] block mb-1">
-                  {selectedIndex + 1} / {photos.length}
+                  {selectedIndex + 1} / {galleryPhotos.length}
                 </span>
                 <h3 className="text-base sm:text-lg font-bold leading-snug">
                   {isAr ? selectedPhoto.titleAr : selectedPhoto.titleEn}
