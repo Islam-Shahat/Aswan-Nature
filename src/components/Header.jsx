@@ -1,21 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Globe, ArrowRight, Menu, X, ChevronDown } from 'lucide-react';
 
 export const Header = ({
   onBookClick,
-  onNavClick,
   currentLang = 'EN',
   onToggleLang,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeNav, setActiveNav] = useState('Home');
   const [langOpen, setLangOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
+  const location = useLocation();
   const lastProgressRef = useRef(-1);
 
-  // Track scroll state to smoothly and gradually transition background & text colors
+  const isHome = location.pathname === '/';
+  // On all subpages, the navbar is ALWAYS clearly solid, high-contrast, and fully legible
+  const effectiveScrolled = !isHome || isScrolled;
+  const effectiveProgress = isHome ? scrollProgress : 1;
+
+  // Track scroll state to smoothly transition background on home page
   useEffect(() => {
     let ticking = false;
 
@@ -23,9 +28,8 @@ export const Header = ({
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const y = window.scrollY;
-          // Smooth progressive transition over 20px to 260px of scroll
           const rawProgress = Math.min(Math.max((y - 20) / 240, 0), 1);
-          const progress = Math.round(rawProgress * 100) / 100; // clamp micro jitter
+          const progress = Math.round(rawProgress * 100) / 100;
 
           if (Math.abs(progress - lastProgressRef.current) >= 0.02 || (progress === 0 && lastProgressRef.current !== 0) || (progress === 1 && lastProgressRef.current !== 1)) {
             lastProgressRef.current = progress;
@@ -44,27 +48,14 @@ export const Header = ({
   }, []);
 
   const navItems = [
-    { label: currentLang === 'AR' ? 'الرئيسية' : 'Home', href: '#' },
-    { label: currentLang === 'AR' ? 'جولاتنا' : 'Our Tours', href: '#tours' },
-    { label: currentLang === 'AR' ? 'طيور الفراعنة حية' : 'Pharaohs Birds Alive', href: '#pharaohs' },
-    { label: currentLang === 'AR' ? 'معسكرات التعلم' : 'Learning Camps', href: '#camps' },
-    { label: currentLang === 'AR' ? 'معرض الصور' : 'Gallery', href: '#gallery' },
-    { label: currentLang === 'AR' ? 'من نحن' : 'About Us', href: '#about' },
-    { label: currentLang === 'AR' ? 'تواصل معنا' : 'Contact', href: '#contact' },
+    { label: currentLang === 'AR' ? 'الرئيسية' : 'Home', path: '/' },
+    { label: currentLang === 'AR' ? 'جولاتنا' : 'Our Tours', path: '/tours' },
+    { label: currentLang === 'AR' ? 'طيور الفراعنة حية' : 'Pharaohs Birds Alive', path: '/pharaohs' },
+    { label: currentLang === 'AR' ? 'معسكرات التعلم' : 'Learning Camps', path: '/camps' },
+    { label: currentLang === 'AR' ? 'معرض الصور' : 'Gallery', path: '/gallery' },
+    { label: currentLang === 'AR' ? 'من نحن' : 'About Us', path: '/about' },
+    { label: currentLang === 'AR' ? 'تواصل معنا' : 'Contact', path: '/contact' },
   ];
-
-  const handleNavClick = (label, href) => {
-    setActiveNav(label);
-    setMobileMenuOpen(false);
-    if (onNavClick) {
-      onNavClick(href);
-    } else if (href.startsWith('#')) {
-      const target = document.querySelector(href);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  };
 
   const handleSelectLang = (newLang) => {
     if (onToggleLang) {
@@ -77,20 +68,20 @@ export const Header = ({
     <header className="fixed top-2 sm:top-4 inset-x-0 z-50 px-2 sm:px-4 lg:px-6 flex justify-center pointer-events-none transition-all duration-300">
       {/* Floating Pill Island Navbar */}
       <div className="pointer-events-auto relative w-full max-w-[1620px] h-16 sm:h-[72px] px-5 sm:px-8 lg:px-10 rounded-full flex items-center justify-between">
-        {/* Transparent Glass Background Layer (fades out gradually as user scrolls) */}
+        {/* Transparent Glass Background Layer (only on home page when not scrolled) */}
         <div
-          className="absolute inset-0 rounded-full bg-white/15 backdrop-blur-md border border-white/30 shadow-[0_4px_24px_rgba(0,0,0,0.04)] pointer-events-none transition-opacity duration-150 ease-out"
-          style={{ opacity: 1 - scrollProgress }}
+          className="absolute inset-0 rounded-full bg-white/15 backdrop-blur-md border border-white/30 shadow-[0_4px_24px_rgba(0,0,0,0.04)] pointer-events-none transition-opacity duration-200 ease-out"
+          style={{ opacity: isHome ? 1 - effectiveProgress : 0 }}
         />
 
-        {/* Solid White Scrolled Background Layer (fades in gradually with scroll) */}
+        {/* Solid White High-Contrast Scrolled Background Layer */}
         <div
-          className="absolute inset-0 rounded-full bg-white/95 backdrop-blur-xl border border-[#E2E8DC] shadow-[0_12px_36px_-6px_rgba(20,40,25,0.12)] pointer-events-none transition-opacity duration-150 ease-out"
-          style={{ opacity: scrollProgress }}
+          className="absolute inset-0 rounded-full bg-white/95 backdrop-blur-xl border border-[#DDE5D7] shadow-[0_10px_35px_-5px_rgba(20,40,25,0.09)] pointer-events-none transition-opacity duration-200 ease-out"
+          style={{ opacity: effectiveProgress }}
         />
 
         {/* Brand Logo */}
-        <a href="#" className="relative z-10 flex items-center gap-3 sm:gap-4 group flex-shrink-0">
+        <Link to="/" className="relative z-10 flex items-center gap-3 sm:gap-4 group flex-shrink-0">
           <img
             src="/assets/logo-official.png"
             alt="Aswan Nature Logo"
@@ -98,20 +89,20 @@ export const Header = ({
           />
           <span
             dir="ltr"
-            className={`text-lg sm:text-xl tracking-tight font-medium flex items-baseline transition-all duration-500 ease-out ${
-              isScrolled ? 'text-[#16241B]' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]'
+            className={`text-lg sm:text-xl tracking-tight font-medium flex items-baseline transition-all duration-300 ease-out ${
+              effectiveScrolled ? 'text-[#16241B]' : 'text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]'
             }`}
           >
             aswan
             <span
-              className={`font-bold transition-all duration-500 ease-out ${
-                isScrolled ? 'text-[#13231B]' : 'text-white'
+              className={`font-bold transition-all duration-300 ease-out ${
+                effectiveScrolled ? 'text-[#13231B]' : 'text-white'
               }`}
             >
               nature<span className="text-[#2BE019]">.</span>
             </span>
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <nav
@@ -119,20 +110,19 @@ export const Header = ({
           aria-label="Main navigation"
         >
           {navItems.map((item) => {
-            const isActive = activeNav === item.label;
+            const isActive = item.path === '/'
+              ? location.pathname === '/'
+              : location.pathname.startsWith(item.path);
+
             return (
-              <a
-                key={item.label}
-                href={item.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleNavClick(item.label, item.href);
-                }}
-                className={`relative px-3.5 py-2 rounded-full transition-all duration-500 ease-out whitespace-nowrap ${
-                  isScrolled
+              <Link
+                key={item.path}
+                to={item.path}
+                className={`relative px-4 py-2 rounded-full transition-all duration-300 ease-out whitespace-nowrap text-[14.5px] ${
+                  effectiveScrolled
                     ? isActive
-                      ? 'font-bold text-[#16241B] bg-black/5'
-                      : 'text-[#35463B] hover:text-[#16241B] hover:bg-black/5'
+                      ? 'font-bold text-[#112417] bg-[#E5F3E1] shadow-xs'
+                      : 'text-[#2C3E32] font-semibold hover:text-[#112417] hover:bg-[#EEF4EB]'
                     : isActive
                       ? 'font-bold text-white bg-white/20 shadow-xs'
                       : 'text-white hover:text-white hover:bg-white/15 drop-shadow-[0_1px_3px_rgba(0,0,0,0.5)]'
@@ -141,9 +131,9 @@ export const Header = ({
                 {item.label}
                 {/* Luminous Green Active Underline Bar */}
                 {isActive && (
-                  <span className="absolute -bottom-1 inset-x-2 h-[3.5px] rounded-full bg-[#2BE019] shadow-[0_0_10px_#2BE019]" />
+                  <span className="absolute -bottom-1 inset-x-2.5 h-[3.5px] rounded-full bg-[#2BE019] shadow-[0_0_10px_#2BE019]" />
                 )}
-              </a>
+              </Link>
             );
           })}
         </nav>
@@ -154,16 +144,16 @@ export const Header = ({
           <div className="relative">
             <button
               onClick={() => setLangOpen(!langOpen)}
-              className={`flex items-center gap-1.5 text-xs sm:text-[13px] font-bold uppercase tracking-wider px-3.5 py-1.5 sm:py-2 rounded-full border shadow-xs transition-all duration-500 ease-out cursor-pointer ${
-                isScrolled
-                  ? 'border-[#E0E6DA] bg-white/80 hover:bg-white text-[#2C3B30] hover:text-[#16241B]'
+              className={`flex items-center gap-1.5 text-xs sm:text-[13px] font-bold uppercase tracking-wider px-3.5 py-1.5 sm:py-2 rounded-full border shadow-xs transition-all duration-300 ease-out cursor-pointer ${
+                effectiveScrolled
+                  ? 'border-[#D4E0CE] bg-white hover:bg-[#F3F7F0] text-[#1D3222] hover:text-[#112417]'
                   : 'border-white/35 bg-white/20 hover:bg-white/30 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]'
               }`}
               aria-label={currentLang === 'EN' ? 'Switch to Arabic' : 'التبديل إلى الإنجليزية'}
             >
-              <Globe className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors duration-500 ${isScrolled ? 'text-[#5A6D61]' : 'text-white/90'}`} />
+              <Globe className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors duration-300 ${effectiveScrolled ? 'text-[#3E5645]' : 'text-white/90'}`} />
               <span>{currentLang}</span>
-              <ChevronDown className={`w-3 h-3 transition-colors duration-500 ${isScrolled ? 'text-[#5A6D61]' : 'text-white/90'}`} />
+              <ChevronDown className={`w-3 h-3 transition-colors duration-300 ${effectiveScrolled ? 'text-[#3E5645]' : 'text-white/90'}`} />
             </button>
 
             {langOpen && (
@@ -198,9 +188,9 @@ export const Header = ({
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`xl:hidden p-2 rounded-full transition-colors duration-500 cursor-pointer ${
-              isScrolled
-                ? 'text-[#2C3B30] hover:text-[#16241B] hover:bg-black/5'
+            className={`xl:hidden p-2 rounded-full transition-colors duration-300 cursor-pointer ${
+              effectiveScrolled
+                ? 'text-[#1D3222] hover:text-[#112417] hover:bg-[#EEF4EB]'
                 : 'text-white hover:bg-white/15'
             }`}
             aria-label="Toggle menu"
@@ -216,15 +206,15 @@ export const Header = ({
         <div className="pointer-events-auto absolute top-full mt-2 w-[calc(100%-24px)] sm:w-[calc(100%-48px)] max-w-md bg-white/95 backdrop-blur-xl rounded-3xl border border-[#E2E8DC] p-5 shadow-2xl space-y-3 animate-in slide-in-from-top-3 duration-200 z-50">
           <nav className="flex flex-col space-y-2">
             {navItems.map((item) => {
-              const isActive = activeNav === item.label;
+              const isActive = item.path === '/'
+                ? location.pathname === '/'
+                : location.pathname.startsWith(item.path);
+
               return (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleNavClick(item.label, item.href);
-                  }}
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  onClick={() => setMobileMenuOpen(false)}
                   className={`text-sm font-semibold px-3.5 py-2.5 rounded-xl flex items-center justify-between transition-colors ${
                     isActive
                       ? 'bg-[#EBFBE7] text-[#16241B] border-r-4 rtl:border-r-0 rtl:border-l-4 border-[#2BE019]'
@@ -233,7 +223,7 @@ export const Header = ({
                 >
                   <span>{item.label}</span>
                   <span className="text-xs text-[#8A9C8E] rtl:rotate-180">→</span>
-                </a>
+                </Link>
               );
             })}
           </nav>
