@@ -42,9 +42,6 @@ export const GalleryPage = () => {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#16241B]">
             {isAr ? 'معرض صور الحياة البرية' : 'Wildlife Photo Gallery'}
           </h1>
-          <span className="text-xs sm:text-sm font-semibold text-[#556F5C] mt-2 block">
-            {galleryPhotos.length} {isAr ? 'صورة ميدانية موثقة' : 'Documented Field Photographs'}
-          </span>
         </div>
 
         {/* 52-Photo Responsive Grid */}
