@@ -134,7 +134,7 @@ export const GalleryPage = () => {
               e.stopPropagation();
               prevPhoto();
             }}
-            className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/60 hover:bg-black/90 text-white transition-all hover:scale-110 cursor-pointer"
+            className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/60 hover:bg-[#0a515b] text-white transition-all hover:scale-110 cursor-pointer"
             aria-label="Previous photo"
           >
             <ChevronLeft className="w-6 h-6" />
@@ -145,7 +145,7 @@ export const GalleryPage = () => {
               e.stopPropagation();
               nextPhoto();
             }}
-            className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/60 hover:bg-black/90 text-white transition-all hover:scale-110 cursor-pointer"
+            className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/60 hover:bg-[#0a515b] text-white transition-all hover:scale-110 cursor-pointer"
             aria-label="Next photo"
           >
             <ChevronRight className="w-6 h-6" />
@@ -153,13 +153,13 @@ export const GalleryPage = () => {
 
           {/* Modal Container */}
           <div
-            className="relative max-w-4xl w-full bg-[#0C1D15] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col max-h-[92vh]"
+            className="relative max-w-4xl w-full bg-[#06252a] rounded-3xl overflow-hidden border border-[#0a515b]/50 shadow-2xl flex flex-col max-h-[92vh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Close Button */}
             <button
               onClick={() => setSelectedIndex(null)}
-              className="absolute top-4 right-4 rtl:right-auto rtl:left-4 z-30 p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/90 transition-all cursor-pointer shadow-lg"
+              className="absolute top-4 right-4 rtl:right-auto rtl:left-4 z-30 p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-[#0a515b] transition-all cursor-pointer shadow-lg"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
@@ -174,16 +174,16 @@ export const GalleryPage = () => {
               />
             </div>
 
-            {/* Bottom Info Bar */}
-            <div className="p-4 sm:p-6 bg-[#08150E] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/10">
+            {/* Bottom Info Bar in Nile Teal Blue #0a515b */}
+            <div className="p-4 sm:p-6 bg-[#0a515b] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/15">
               <div>
-                <span className="text-xs font-mono font-bold text-[#48e714] block mb-1">
+                <span className="text-xs font-mono font-bold text-[#67e8f9] block mb-1">
                   {selectedIndex + 1} / {galleryPhotos.length}
                 </span>
-                <h3 className="text-base sm:text-lg font-bold leading-snug">
+                <h3 className="text-base sm:text-lg font-bold leading-snug text-white">
                   {isAr ? selectedPhoto.titleAr : selectedPhoto.titleEn}
                 </h3>
-                <span className="text-xs text-[#8BA493]">
+                <span className="text-xs text-[#cce8eb]">
                   {isAr ? selectedPhoto.locationAr : selectedPhoto.locationEn}
                 </span>
               </div>
@@ -194,7 +194,7 @@ export const GalleryPage = () => {
                   target="_blank"
                   rel="noreferrer"
                   download
-                  className="px-4 py-2 rounded-full bg-white/10 hover:bg-[#21c715] hover:text-[#0C1D15] text-xs font-bold text-white transition-all inline-flex items-center gap-1.5"
+                  className="px-4 py-2 rounded-full bg-white/15 hover:bg-white hover:text-[#0a515b] text-xs font-bold text-white transition-all inline-flex items-center gap-1.5 border border-white/20 shadow-xs cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>{isAr ? 'تحميل الصورة' : 'Download'}</span>
