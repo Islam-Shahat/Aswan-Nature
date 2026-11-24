@@ -132,18 +132,20 @@ export const Header = ({
 
         {/* Right Actions */}
         <div className="relative z-10 flex items-center gap-2.5 sm:gap-4 flex-shrink-0">
-          {/* Instant Language Toggle (Globe Icon Only - Click to switch immediately) */}
+          {/* Instant Language Toggle (Globe Icon Only - Transparent, No Circle, 60deg Hover Rotation) */}
           <button
             onClick={() => onToggleLang && onToggleLang(currentLang === 'EN' ? 'AR' : 'EN')}
-            className={`p-2.5 sm:p-3 rounded-full border shadow-xs transition-all duration-300 ease-out cursor-pointer hover:scale-105 active:scale-95 flex items-center justify-center ${
-              effectiveScrolled
-                ? 'border-[#D4E0CE] bg-white hover:bg-[#F3F7F0] text-[#1D3222] hover:text-[#0a515b]'
-                : 'border-white/35 bg-white/20 hover:bg-white/30 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]'
-            }`}
+            className="group p-1.5 sm:p-2 bg-transparent border-0 shadow-none outline-none cursor-pointer flex items-center justify-center active:scale-90"
             aria-label={currentLang === 'EN' ? 'التبديل إلى العربية' : 'Switch to English'}
             title={currentLang === 'EN' ? 'العربية' : 'English'}
           >
-            <Globe className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300 ${effectiveScrolled ? 'text-[#1D3222]' : 'text-white'}`} />
+            <Globe
+              className={`w-5 h-5 sm:w-[22px] sm:h-[22px] transition-all duration-500 ease-out group-hover:rotate-[60deg] group-hover:scale-110 ${
+                effectiveScrolled
+                  ? 'text-[#1D3222] group-hover:text-[#21c715]'
+                  : 'text-white/95 group-hover:text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)]'
+              }`}
+            />
           </button>
 
           {/* Book CTA Pill Button */}
