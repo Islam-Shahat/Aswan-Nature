@@ -36,14 +36,16 @@ export const GalleryPage = () => {
 
   return (
     <div className="pt-24 sm:pt-32 pb-24 bg-[#F8FAF5] min-h-screen">
-      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
-        {/* Centered Clean Title - No badge, no paragraph, no filter */}
-        <div className="text-center mb-10 sm:mb-14">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#16241B]">
-            {isAr ? 'معرض صور الحياة البرية' : 'Wildlife Photo Gallery'}
-          </h1>
-        </div>
+      {/* Full-width Nile Teal Stripe with Centered Title */}
+      <div className="w-full flex items-center justify-center mb-10 sm:mb-14">
+        <div className="flex-1 h-1 sm:h-1.5 bg-[#0a515b]" />
+        <h1 className="px-4 sm:px-8 text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#16241B] shrink-0 text-center">
+          {isAr ? 'معرض صور الحياة البرية' : 'Wildlife Photo Gallery'}
+        </h1>
+        <div className="flex-1 h-1 sm:h-1.5 bg-[#0a515b]" />
+      </div>
 
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
         {/* 52-Photo Responsive Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
           {galleryPhotos.map((photo, i) => (
