@@ -91,7 +91,7 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
-        className={`relative w-full max-w-6xl h-[380px] sm:h-[460px] lg:h-[500px] flex items-center justify-center overflow-hidden touch-pan-y cursor-grab ${
+        className={`relative w-full max-w-7xl h-[340px] sm:h-[420px] lg:h-[480px] flex items-center justify-center overflow-hidden touch-pan-y cursor-grab ${
           isDragging ? 'cursor-grabbing' : ''
         }`}
         style={{
@@ -106,12 +106,12 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
           }}
         >
           {visibleCards.map(({ photo, photoIndex, offset }) => {
-            // Precise mathematical cylinder curve
+            // Precise mathematical cylinder curve for landscape photos
             const effectiveOffset = offset - dragFraction;
-            const angleStep = 22; // Degrees between cards on the cylinder
+            const angleStep = 24; // Degrees between cards on the cylinder
             const angle = effectiveOffset * angleStep;
             const rad = (angle * Math.PI) / 180;
-            const radius = 680; // Cylinder radius in px
+            const radius = 820; // Cylinder radius in px for wide natural cards
 
             // Parametric cylinder coordinates
             const x = Math.sin(rad) * radius;
@@ -119,8 +119,9 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
             const rotateY = -angle;
 
             const absOffset = Math.abs(effectiveOffset);
-            const scale = Math.max(0.72, 1 - absOffset * 0.06);
-            const opacity = Math.max(0.18, 1 - absOffset * 0.2);
+            const scale = Math.max(0.75, 1 - absOffset * 0.07);
+            // 100% opaque solid cards with no see-through transparency
+            const opacity = absOffset > 3.2 ? 0 : 1;
             const zIndex = Math.round(50 - absOffset * 8);
             const isCenter = Math.abs(effectiveOffset) < 0.45;
 
@@ -136,14 +137,14 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
                     setActiveIndex(photoIndex);
                   }
                 }}
-                className={`absolute w-[230px] h-[310px] sm:w-[280px] sm:h-[380px] lg:w-[320px] lg:h-[420px] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#101D16] transition-all will-change-transform ${
+                className={`absolute w-[280px] h-[190px] sm:w-[390px] sm:h-[265px] lg:w-[480px] lg:h-[325px] rounded-2xl sm:rounded-3xl overflow-hidden bg-white transition-all will-change-transform ${
                   isDragging
                     ? 'transition-none'
                     : 'duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]'
                 } ${
                   isCenter
-                    ? 'border-2 border-[#0a515b] shadow-[0_20px_45px_-10px_rgba(10,81,91,0.45)] ring-4 ring-[#0a515b]/20 cursor-pointer'
-                    : 'border border-[#CBDCCB]/70 shadow-lg cursor-pointer hover:border-[#0a515b]/60'
+                    ? 'border-2 border-[#0a515b] shadow-[0_25px_60px_-12px_rgba(10,81,91,0.4)] ring-4 ring-[#0a515b]/20 cursor-pointer'
+                    : 'border border-[#CBDCCB] shadow-xl cursor-pointer hover:border-[#0a515b]/60'
                 }`}
                 style={{
                   transform: `translate3d(${x}px, 0, ${z}px) rotateY(${rotateY}deg) scale(${scale})`,
@@ -152,21 +153,13 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
                   transformStyle: 'preserve-3d',
                 }}
               >
+                {/* Natural full photo - crisp and 100% solid */}
                 <img
                   src={photo.src}
                   alt={isAr ? photo.titleAr : photo.titleEn}
                   loading="lazy"
                   draggable={false}
                   className="w-full h-full object-cover pointer-events-none select-none"
-                />
-
-                {/* Subtle depth gradient overlay on non-center cards */}
-                <div
-                  className={`absolute inset-0 transition-opacity duration-300 pointer-events-none ${
-                    isCenter
-                      ? 'bg-gradient-to-t from-black/80 via-black/10 to-transparent'
-                      : 'bg-black/35'
-                  }`}
                 />
 
                 {/* Quick Zoom icon on Center Card */}
