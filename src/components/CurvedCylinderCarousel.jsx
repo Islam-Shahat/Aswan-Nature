@@ -212,16 +212,13 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
         </div>
       </div>
 
-      {/* Center Caption with smooth entry transition on change */}
+      {/* Creative Concise Single-Line Caption */}
       <div 
         key={activeIndex} 
-        className="text-center mt-2 sm:mt-2.5 min-h-[44px] px-4 animate-in fade-in slide-in-from-bottom-2 duration-300 shrink-0"
+        className="text-center mt-2 sm:mt-2.5 min-h-[32px] px-4 animate-in fade-in slide-in-from-bottom-1 duration-300 shrink-0"
       >
-        <h3 className="text-base sm:text-xl font-extrabold text-[#16241B] tracking-tight">
+        <p className="text-sm sm:text-base lg:text-lg font-bold text-[#16241B] tracking-tight">
           {isAr ? currentPhoto.titleAr : currentPhoto.titleEn}
-        </h3>
-        <p className="text-xs sm:text-sm text-[#556F5C] mt-0.5 font-medium">
-          {isAr ? currentPhoto.locationAr : currentPhoto.locationEn}
         </p>
       </div>
 
