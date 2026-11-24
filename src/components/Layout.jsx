@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { BookingModal } from './BookingModal';
@@ -11,6 +11,8 @@ import { FlyingBirdCompanion } from './FlyingBirdCompanion';
 import { ScrollToTop } from './ScrollToTop';
 
 export const Layout = () => {
+  const location = useLocation();
+  const isGallery = location.pathname === '/gallery';
   const [currentLang, setCurrentLang] = useState('EN');
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
   const [selectedTour, setSelectedTour] = useState('Nile Birds Tour');
@@ -78,14 +80,16 @@ export const Layout = () => {
         />
       </main>
 
-      {/* Footer */}
-      <Footer
-        onOpenAdmin={() => setAdminOpen(true)}
-        onOpenEgyptianRates={() => setEgyptianRatesOpen(true)}
-        onOpenPartners={() => setPartnersOpen(true)}
-        onSelectTour={(tour) => handleOpenBooking(tour)}
-        currentLang={currentLang}
-      />
+      {/* Footer - Hidden on fullscreen 100vh Gallery */}
+      {!isGallery && (
+        <Footer
+          onOpenAdmin={() => setAdminOpen(true)}
+          onOpenEgyptianRates={() => setEgyptianRatesOpen(true)}
+          onOpenPartners={() => setPartnersOpen(true)}
+          onSelectTour={(tour) => handleOpenBooking(tour)}
+          currentLang={currentLang}
+        />
+      )}
 
       {/* Floating WhatsApp Button */}
       <a

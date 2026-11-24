@@ -37,12 +37,18 @@ export const GalleryPage = () => {
   }, [selectedIndex]);
 
   return (
-    <div className="pt-24 sm:pt-32 pb-24 bg-[#F8FAF5] min-h-screen">
+    <div
+      className={`bg-[#F8FAF5] ${
+        viewMode === '3d'
+          ? 'h-screen max-h-screen overflow-hidden flex flex-col justify-between pt-16 sm:pt-20 pb-2 sm:pb-3'
+          : 'min-h-screen pt-24 sm:pt-32 pb-24'
+      }`}
+    >
       {/* Elegant Nile Teal Gradient Divider Bisected by Centered Title */}
-      <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8 px-4 sm:px-8 overflow-hidden">
+      <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-2 sm:mb-2.5 px-4 sm:px-8 overflow-hidden shrink-0">
         <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent via-[#0a515b]/50 to-[#0a515b]" />
         <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
-        <h1 className="px-3 sm:px-6 text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#16241B] shrink-0 text-center">
+        <h1 className="px-3 sm:px-6 text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#16241B] shrink-0 text-center">
           {isAr ? 'معرض صور الحياة البرية' : 'Wildlife Photo Gallery'}
         </h1>
         <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
@@ -50,28 +56,28 @@ export const GalleryPage = () => {
       </div>
 
       {/* View Mode Toggle: 3D Curved Showcase vs Full Grid */}
-      <div className="flex items-center justify-center mb-8">
-        <div className="inline-flex items-center p-1.5 rounded-full bg-white border border-[#CBDCCB] shadow-xs">
+      <div className="flex items-center justify-center mb-2 sm:mb-2.5 shrink-0">
+        <div className="inline-flex items-center p-1 rounded-full bg-white border border-[#CBDCCB] shadow-xs">
           <button
             onClick={() => setViewMode('3d')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
               viewMode === '3d'
                 ? 'bg-[#0a515b] text-white shadow-sm'
                 : 'text-[#556F5C] hover:text-[#16241B]'
             }`}
           >
-            <Layers className="w-4 h-4" />
+            <Layers className="w-3.5 h-3.5" />
             <span>{isAr ? 'عرض أسطواني 3D' : '3D Curved View'}</span>
           </button>
           <button
             onClick={() => setViewMode('grid')}
-            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
               viewMode === 'grid'
                 ? 'bg-[#0a515b] text-white shadow-sm'
                 : 'text-[#556F5C] hover:text-[#16241B]'
             }`}
           >
-            <Grid3X3 className="w-4 h-4" />
+            <Grid3X3 className="w-3.5 h-3.5" />
             <span>{isAr ? 'عرض الشبكة (52)' : 'Grid View (52)'}</span>
           </button>
         </div>
@@ -79,7 +85,7 @@ export const GalleryPage = () => {
 
       {/* Main Showcase: 3D Curved Cylinder Carousel - Full Viewport Width */}
       {viewMode === '3d' ? (
-        <div className="w-full overflow-hidden px-0">
+        <div className="w-full overflow-hidden px-0 flex-1 flex flex-col justify-center">
           <CurvedCylinderCarousel
             photos={galleryPhotos}
             isAr={isAr}

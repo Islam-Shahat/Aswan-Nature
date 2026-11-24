@@ -121,7 +121,7 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
   const dragFraction = isDragging ? Math.max(-1, Math.min(1, dragOffset / 300)) : 0;
 
   return (
-    <div className="w-full flex flex-col items-center select-none py-2 sm:py-6 overflow-hidden">
+    <div className="w-full flex-1 flex flex-col items-center justify-center select-none py-0 overflow-hidden">
       {/* 3D Scene Viewport - Full 100% Screen Width */}
       <div
         ref={containerRef}
@@ -129,7 +129,7 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
-        className={`relative w-full h-[360px] sm:h-[460px] lg:h-[530px] xl:h-[590px] flex items-center justify-center overflow-hidden touch-pan-y cursor-grab ${
+        className={`relative w-full h-[340px] sm:h-[430px] lg:h-[490px] xl:h-[540px] flex items-center justify-center overflow-hidden touch-pan-y cursor-grab ${
           isDragging ? 'cursor-grabbing' : ''
         }`}
         style={{
@@ -215,24 +215,24 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
       {/* Center Caption with smooth entry transition on change */}
       <div 
         key={activeIndex} 
-        className="text-center mt-4 sm:mt-6 min-h-[56px] px-4 animate-in fade-in slide-in-from-bottom-2 duration-300"
+        className="text-center mt-2 sm:mt-2.5 min-h-[44px] px-4 animate-in fade-in slide-in-from-bottom-2 duration-300 shrink-0"
       >
-        <h3 className="text-lg sm:text-2xl font-extrabold text-[#16241B] tracking-tight">
+        <h3 className="text-base sm:text-xl font-extrabold text-[#16241B] tracking-tight">
           {isAr ? currentPhoto.titleAr : currentPhoto.titleEn}
         </h3>
-        <p className="text-xs sm:text-sm text-[#556F5C] mt-1 font-medium">
+        <p className="text-xs sm:text-sm text-[#556F5C] mt-0.5 font-medium">
           {isAr ? currentPhoto.locationAr : currentPhoto.locationEn}
         </p>
       </div>
 
       {/* Navigation Controls & Counter */}
-      <div className="flex items-center gap-4 sm:gap-6 mt-4 z-10">
+      <div className="flex items-center gap-4 sm:gap-6 mt-1.5 sm:mt-2 z-10 shrink-0">
         <button
           onClick={isAr ? handleNext : handlePrev}
-          className="p-3 rounded-full bg-white hover:bg-[#0a515b] hover:text-white text-[#16241B] border border-[#CBDCCB] shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer active:scale-95"
+          className="p-2.5 sm:p-3 rounded-full bg-white hover:bg-[#0a515b] hover:text-white text-[#16241B] border border-[#CBDCCB] shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer active:scale-95"
           aria-label="Previous"
         >
-          <ChevronLeft className="w-5 h-5 rtl:rotate-180" />
+          <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 rtl:rotate-180" />
         </button>
 
         <span className="text-xs sm:text-sm font-mono font-bold text-[#0a515b] bg-[#0a515b]/10 px-3.5 py-1.5 rounded-full border border-[#0a515b]/20">
@@ -241,10 +241,10 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
 
         <button
           onClick={isAr ? handlePrev : handleNext}
-          className="p-3 rounded-full bg-white hover:bg-[#0a515b] hover:text-white text-[#16241B] border border-[#CBDCCB] shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer active:scale-95"
+          className="p-2.5 sm:p-3 rounded-full bg-white hover:bg-[#0a515b] hover:text-white text-[#16241B] border border-[#CBDCCB] shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer active:scale-95"
           aria-label="Next"
         >
-          <ChevronRight className="w-5 h-5 rtl:rotate-180" />
+          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 rtl:rotate-180" />
         </button>
       </div>
     </div>
