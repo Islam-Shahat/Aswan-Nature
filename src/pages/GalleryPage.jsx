@@ -36,13 +36,15 @@ export const GalleryPage = () => {
 
   return (
     <div className="pt-24 sm:pt-32 pb-24 bg-[#F8FAF5] min-h-screen">
-      {/* Full-width Nile Teal Stripe with Centered Title */}
-      <div className="w-full flex items-center justify-center mb-10 sm:mb-14">
-        <div className="flex-1 h-1 sm:h-1.5 bg-[#0a515b]" />
-        <h1 className="px-4 sm:px-8 text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#16241B] shrink-0 text-center">
+      {/* Elegant Nile Teal Gradient Divider Bisected by Centered Title */}
+      <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-10 sm:mb-14 px-4 sm:px-8 overflow-hidden">
+        <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent via-[#0a515b]/50 to-[#0a515b]" />
+        <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
+        <h1 className="px-3 sm:px-6 text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#16241B] shrink-0 text-center">
           {isAr ? 'معرض صور الحياة البرية' : 'Wildlife Photo Gallery'}
         </h1>
-        <div className="flex-1 h-1 sm:h-1.5 bg-[#0a515b]" />
+        <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
+        <div className="flex-1 h-[2px] bg-gradient-to-r from-[#0a515b] via-[#0a515b]/50 to-transparent" />
       </div>
 
       <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
