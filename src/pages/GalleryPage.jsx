@@ -153,24 +153,24 @@ export const GalleryPage = () => {
 
           {/* Modal Container */}
           <div
-            className="relative max-w-5xl w-full bg-[#0C1D15] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col max-h-[90vh]"
+            className="relative max-w-4xl w-full bg-[#0C1D15] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col max-h-[92vh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Close Button */}
             <button
               onClick={() => setSelectedIndex(null)}
-              className="absolute top-4 right-4 rtl:right-auto rtl:left-4 z-30 p-2.5 rounded-full bg-black/60 text-white hover:bg-black transition-colors cursor-pointer"
+              className="absolute top-4 right-4 rtl:right-auto rtl:left-4 z-30 p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-black/90 transition-all cursor-pointer shadow-lg"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
             </button>
 
-            {/* Photo View */}
-            <div className="relative flex-1 flex items-center justify-center bg-black/50 p-2 sm:p-4 min-h-[50vh] max-h-[72vh] overflow-hidden">
+            {/* Photo View - Full Width edge-to-edge */}
+            <div className="relative w-full overflow-hidden bg-black flex items-center justify-center">
               <img
                 src={selectedPhoto.src}
                 alt={isAr ? selectedPhoto.titleAr : selectedPhoto.titleEn}
-                className="max-h-[70vh] w-auto max-w-full object-contain mx-auto rounded-lg shadow-lg"
+                className="w-full h-[50vh] sm:h-[62vh] lg:h-[68vh] object-cover select-none"
               />
             </div>
 
