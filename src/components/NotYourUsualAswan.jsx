@@ -138,27 +138,30 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
     <section id="about" className="py-20 lg:py-28 bg-[#EAF0E5] relative">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#0a515b]/30 text-[#0a515b] text-xs sm:text-[13px] font-bold uppercase tracking-[0.2em] mb-4 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#0a515b]" />
-            <span>{isAr ? 'ليست أسوان التقليدية' : 'NOT YOUR USUAL ASWAN'}</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-extrabold tracking-[-0.03em] leading-[1.12] text-[#16241B] font-heading">
+        <div className="text-center max-w-4xl mx-auto mb-14 sm:mb-20">
+          <h2 className="text-center">
             {isAr ? (
-              <>
-                أقل تقليدية.{' '}
-                <span className="text-[#0a515b]">وأكثر استثنائية.</span>
-              </>
+              <div className="flex flex-col items-center gap-2 sm:gap-3">
+                <span className="text-2xl sm:text-3xl lg:text-4xl font-light text-[#273B2E] tracking-wide">
+                  أقل تقليدية<span className="text-[#21c715]">.</span>
+                </span>
+                <span className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-[#0a515b] via-[#0d6d5c] to-[#1cb911] bg-clip-text text-transparent leading-[1.25]">
+                  وأكثر استثنائية<span className="text-[#0a515b]">.</span>
+                </span>
+              </div>
             ) : (
-              <>
-                Less ordinary.{' '}
-                <span className="text-[#0a515b]">More extraordinary.</span>
-              </>
+              <div className="flex flex-col items-center justify-center leading-none">
+                <span className="text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-[#2B3E31] mb-2 sm:mb-3">
+                  Less ordinary<span className="text-[#21c715] font-serif font-medium">.</span>
+                </span>
+                <span className="font-serif italic font-normal text-5xl sm:text-7xl lg:text-[84px] xl:text-[92px] tracking-[-0.03em] leading-[0.94] bg-gradient-to-r from-[#0a515b] via-[#0f6c5b] to-[#1cb911] bg-clip-text text-transparent pb-1 drop-shadow-xs">
+                  More extraordinary<span className="text-[#0a515b] not-italic font-sans">.</span>
+                </span>
+              </div>
             )}
           </h2>
 
-          <p className="text-base sm:text-lg text-[#526657] mt-4 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg lg:text-[19px] text-[#526657] mt-6 sm:mt-7 leading-relaxed max-w-2xl mx-auto font-normal">
             {isAr
               ? 'هناك أسوان أخرى تنتظر من يكتشفها. جزر هادئة، وحياة برية غير متوقعة، واتصال أعمق بعالم الطبيعة عبر 4 ركائز تصنع هويتنا.'
               : 'There is another Aswan waiting to be discovered. Quiet islands, unexpected wildlife, and a deeper connection to nature across four core pillars.'}
