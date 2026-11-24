@@ -151,38 +151,38 @@ export const GalleryPage = () => {
             <ChevronRight className="w-6 h-6" />
           </button>
 
-          {/* Modal Container - Clean Photo with Direct Text Overlay */}
+          {/* Modal Container - Expansive Large View to reveal all photo details */}
           <div
-            className="relative w-fit max-w-[94vw] sm:max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/20 flex flex-col max-h-[92vh] bg-black/60"
+            className="relative w-fit max-w-[96vw] lg:max-w-[92vw] xl:max-w-[1500px] mx-auto rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-white/20 flex flex-col max-h-[96vh] bg-black/80"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Close Button */}
             <button
               onClick={() => setSelectedIndex(null)}
-              className="absolute top-3 right-3 rtl:right-auto rtl:left-3 z-30 p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-[#0a515b] transition-all cursor-pointer shadow-lg"
+              className="absolute top-4 right-4 rtl:right-auto rtl:left-4 z-30 p-2.5 sm:p-3 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-[#0a515b] transition-all cursor-pointer shadow-lg hover:scale-105"
               aria-label="Close modal"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
-            {/* Photo View with Direct Text Overlay */}
+            {/* Photo View with Direct Text Overlay - Expansive & Large */}
             <div className="relative w-full overflow-hidden flex items-center justify-center">
               <img
                 src={selectedPhoto.src}
                 alt={isAr ? selectedPhoto.titleAr : selectedPhoto.titleEn}
-                className="max-h-[75vh] sm:max-h-[82vh] w-auto max-w-full block object-contain select-none"
+                className="max-h-[84vh] sm:max-h-[88vh] lg:max-h-[90vh] w-auto max-w-full block object-contain select-none"
               />
 
               {/* Text & Action Overlay Directly on Image */}
-              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-white flex flex-col sm:flex-row sm:items-end justify-between gap-3 z-20">
+              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-7 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-white flex flex-col sm:flex-row sm:items-end justify-between gap-4 z-20">
                 <div>
-                  <span className="text-xs font-mono font-bold text-[#67e8f9] block mb-1 drop-shadow-sm">
+                  <span className="text-xs sm:text-sm font-mono font-bold text-[#67e8f9] block mb-1 drop-shadow-sm">
                     {selectedIndex + 1} / {galleryPhotos.length}
                   </span>
-                  <h3 className="text-base sm:text-xl font-extrabold leading-snug text-white drop-shadow-md">
+                  <h3 className="text-base sm:text-2xl font-extrabold leading-snug text-white drop-shadow-md">
                     {isAr ? selectedPhoto.titleAr : selectedPhoto.titleEn}
                   </h3>
-                  <span className="text-xs sm:text-sm text-[#e2f1f3] drop-shadow-sm font-medium">
+                  <span className="text-xs sm:text-base text-[#e2f1f3] drop-shadow-sm font-medium">
                     {isAr ? selectedPhoto.locationAr : selectedPhoto.locationEn}
                   </span>
                 </div>
@@ -193,9 +193,9 @@ export const GalleryPage = () => {
                     target="_blank"
                     rel="noreferrer"
                     download
-                    className="px-4 py-2 rounded-full bg-white/20 hover:bg-[#0a515b] hover:text-white backdrop-blur-md text-xs font-bold text-white transition-all inline-flex items-center gap-1.5 border border-white/25 shadow-md cursor-pointer"
+                    className="px-5 py-2.5 rounded-full bg-white/20 hover:bg-[#0a515b] hover:text-white backdrop-blur-md text-xs sm:text-sm font-bold text-white transition-all inline-flex items-center gap-2 border border-white/25 shadow-md cursor-pointer hover:scale-105"
                   >
-                    <Download className="w-3.5 h-3.5" />
+                    <Download className="w-4 h-4" />
                     <span>{isAr ? 'تحميل الصورة' : 'Download'}</span>
                   </a>
                 </div>
