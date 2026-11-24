@@ -77,9 +77,9 @@ export const GalleryPage = () => {
         </div>
       </div>
 
-      {/* Main Showcase: 3D Curved Cylinder Carousel */}
+      {/* Main Showcase: 3D Curved Cylinder Carousel - Full Viewport Width */}
       {viewMode === '3d' ? (
-        <div className="w-full max-w-[1500px] mx-auto px-4">
+        <div className="w-full overflow-hidden px-0">
           <CurvedCylinderCarousel
             photos={galleryPhotos}
             isAr={isAr}

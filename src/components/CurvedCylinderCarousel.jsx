@@ -103,9 +103,9 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
   }, [handleNext, handlePrev, isAr]);
 
   // Render cards within window around activeIndex
-  // Visible range: -4 to +4 (9 cards on the 3D cylinder)
+  // Visible range: -5 to +5 (11 cards spanning the full viewport arc)
   const visibleCards = [];
-  const VISIBLE_RADIUS = 4;
+  const VISIBLE_RADIUS = 5;
 
   for (let offset = -VISIBLE_RADIUS; offset <= VISIBLE_RADIUS; offset++) {
     const rawIndex = activeIndex + offset;
@@ -118,22 +118,22 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
   }
 
   // Drag progress normalized (-1 to 1)
-  const dragFraction = isDragging ? Math.max(-1, Math.min(1, dragOffset / 260)) : 0;
+  const dragFraction = isDragging ? Math.max(-1, Math.min(1, dragOffset / 300)) : 0;
 
   return (
-    <div className="w-full flex flex-col items-center select-none py-2 sm:py-6">
-      {/* 3D Scene Viewport */}
+    <div className="w-full flex flex-col items-center select-none py-2 sm:py-6 overflow-hidden">
+      {/* 3D Scene Viewport - Full 100% Screen Width */}
       <div
         ref={containerRef}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
-        className={`relative w-full max-w-7xl h-[340px] sm:h-[420px] lg:h-[480px] flex items-center justify-center overflow-hidden touch-pan-y cursor-grab ${
+        className={`relative w-full h-[360px] sm:h-[460px] lg:h-[530px] xl:h-[590px] flex items-center justify-center overflow-hidden touch-pan-y cursor-grab ${
           isDragging ? 'cursor-grabbing' : ''
         }`}
         style={{
-          perspective: '1200px',
+          perspective: '1300px',
         }}
       >
         {/* 3D Cylinder Container */}
@@ -144,12 +144,12 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
           }}
         >
           {visibleCards.map(({ photo, photoIndex, offset }) => {
-            // Precise mathematical cylinder curve for landscape photos
+            // Precise mathematical cylinder curve spanning the full browser width
             const effectiveOffset = offset - dragFraction;
-            const angleStep = 24; // Degrees between cards on the cylinder
+            const angleStep = 21; // Degrees between cards on the cylinder
             const angle = effectiveOffset * angleStep;
             const rad = (angle * Math.PI) / 180;
-            const radius = 820; // Cylinder radius in px for wide natural cards
+            const radius = 1050; // Expansive cylinder radius for panoramic full-width arc
 
             // Parametric cylinder coordinates
             const x = Math.sin(rad) * radius;
@@ -157,10 +157,10 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
             const rotateY = -angle;
 
             const absOffset = Math.abs(effectiveOffset);
-            const scale = Math.max(0.75, 1 - absOffset * 0.07);
-            // 100% opaque solid cards with no see-through transparency
-            const opacity = absOffset > 3.2 ? 0 : 1;
-            const zIndex = Math.round(50 - absOffset * 8);
+            const scale = Math.max(0.72, 1 - absOffset * 0.065);
+            // Fully visible across the whole screen width
+            const opacity = absOffset > 4.4 ? 0 : 1;
+            const zIndex = Math.round(60 - absOffset * 8);
             const isCenter = Math.abs(effectiveOffset) < 0.45;
 
             return (
@@ -175,14 +175,14 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
                     setActiveIndex(photoIndex);
                   }
                 }}
-                className={`group absolute w-[280px] h-[190px] sm:w-[390px] sm:h-[265px] lg:w-[480px] lg:h-[325px] rounded-2xl sm:rounded-3xl overflow-hidden bg-white will-change-transform ${
+                className={`group absolute w-[290px] h-[195px] sm:w-[420px] sm:h-[285px] lg:w-[540px] lg:h-[365px] xl:w-[620px] xl:h-[415px] rounded-2xl sm:rounded-3xl overflow-hidden bg-white will-change-transform ${
                   isDragging
                     ? 'transition-none'
                     : 'transition-all duration-600 ease-[cubic-bezier(0.2,1,0.3,1)]'
                 } ${
                   isCenter
-                    ? 'border-2 border-[#0a515b] shadow-[0_25px_60px_-12px_rgba(10,81,91,0.45)] ring-4 ring-[#0a515b]/20 cursor-pointer'
-                    : 'border border-[#CBDCCB] shadow-xl cursor-pointer hover:border-[#0a515b]/60'
+                    ? 'border-2 border-[#0a515b] shadow-[0_30px_70px_-12px_rgba(10,81,91,0.45)] ring-4 ring-[#0a515b]/20 cursor-pointer'
+                    : 'border border-[#CBDCCB] shadow-2xl cursor-pointer hover:border-[#0a515b]/60'
                 }`}
                 style={{
                   transform: `translate3d(${x}px, 0, ${z}px) rotateY(${rotateY}deg) scale(${scale})`,
@@ -191,7 +191,7 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
                   transformStyle: 'preserve-3d',
                 }}
               >
-                {/* Natural full photo - crisp and 100% solid with subtle zoom on hover */}
+                {/* Natural full photo - crisp, expansive and 100% solid */}
                 <img
                   src={photo.src}
                   alt={isAr ? photo.titleAr : photo.titleEn}
@@ -202,8 +202,8 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
 
                 {/* Quick Zoom icon on Center Card */}
                 {isCenter && (
-                  <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-[#0a515b] transition-colors shadow-md">
-                    <ZoomIn className="w-4 h-4" />
+                  <div className="absolute top-4 right-4 rtl:right-auto rtl:left-4 p-3 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-[#0a515b] transition-colors shadow-md">
+                    <ZoomIn className="w-5 h-5" />
                   </div>
                 )}
               </div>
