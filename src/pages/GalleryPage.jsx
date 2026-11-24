@@ -151,31 +151,31 @@ export const GalleryPage = () => {
             <ChevronRight className="w-6 h-6" />
           </button>
 
-          {/* Modal Container */}
+          {/* Modal Container - Dynamically wraps full image width */}
           <div
-            className="relative max-w-4xl w-full bg-[#06252a] rounded-3xl overflow-hidden border border-[#0a515b]/50 shadow-2xl flex flex-col max-h-[92vh]"
+            className="relative w-fit max-w-[94vw] sm:max-w-4xl mx-auto bg-[#0a515b] rounded-3xl overflow-hidden border border-[#0a515b]/60 shadow-2xl flex flex-col max-h-[92vh]"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Close Button */}
             <button
               onClick={() => setSelectedIndex(null)}
-              className="absolute top-4 right-4 rtl:right-auto rtl:left-4 z-30 p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-[#0a515b] transition-all cursor-pointer shadow-lg"
+              className="absolute top-3 right-3 rtl:right-auto rtl:left-3 z-30 p-2.5 rounded-full bg-black/60 backdrop-blur-md text-white hover:bg-[#0a515b] transition-all cursor-pointer shadow-lg"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
             </button>
 
-            {/* Photo View - Full Width edge-to-edge */}
-            <div className="relative w-full overflow-hidden bg-black flex items-center justify-center">
+            {/* Photo View - 100% Uncropped & Natural Ratio */}
+            <div className="relative w-full overflow-hidden bg-black/40 flex items-center justify-center">
               <img
                 src={selectedPhoto.src}
                 alt={isAr ? selectedPhoto.titleAr : selectedPhoto.titleEn}
-                className="w-full h-[50vh] sm:h-[62vh] lg:h-[68vh] object-cover select-none"
+                className="max-h-[66vh] sm:max-h-[72vh] w-auto max-w-full block object-contain select-none"
               />
             </div>
 
             {/* Bottom Info Bar in Nile Teal Blue #0a515b */}
-            <div className="p-4 sm:p-6 bg-[#0a515b] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/15">
+            <div className="p-4 sm:p-5 bg-[#0a515b] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/15">
               <div>
                 <span className="text-xs font-mono font-bold text-[#67e8f9] block mb-1">
                   {selectedIndex + 1} / {galleryPhotos.length}
@@ -188,7 +188,7 @@ export const GalleryPage = () => {
                 </span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 shrink-0">
                 <a
                   href={selectedPhoto.src}
                   target="_blank"
