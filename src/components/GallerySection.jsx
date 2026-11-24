@@ -71,9 +71,7 @@ export const GallerySection = ({ currentLang = 'EN' }) => {
             className="group inline-flex items-center gap-2 text-sm font-bold text-[#1A261E] hover:text-[#21c715] transition-colors self-start md:self-auto cursor-pointer"
           >
             <span>
-              {isArabic ?
-              `استكشف المعرض بالكامل (${photos.length} صور)` :
-              `Explore Full Gallery (${photos.length} Photos)`}
+              {isArabic ? 'استكشف المعرض بالكامل' : 'Explore Full Gallery'}
             </span>
             <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
           </Link>
