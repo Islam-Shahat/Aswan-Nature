@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, ZoomIn, Mouse } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 
 export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -122,14 +122,6 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
 
   return (
     <div className="w-full flex flex-col items-center select-none py-2 sm:py-6">
-      {/* Subtle interaction tip */}
-      <div className="mb-3">
-        <span className="text-[11px] sm:text-xs font-semibold text-[#556F5C] inline-flex items-center gap-1.5 bg-[#0a515b]/8 px-3.5 py-1 rounded-full border border-[#0a515b]/15">
-          <Mouse className="w-3.5 h-3.5 text-[#0a515b] animate-bounce" />
-          <span>{isAr ? 'حرّك عجلة الماوس أو اسحب للتنقل بين الصور' : 'Scroll mouse wheel or drag to explore'}</span>
-        </span>
-      </div>
-
       {/* 3D Scene Viewport */}
       <div
         ref={containerRef}
