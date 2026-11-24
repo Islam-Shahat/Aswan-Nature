@@ -151,9 +151,9 @@ export const GalleryPage = () => {
             <ChevronRight className="w-6 h-6" />
           </button>
 
-          {/* Modal Container - Dynamically wraps full image width */}
+          {/* Modal Container - Clean Photo with Direct Text Overlay */}
           <div
-            className="relative w-fit max-w-[94vw] sm:max-w-4xl mx-auto bg-[#0a515b] rounded-3xl overflow-hidden border border-[#0a515b]/60 shadow-2xl flex flex-col max-h-[92vh]"
+            className="relative w-fit max-w-[94vw] sm:max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/20 flex flex-col max-h-[92vh] bg-black/60"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Top Close Button */}
@@ -165,40 +165,40 @@ export const GalleryPage = () => {
               <X className="w-5 h-5" />
             </button>
 
-            {/* Photo View - 100% Uncropped & Natural Ratio */}
-            <div className="relative w-full overflow-hidden bg-black/40 flex items-center justify-center">
+            {/* Photo View with Direct Text Overlay */}
+            <div className="relative w-full overflow-hidden flex items-center justify-center">
               <img
                 src={selectedPhoto.src}
                 alt={isAr ? selectedPhoto.titleAr : selectedPhoto.titleEn}
-                className="max-h-[66vh] sm:max-h-[72vh] w-auto max-w-full block object-contain select-none"
+                className="max-h-[75vh] sm:max-h-[82vh] w-auto max-w-full block object-contain select-none"
               />
-            </div>
 
-            {/* Bottom Info Bar in Nile Teal Blue #0a515b */}
-            <div className="p-4 sm:p-5 bg-[#0a515b] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-t border-white/15">
-              <div>
-                <span className="text-xs font-mono font-bold text-[#67e8f9] block mb-1">
-                  {selectedIndex + 1} / {galleryPhotos.length}
-                </span>
-                <h3 className="text-base sm:text-lg font-bold leading-snug text-white">
-                  {isAr ? selectedPhoto.titleAr : selectedPhoto.titleEn}
-                </h3>
-                <span className="text-xs text-[#cce8eb]">
-                  {isAr ? selectedPhoto.locationAr : selectedPhoto.locationEn}
-                </span>
-              </div>
+              {/* Text & Action Overlay Directly on Image */}
+              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 bg-gradient-to-t from-black/90 via-black/50 to-transparent text-white flex flex-col sm:flex-row sm:items-end justify-between gap-3 z-20">
+                <div>
+                  <span className="text-xs font-mono font-bold text-[#67e8f9] block mb-1 drop-shadow-sm">
+                    {selectedIndex + 1} / {galleryPhotos.length}
+                  </span>
+                  <h3 className="text-base sm:text-xl font-extrabold leading-snug text-white drop-shadow-md">
+                    {isAr ? selectedPhoto.titleAr : selectedPhoto.titleEn}
+                  </h3>
+                  <span className="text-xs sm:text-sm text-[#e2f1f3] drop-shadow-sm font-medium">
+                    {isAr ? selectedPhoto.locationAr : selectedPhoto.locationEn}
+                  </span>
+                </div>
 
-              <div className="flex items-center gap-3 shrink-0">
-                <a
-                  href={selectedPhoto.src}
-                  target="_blank"
-                  rel="noreferrer"
-                  download
-                  className="px-4 py-2 rounded-full bg-white/15 hover:bg-white hover:text-[#0a515b] text-xs font-bold text-white transition-all inline-flex items-center gap-1.5 border border-white/20 shadow-xs cursor-pointer"
-                >
-                  <Download className="w-3.5 h-3.5" />
-                  <span>{isAr ? 'تحميل الصورة' : 'Download'}</span>
-                </a>
+                <div className="flex items-center gap-3 shrink-0">
+                  <a
+                    href={selectedPhoto.src}
+                    target="_blank"
+                    rel="noreferrer"
+                    download
+                    className="px-4 py-2 rounded-full bg-white/20 hover:bg-[#0a515b] hover:text-white backdrop-blur-md text-xs font-bold text-white transition-all inline-flex items-center gap-1.5 border border-white/25 shadow-md cursor-pointer"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    <span>{isAr ? 'تحميل الصورة' : 'Download'}</span>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
