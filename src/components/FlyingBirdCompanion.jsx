@@ -4,6 +4,9 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
   const isAr = currentLang === 'AR';
   const birdRef = useRef(null);
   const innerRef = useRef(null);
+  const currentLangRef = useRef(currentLang);
+  currentLangRef.current = currentLang;
+  const updateDOMRef = useRef(null);
 
   // Section IDs across the landing page in scroll order:
   // Group 0 (Sections 0, 1): hero, about      -> LEFT side (DEFAULT)
@@ -38,10 +41,13 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
         birdRef.current.style.transform = `translate3d(${state.currentX}px, ${state.currentY}px, 0)`;
       }
       if (innerRef.current) {
-        const rot = state.facing === 1 ? state.rotation : -state.rotation;
-        innerRef.current.style.transform = `scaleX(${state.facing}) rotate(${rot}deg)`;
+        const langFactor = currentLangRef.current === 'AR' ? -1 : 1;
+        const effectiveFacing = state.facing * langFactor;
+        const rot = effectiveFacing === 1 ? state.rotation : -state.rotation;
+        innerRef.current.style.transform = `scaleX(${effectiveFacing}) rotate(${rot}deg)`;
       }
     };
+    updateDOMRef.current = updateDOM;
 
     const tick = () => {
       const state = stateRef.current;
@@ -192,6 +198,19 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
     };
   }, []);
 
+  // Seamlessly flip bird direction on language switch (EN <-> AR)
+  useEffect(() => {
+    currentLangRef.current = currentLang;
+    if (innerRef.current) {
+      innerRef.current.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+      if (updateDOMRef.current) updateDOMRef.current();
+      const t = setTimeout(() => {
+        if (innerRef.current) innerRef.current.style.transition = '';
+      }, 400);
+      return () => clearTimeout(t);
+    }
+  }, [currentLang]);
+
   return (
     <div
       aria-hidden="true"
@@ -209,7 +228,7 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
           ref={innerRef}
           className="relative will-change-transform"
           style={{
-            transform: `scaleX(${stateRef.current.facing}) rotate(${stateRef.current.rotation}deg)`,
+            transform: `scaleX(${stateRef.current.facing * (currentLang === 'AR' ? -1 : 1)}) rotate(${stateRef.current.rotation}deg)`,
           }}
         >
           <img
