@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ZoomIn, Mouse } from 'lucide-react';
 
 export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -8,6 +8,8 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
   const startXRef = useRef(0);
   const currentDragRef = useRef(0);
   const containerRef = useRef(null);
+  const lastWheelTimeRef = useRef(0);
+  const wheelAccumulatorRef = useRef(0);
 
   const total = photos.length;
   const currentPhoto = photos[activeIndex] || photos[0];
@@ -19,6 +21,42 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
   const handlePrev = useCallback(() => {
     setActiveIndex((prev) => (prev - 1 + total) % total);
   }, [total]);
+
+  // Mouse Wheel / Trackpad Scroll Interaction
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const handleWheel = (e) => {
+      // Prioritize horizontal or vertical delta
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      
+      // If minimal jitter, ignore
+      if (Math.abs(delta) < 6) return;
+
+      // Prevent the outer browser page from jumping up/down while interacting with 3D carousel
+      e.preventDefault();
+
+      const now = Date.now();
+      wheelAccumulatorRef.current += delta;
+
+      // Smooth throttle window (200ms) for comfortable notch-by-notch navigation
+      if (now - lastWheelTimeRef.current > 200) {
+        if (wheelAccumulatorRef.current > 20) {
+          isAr ? handlePrev() : handleNext();
+          lastWheelTimeRef.current = now;
+          wheelAccumulatorRef.current = 0;
+        } else if (wheelAccumulatorRef.current < -20) {
+          isAr ? handleNext() : handlePrev();
+          lastWheelTimeRef.current = now;
+          wheelAccumulatorRef.current = 0;
+        }
+      }
+    };
+
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, [handleNext, handlePrev, isAr]);
 
   // Pointer / Mouse / Touch Drag Handlers
   const handlePointerDown = (e) => {
@@ -41,9 +79,9 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
     const dragDistance = currentDragRef.current;
 
     // Threshold to switch card
-    if (dragDistance < -60) {
+    if (dragDistance < -50) {
       handleNext();
-    } else if (dragDistance > 60) {
+    } else if (dragDistance > 50) {
       handlePrev();
     }
     setDragOffset(0);
@@ -83,7 +121,15 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
   const dragFraction = isDragging ? Math.max(-1, Math.min(1, dragOffset / 260)) : 0;
 
   return (
-    <div className="w-full flex flex-col items-center select-none py-4 sm:py-8">
+    <div className="w-full flex flex-col items-center select-none py-2 sm:py-6">
+      {/* Subtle interaction tip */}
+      <div className="mb-3">
+        <span className="text-[11px] sm:text-xs font-semibold text-[#556F5C] inline-flex items-center gap-1.5 bg-[#0a515b]/8 px-3.5 py-1 rounded-full border border-[#0a515b]/15">
+          <Mouse className="w-3.5 h-3.5 text-[#0a515b] animate-bounce" />
+          <span>{isAr ? 'حرّك عجلة الماوس أو اسحب للتنقل بين الصور' : 'Scroll mouse wheel or drag to explore'}</span>
+        </span>
+      </div>
+
       {/* 3D Scene Viewport */}
       <div
         ref={containerRef}
@@ -137,13 +183,13 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
                     setActiveIndex(photoIndex);
                   }
                 }}
-                className={`absolute w-[280px] h-[190px] sm:w-[390px] sm:h-[265px] lg:w-[480px] lg:h-[325px] rounded-2xl sm:rounded-3xl overflow-hidden bg-white transition-all will-change-transform ${
+                className={`group absolute w-[280px] h-[190px] sm:w-[390px] sm:h-[265px] lg:w-[480px] lg:h-[325px] rounded-2xl sm:rounded-3xl overflow-hidden bg-white will-change-transform ${
                   isDragging
                     ? 'transition-none'
-                    : 'duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]'
+                    : 'transition-all duration-600 ease-[cubic-bezier(0.2,1,0.3,1)]'
                 } ${
                   isCenter
-                    ? 'border-2 border-[#0a515b] shadow-[0_25px_60px_-12px_rgba(10,81,91,0.4)] ring-4 ring-[#0a515b]/20 cursor-pointer'
+                    ? 'border-2 border-[#0a515b] shadow-[0_25px_60px_-12px_rgba(10,81,91,0.45)] ring-4 ring-[#0a515b]/20 cursor-pointer'
                     : 'border border-[#CBDCCB] shadow-xl cursor-pointer hover:border-[#0a515b]/60'
                 }`}
                 style={{
@@ -153,13 +199,13 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
                   transformStyle: 'preserve-3d',
                 }}
               >
-                {/* Natural full photo - crisp and 100% solid */}
+                {/* Natural full photo - crisp and 100% solid with subtle zoom on hover */}
                 <img
                   src={photo.src}
                   alt={isAr ? photo.titleAr : photo.titleEn}
                   loading="lazy"
                   draggable={false}
-                  className="w-full h-full object-cover pointer-events-none select-none"
+                  className="w-full h-full object-cover pointer-events-none select-none transition-transform duration-700 ease-out group-hover:scale-105"
                 />
 
                 {/* Quick Zoom icon on Center Card */}
@@ -174,9 +220,12 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
         </div>
       </div>
 
-      {/* Center Caption identical to Emblematica style */}
-      <div className="text-center mt-5 sm:mt-8 min-h-[56px] px-4">
-        <h3 className="text-lg sm:text-2xl font-extrabold text-[#16241B] tracking-tight transition-all duration-300">
+      {/* Center Caption with smooth entry transition on change */}
+      <div 
+        key={activeIndex} 
+        className="text-center mt-4 sm:mt-6 min-h-[56px] px-4 animate-in fade-in slide-in-from-bottom-2 duration-300"
+      >
+        <h3 className="text-lg sm:text-2xl font-extrabold text-[#16241B] tracking-tight">
           {isAr ? currentPhoto.titleAr : currentPhoto.titleEn}
         </h3>
         <p className="text-xs sm:text-sm text-[#556F5C] mt-1 font-medium">
