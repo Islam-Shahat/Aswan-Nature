@@ -4,12 +4,17 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
   const isAr = currentLang === 'AR';
   const birdRef = useRef(null);
   const innerRef = useRef(null);
+  const currentLangRef = useRef(currentLang);
+  currentLangRef.current = currentLang;
+
+  const wakeAnimationRef = useRef(null);
+  const handleScrollRef = useRef(null);
 
   // Section IDs across the landing page in scroll order:
-  // Group 0 (Sections 0, 1): hero, about      -> LEFT side (DEFAULT)
-  // Group 1 (Sections 2, 3): tours, pharaohs  -> RIGHT side
-  // Group 2 (Sections 4, 5): gallery, camps   -> LEFT side
-  // Group 3 (Sections 6, 7): reviews, contact -> RIGHT side
+  // Group 0 (Sections 0, 1): hero, about
+  // Group 1 (Sections 2, 3): tours, pharaohs
+  // Group 2 (Sections 4, 5): gallery, camps
+  // Group 3 (Sections 6, 7): reviews, contact
   const sectionIds = ['hero', 'about', 'tours', 'pharaohs', 'gallery', 'camps', 'reviews', 'contact'];
 
   const stateRef = useRef({
@@ -17,13 +22,13 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
     currentY: 100,
     targetX: 30,
     currentX: 30,
-    facing: 1, // 1 = facing right (default), -1 = facing left
+    facing: currentLang === 'AR' ? -1 : 1, // 1 = facing right (default), -1 = facing left
     rotation: 4,
     targetRotation: 4,
     lastScrollY: 0,
     lastTime: Date.now(),
     isDiving: false,
-    activeSide: 'left',
+    activeSide: currentLang === 'AR' ? 'right' : 'left',
     isInitialized: false,
     isAnimating: false,
     scrollTimeout: null,
@@ -97,6 +102,7 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
         animId = requestAnimationFrame(tick);
       }
     };
+    wakeAnimationRef.current = wakeAnimation;
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -127,9 +133,12 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
         }
       }
 
-      // 2. Switch sides every 2 sections (Default = LEFT)
+      // 2. Switch sides every 2 sections (mirrored dynamically for Arabic RTL)
       const group = Math.floor(currentIdx / 2);
-      const targetSide = group % 2 === 0 ? 'left' : 'right';
+      const isArabic = currentLangRef.current === 'AR';
+      const targetSide = (group % 2 === 0)
+        ? (isArabic ? 'right' : 'left')
+        : (isArabic ? 'left' : 'right');
       state.activeSide = targetSide;
 
       // Responsive margin constants adjusted for enlarged bird scale
@@ -143,7 +152,7 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
       if (!state.isInitialized) {
         state.currentX = state.targetX;
         state.currentY = winHeight * 0.14;
-        state.facing = 1;
+        state.facing = isArabic ? -1 : 1;
         state.isInitialized = true;
         updateDOM();
       }
@@ -179,6 +188,7 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
       // Wake the loop on scroll
       wakeAnimation();
     };
+    handleScrollRef.current = handleScroll;
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
@@ -191,6 +201,16 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
       if (stateRef.current.scrollTimeout) clearTimeout(stateRef.current.scrollTimeout);
     };
   }, []);
+
+  // Smoothly reposition and flip bird facing direction whenever language switches
+  useEffect(() => {
+    if (handleScrollRef.current) {
+      handleScrollRef.current();
+    }
+    if (wakeAnimationRef.current) {
+      wakeAnimationRef.current();
+    }
+  }, [currentLang]);
 
   return (
     <div
