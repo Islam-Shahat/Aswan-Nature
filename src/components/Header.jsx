@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Globe, ArrowRight, Menu, X, ChevronDown } from 'lucide-react';
+import { Globe, ArrowRight, Menu, X } from 'lucide-react';
 
 export const Header = ({
   onBookClick,
@@ -8,7 +8,6 @@ export const Header = ({
   onToggleLang,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -56,13 +55,6 @@ export const Header = ({
     { label: currentLang === 'AR' ? 'من نحن' : 'About Us', path: '/about' },
     { label: currentLang === 'AR' ? 'تواصل معنا' : 'Contact', path: '/contact' },
   ];
-
-  const handleSelectLang = (newLang) => {
-    if (onToggleLang) {
-      onToggleLang(newLang);
-    }
-    setLangOpen(false);
-  };
 
   return (
     <header className="fixed top-2 sm:top-4 inset-x-0 z-50 px-2 sm:px-4 lg:px-6 flex justify-center pointer-events-none transition-all duration-300">
@@ -140,41 +132,19 @@ export const Header = ({
 
         {/* Right Actions */}
         <div className="relative z-10 flex items-center gap-2.5 sm:gap-4 flex-shrink-0">
-          {/* Language Switcher */}
-          <div className="relative">
-            <button
-              onClick={() => setLangOpen(!langOpen)}
-              className={`flex items-center gap-1.5 text-xs sm:text-[13px] font-bold uppercase tracking-wider px-3.5 py-1.5 sm:py-2 rounded-full border shadow-xs transition-all duration-300 ease-out cursor-pointer ${
-                effectiveScrolled
-                  ? 'border-[#D4E0CE] bg-white hover:bg-[#F3F7F0] text-[#1D3222] hover:text-[#112417]'
-                  : 'border-white/35 bg-white/20 hover:bg-white/30 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]'
-              }`}
-              aria-label={currentLang === 'EN' ? 'Switch to Arabic' : 'التبديل إلى الإنجليزية'}
-            >
-              <Globe className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors duration-300 ${effectiveScrolled ? 'text-[#3E5645]' : 'text-white/90'}`} />
-              <span>{currentLang}</span>
-              <ChevronDown className={`w-3 h-3 transition-colors duration-300 ${effectiveScrolled ? 'text-[#3E5645]' : 'text-white/90'}`} />
-            </button>
-
-            {langOpen && (
-              <div className="absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-32 bg-white/95 backdrop-blur-md border border-[#E5EADF] rounded-2xl shadow-xl py-1.5 z-50 animate-in fade-in zoom-in-95 duration-150">
-                <button
-                  onClick={() => handleSelectLang('EN')}
-                  className="w-full text-left px-3.5 py-2 text-xs font-semibold hover:bg-[#F4F7F1] text-[#16241B] flex items-center justify-between cursor-pointer"
-                >
-                  <span>English</span>
-                  {currentLang === 'EN' && <span className="w-1.5 h-1.5 rounded-full bg-[#2BE019]" />}
-                </button>
-                <button
-                  onClick={() => handleSelectLang('AR')}
-                  className="w-full text-right px-3.5 py-2 text-xs font-semibold hover:bg-[#F4F7F1] text-[#16241B] flex items-center justify-between cursor-pointer"
-                >
-                  {currentLang === 'AR' && <span className="w-1.5 h-1.5 rounded-full bg-[#2BE019]" />}
-                  <span>العربية</span>
-                </button>
-              </div>
-            )}
-          </div>
+          {/* Instant Language Toggle (Globe Icon Only - Click to switch immediately) */}
+          <button
+            onClick={() => onToggleLang && onToggleLang(currentLang === 'EN' ? 'AR' : 'EN')}
+            className={`p-2.5 sm:p-3 rounded-full border shadow-xs transition-all duration-300 ease-out cursor-pointer hover:scale-105 active:scale-95 flex items-center justify-center ${
+              effectiveScrolled
+                ? 'border-[#D4E0CE] bg-white hover:bg-[#F3F7F0] text-[#1D3222] hover:text-[#0a515b]'
+                : 'border-white/35 bg-white/20 hover:bg-white/30 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.3)]'
+            }`}
+            aria-label={currentLang === 'EN' ? 'التبديل إلى العربية' : 'Switch to English'}
+            title={currentLang === 'EN' ? 'العربية' : 'English'}
+          >
+            <Globe className={`w-4 h-4 sm:w-5 sm:h-5 transition-colors duration-300 ${effectiveScrolled ? 'text-[#1D3222]' : 'text-white'}`} />
+          </button>
 
           {/* Book CTA Pill Button */}
           <button
