@@ -7,12 +7,14 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
   const currentLangRef = useRef(currentLang);
   currentLangRef.current = currentLang;
   const updateDOMRef = useRef(null);
+  const wakeAnimationRef = useRef(null);
+  const handleScrollRef = useRef(null);
 
   // Section IDs across the landing page in scroll order:
-  // Group 0 (Sections 0, 1): hero, about      -> LEFT side (DEFAULT)
-  // Group 1 (Sections 2, 3): tours, pharaohs  -> RIGHT side
-  // Group 2 (Sections 4, 5): gallery, camps   -> LEFT side
-  // Group 3 (Sections 6, 7): reviews, contact -> RIGHT side
+  // Group 0 (Sections 0, 1): hero, about
+  // Group 1 (Sections 2, 3): tours, pharaohs
+  // Group 2 (Sections 4, 5): gallery, camps
+  // Group 3 (Sections 6, 7): reviews, contact
   const sectionIds = ['hero', 'about', 'tours', 'pharaohs', 'gallery', 'camps', 'reviews', 'contact'];
 
   const stateRef = useRef({
@@ -20,13 +22,13 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
     currentY: 100,
     targetX: 30,
     currentX: 30,
-    facing: 1, // 1 = facing right (default), -1 = facing left
+    facing: currentLang === 'AR' ? -1 : 1, // 1 = facing right, -1 = facing left
     rotation: 4,
     targetRotation: 4,
     lastScrollY: 0,
     lastTime: Date.now(),
     isDiving: false,
-    activeSide: 'left',
+    activeSide: currentLang === 'AR' ? 'right' : 'left',
     isInitialized: false,
     isAnimating: false,
     scrollTimeout: null,
@@ -41,10 +43,8 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
         birdRef.current.style.transform = `translate3d(${state.currentX}px, ${state.currentY}px, 0)`;
       }
       if (innerRef.current) {
-        const langFactor = currentLangRef.current === 'AR' ? -1 : 1;
-        const effectiveFacing = state.facing * langFactor;
-        const rot = effectiveFacing === 1 ? state.rotation : -state.rotation;
-        innerRef.current.style.transform = `scaleX(${effectiveFacing}) rotate(${rot}deg)`;
+        const rot = state.facing === 1 ? state.rotation : -state.rotation;
+        innerRef.current.style.transform = `scaleX(${state.facing}) rotate(${rot}deg)`;
       }
     };
     updateDOMRef.current = updateDOM;
@@ -103,6 +103,7 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
         animId = requestAnimationFrame(tick);
       }
     };
+    wakeAnimationRef.current = wakeAnimation;
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
@@ -133,23 +134,26 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
         }
       }
 
-      // 2. Switch sides every 2 sections (Default = LEFT)
+      // 2. Switch sides every 2 sections (mirrored for Arabic RTL)
       const group = Math.floor(currentIdx / 2);
-      const targetSide = group % 2 === 0 ? 'left' : 'right';
+      const isArabic = currentLangRef.current === 'AR';
+      const targetSide = (group % 2 === 0)
+        ? (isArabic ? 'right' : 'left')
+        : (isArabic ? 'left' : 'right');
       state.activeSide = targetSide;
 
       // Responsive margin constants adjusted for enlarged bird scale
       const birdWidth = winWidth < 640 ? 144 : winWidth < 1024 ? 190 : 230;
       const margin = winWidth < 640 ? 12 : winWidth < 1024 ? 24 : 36;
 
-      // 3. Compute target horizontal position
+      // 3. Compute target horizontal position (Deterministic LTR coordinate system)
       state.targetX = targetSide === 'right' ? winWidth - birdWidth - margin : margin;
 
       // Initial placement on mount
       if (!state.isInitialized) {
         state.currentX = state.targetX;
         state.currentY = winHeight * 0.14;
-        state.facing = 1;
+        state.facing = state.activeSide === 'right' ? -1 : 1;
         state.isInitialized = true;
         updateDOM();
       }
@@ -185,6 +189,7 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
       // Wake the loop on scroll
       wakeAnimation();
     };
+    handleScrollRef.current = handleScroll;
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll);
@@ -198,27 +203,26 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
     };
   }, []);
 
-  // Seamlessly flip bird direction on language switch (EN <-> AR)
+  // Seamlessly reposition and flip bird direction on language switch (EN <-> AR)
   useEffect(() => {
     currentLangRef.current = currentLang;
-    if (innerRef.current) {
-      innerRef.current.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-      if (updateDOMRef.current) updateDOMRef.current();
-      const t = setTimeout(() => {
-        if (innerRef.current) innerRef.current.style.transition = '';
-      }, 400);
-      return () => clearTimeout(t);
+    if (handleScrollRef.current) {
+      handleScrollRef.current();
+    }
+    if (wakeAnimationRef.current) {
+      wakeAnimationRef.current();
     }
   }, [currentLang]);
 
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none z-40 overflow-hidden select-none"
+      dir="ltr"
+      className="fixed inset-0 left-0 top-0 w-full h-full pointer-events-none z-40 overflow-hidden select-none"
     >
       <div
         ref={birdRef}
-        className="absolute pointer-events-auto cursor-pointer will-change-transform group animate-bird-float"
+        className="absolute top-0 left-0 pointer-events-auto cursor-pointer will-change-transform group animate-bird-float"
         style={{
           transform: `translate3d(${stateRef.current.currentX}px, ${stateRef.current.currentY}px, 0)`,
         }}
@@ -228,7 +232,7 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
           ref={innerRef}
           className="relative will-change-transform"
           style={{
-            transform: `scaleX(${stateRef.current.facing * (currentLang === 'AR' ? -1 : 1)}) rotate(${stateRef.current.rotation}deg)`,
+            transform: `scaleX(${stateRef.current.facing}) rotate(${stateRef.current.rotation}deg)`,
           }}
         >
           <img
