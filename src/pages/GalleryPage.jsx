@@ -40,8 +40,8 @@ export const GalleryPage = () => {
     <div
       className={`bg-[#F8FAF5] ${
         viewMode === '3d'
-          ? 'h-screen max-h-screen overflow-hidden flex flex-col justify-between pt-16 sm:pt-20 pb-2 sm:pb-3'
-          : 'min-h-screen pt-24 sm:pt-32 pb-24'
+          ? 'h-screen max-h-screen overflow-hidden flex flex-col justify-between pt-26 sm:pt-28 lg:pt-[120px] pb-2 sm:pb-3'
+          : 'min-h-screen pt-28 sm:pt-36 pb-24'
       }`}
     >
       {/* Elegant Nile Teal Gradient Divider Bisected by Centered Title */}

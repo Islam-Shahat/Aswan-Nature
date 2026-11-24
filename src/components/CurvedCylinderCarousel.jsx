@@ -129,7 +129,7 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerLeave={handlePointerUp}
-        className={`relative w-full h-[340px] sm:h-[430px] lg:h-[490px] xl:h-[540px] flex items-center justify-center overflow-hidden touch-pan-y cursor-grab ${
+        className={`relative w-full h-[320px] sm:h-[400px] lg:h-[460px] xl:h-[500px] flex items-center justify-center overflow-hidden touch-pan-y cursor-grab ${
           isDragging ? 'cursor-grabbing' : ''
         }`}
         style={{
