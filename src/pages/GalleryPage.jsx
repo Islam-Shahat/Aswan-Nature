@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { X, ZoomIn, ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import { X, ZoomIn, ChevronLeft, ChevronRight, Download, Grid3X3, Layers } from 'lucide-react';
 import { galleryPhotos } from '../data/galleryData';
+import { CurvedCylinderCarousel } from '../components/CurvedCylinderCarousel';
 
 export const GalleryPage = () => {
   const { currentLang } = useOutletContext();
   const isAr = currentLang === 'AR';
   const [selectedIndex, setSelectedIndex] = useState(null);
+  const [viewMode, setViewMode] = useState('3d'); // '3d' | 'grid'
 
   const selectedPhoto = selectedIndex !== null ? galleryPhotos[selectedIndex] : null;
 
@@ -37,7 +39,7 @@ export const GalleryPage = () => {
   return (
     <div className="pt-24 sm:pt-32 pb-24 bg-[#F8FAF5] min-h-screen">
       {/* Elegant Nile Teal Gradient Divider Bisected by Centered Title */}
-      <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-10 sm:mb-14 px-4 sm:px-8 overflow-hidden">
+      <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8 px-4 sm:px-8 overflow-hidden">
         <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent via-[#0a515b]/50 to-[#0a515b]" />
         <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
         <h1 className="px-3 sm:px-6 text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#16241B] shrink-0 text-center">
@@ -47,39 +49,78 @@ export const GalleryPage = () => {
         <div className="flex-1 h-[2px] bg-gradient-to-r from-[#0a515b] via-[#0a515b]/50 to-transparent" />
       </div>
 
-      <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10">
-        {/* 52-Photo Responsive Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
-          {galleryPhotos.map((photo, i) => (
-            <div
-              key={photo.id || i}
-              onClick={() => setSelectedIndex(i)}
-              className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#101D16] border border-[#E2E8DC] shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3]"
-            >
-              <img
-                src={photo.src}
-                alt={isAr ? photo.titleAr : photo.titleEn}
-                loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-              <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 p-2 rounded-full bg-black/50 backdrop-blur-md text-white opacity-0 group-hover:opacity-100 transition-opacity">
-                <ZoomIn className="w-4 h-4" />
-              </div>
-
-              <div className="absolute bottom-3 left-3 right-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <h3 className="text-xs sm:text-sm font-bold leading-tight mb-1 line-clamp-1">
-                  {isAr ? photo.titleAr : photo.titleEn}
-                </h3>
-                <span className="text-[11px] text-[#A6C0AF] line-clamp-1">
-                  {isAr ? photo.locationAr : photo.locationEn}
-                </span>
-              </div>
-            </div>
-          ))}
+      {/* View Mode Toggle: 3D Curved Showcase vs Full Grid */}
+      <div className="flex items-center justify-center mb-8">
+        <div className="inline-flex items-center p-1.5 rounded-full bg-white border border-[#CBDCCB] shadow-xs">
+          <button
+            onClick={() => setViewMode('3d')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
+              viewMode === '3d'
+                ? 'bg-[#0a515b] text-white shadow-sm'
+                : 'text-[#556F5C] hover:text-[#16241B]'
+            }`}
+          >
+            <Layers className="w-4 h-4" />
+            <span>{isAr ? 'عرض أسطواني 3D' : '3D Curved View'}</span>
+          </button>
+          <button
+            onClick={() => setViewMode('grid')}
+            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs sm:text-sm font-bold transition-all duration-200 cursor-pointer ${
+              viewMode === 'grid'
+                ? 'bg-[#0a515b] text-white shadow-sm'
+                : 'text-[#556F5C] hover:text-[#16241B]'
+            }`}
+          >
+            <Grid3X3 className="w-4 h-4" />
+            <span>{isAr ? 'عرض الشبكة (52)' : 'Grid View (52)'}</span>
+          </button>
         </div>
       </div>
+
+      {/* Main Showcase: 3D Curved Cylinder Carousel */}
+      {viewMode === '3d' ? (
+        <div className="w-full max-w-[1500px] mx-auto px-4">
+          <CurvedCylinderCarousel
+            photos={galleryPhotos}
+            isAr={isAr}
+            onPhotoClick={(idx) => setSelectedIndex(idx)}
+          />
+        </div>
+      ) : (
+        /* 52-Photo Responsive Grid */
+        <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10 animate-in fade-in duration-300">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {galleryPhotos.map((photo, i) => (
+              <div
+                key={photo.id || i}
+                onClick={() => setSelectedIndex(i)}
+                className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#101D16] border border-[#E2E8DC] shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3]"
+              >
+                <img
+                  src={photo.src}
+                  alt={isAr ? photo.titleAr : photo.titleEn}
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 p-2 rounded-full bg-black/50 backdrop-blur-md text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ZoomIn className="w-4 h-4" />
+                </div>
+
+                <div className="absolute bottom-3 left-3 right-3 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <h3 className="text-xs sm:text-sm font-bold leading-tight mb-1 line-clamp-1">
+                    {isAr ? photo.titleAr : photo.titleEn}
+                  </h3>
+                  <span className="text-[11px] text-[#A6C0AF] line-clamp-1">
+                    {isAr ? photo.locationAr : photo.locationEn}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Lightbox Modal with Next/Prev and Full View */}
       {selectedPhoto && (
