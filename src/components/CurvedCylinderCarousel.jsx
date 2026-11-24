@@ -158,14 +158,14 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
 
             const absOffset = Math.abs(effectiveOffset);
             const scale = Math.max(0.72, 1 - absOffset * 0.065);
-            // Fully visible across the whole screen width
-            const opacity = absOffset > 4.4 ? 0 : 1;
+            // Smooth edge fade for cards entering/leaving the visible viewport
+            const opacity = absOffset >= 4.6 ? 0 : absOffset > 3.6 ? Math.max(0, 1 - (absOffset - 3.6) / 1.0) : 1;
             const zIndex = Math.round(60 - absOffset * 8);
             const isCenter = Math.abs(effectiveOffset) < 0.45;
 
             return (
               <div
-                key={`${photo.id || photoIndex}-${offset}`}
+                key={photo.id || photoIndex}
                 onClick={(e) => {
                   e.stopPropagation();
                   if (Math.abs(currentDragRef.current) > 10) return;
@@ -178,7 +178,7 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
                 className={`group absolute w-[290px] h-[195px] sm:w-[420px] sm:h-[285px] lg:w-[540px] lg:h-[365px] xl:w-[620px] xl:h-[415px] rounded-2xl sm:rounded-3xl overflow-hidden bg-white will-change-transform ${
                   isDragging
                     ? 'transition-none'
-                    : 'transition-all duration-600 ease-[cubic-bezier(0.2,1,0.3,1)]'
+                    : 'transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]'
                 } ${
                   isCenter
                     ? 'border-2 border-[#0a515b] shadow-[0_30px_70px_-12px_rgba(10,81,91,0.45)] ring-4 ring-[#0a515b]/20 cursor-pointer'
