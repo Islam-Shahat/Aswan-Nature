@@ -24,6 +24,16 @@ export const GalleryPage = () => {
     }
   };
 
+  // Preload gallery images for ultra-fast, zero-delay rendering
+  useEffect(() => {
+    galleryPhotos.slice(0, 24).forEach((p) => {
+      if (p?.src) {
+        const img = new Image();
+        img.src = p.src;
+      }
+    });
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (selectedIndex === null) return;
@@ -81,7 +91,7 @@ export const GalleryPage = () => {
             }`}
           >
             <Grid3X3 className="w-3.5 h-3.5" />
-            <span>{isAr ? 'عرض الشبكة (52)' : 'Grid View (52)'}</span>
+            <span>{isAr ? `عرض الشبكة (${galleryPhotos.length})` : `Grid View (${galleryPhotos.length})`}</span>
           </button>
         </div>
       </div>
@@ -96,7 +106,7 @@ export const GalleryPage = () => {
           />
         </div>
       ) : (
-        /* 52-Photo Responsive Grid */
+        /* Responsive Grid */
         <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-10 animate-in fade-in duration-300">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
             {galleryPhotos.map((photo, i) => (
@@ -108,7 +118,9 @@ export const GalleryPage = () => {
                 <img
                   src={photo.src}
                   alt={isAr ? photo.titleAr : photo.titleEn}
-                  loading="lazy"
+                  loading={i < 8 ? "eager" : "lazy"}
+                  decoding="async"
+                  fetchPriority={i < 4 ? "high" : "auto"}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
