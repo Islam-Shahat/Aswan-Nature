@@ -9,8 +9,6 @@ import {
   ArrowRight,
   CheckCircle2,
   Backpack,
-  Clock,
-  Users,
   Camera,
   Heart,
   Smile,
@@ -290,28 +288,6 @@ export const LearningCampsPage = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
 
-                {/* Top Badge */}
-                <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4 flex items-center gap-2">
-                  <span className="px-4 py-1.5 rounded-full bg-white text-[#16241B] font-black text-xs shadow-md border border-[#CBDCCB] flex items-center gap-1.5">
-                    <span>{currentCamp.emoji}</span>
-                    <span>{isAr ? currentCamp.tagAr : currentCamp.tagEn}</span>
-                  </span>
-                </div>
-
-                {/* Subtle 10-second auto-cycle indicator dots */}
-                <div className="absolute top-4 right-4 rtl:right-auto rtl:left-4 flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full">
-                  {camps.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveTab(i)}
-                      className={`h-2 rounded-full transition-all duration-500 cursor-pointer ${
-                        activeTab === i ? 'w-6 bg-[#21c715]' : 'w-2 bg-white/50 hover:bg-white'
-                      }`}
-                      aria-label={`Camp ${i + 1}`}
-                    />
-                  ))}
-                </div>
-
                 {/* Bottom Real Photo Caption */}
                 <div className="absolute bottom-4 left-4 right-4 text-white">
                   <div className="text-xs font-mono font-bold text-[#4bf319] block mb-0.5">
@@ -326,18 +302,6 @@ export const LearningCampsPage = () => {
               {/* Right / Bottom: Camp Details (Concise, punchy, zero fluff) */}
               <div className="lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between">
                 <div>
-                  {/* Meta pills */}
-                  <div className="flex flex-wrap items-center gap-2 mb-3">
-                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#0a515b]/10 text-[#0a515b] text-xs font-bold">
-                      <Users className="w-3.5 h-3.5" />
-                      <span>{isAr ? currentCamp.ageAr : currentCamp.ageEn}</span>
-                    </span>
-                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#21c715]/15 text-[#167010] text-xs font-bold">
-                      <Clock className="w-3.5 h-3.5" />
-                      <span>{isAr ? currentCamp.durationAr : currentCamp.durationEn}</span>
-                    </span>
-                  </div>
-
                   <h3 className="text-2xl sm:text-3xl font-black text-[#16241B] mb-3 leading-snug">
                     {isAr ? currentCamp.nameAr : currentCamp.nameEn}
                   </h3>
