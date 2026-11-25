@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import {
   Compass,
@@ -240,6 +240,72 @@ export const LearningCampsPage = () => {
   const currentCamp = camps[activeTab] || camps[0];
   const isAlternate = activeTab % 2 === 1;
 
+  // ============================================================
+  // SPIRAL RIVER RIBBON: Scroll-Linked Background Illumination
+  // ============================================================
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const pathRef = useRef(null);
+  const [pathLength, setPathLength] = useState(0);
+  const [glowPoint, setGlowPoint] = useState({ x: 500, y: 40 });
+  const [milestones, setMilestones] = useState([]);
+
+  // Meandering spiral path coordinates across 1000 x 3200 virtual plane
+  const ribbonD =
+    "M 500,40 C 740,120 880,300 830,460 C 770,620 540,680 320,650 C 100,620 30,780 70,960 C 120,1160 420,1240 740,1220 C 960,1200 990,1400 910,1560 C 800,1740 520,1780 280,1720 C 80,1660 20,1840 50,2000 C 90,2180 370,2260 700,2240 C 930,2220 970,2420 890,2580 C 800,2740 540,2800 300,2740 C 100,2700 40,2880 120,3000 C 200,3120 420,3170 500,3200";
+
+  // Measure path length and calculate milestone positions
+  useEffect(() => {
+    const updateMetrics = () => {
+      if (pathRef.current) {
+        const len = pathRef.current.getTotalLength();
+        setPathLength(len);
+
+        const waypointConfig = [
+          { t: 0.03, icon: '🌿' },
+          { t: 0.24, icon: '🏕️' },
+          { t: 0.52, icon: '📸' },
+          { t: 0.80, icon: '🎒' },
+          { t: 0.98, icon: '🏅' }
+        ];
+
+        const calculated = waypointConfig.map((wp) => {
+          const pt = pathRef.current.getPointAtLength(len * wp.t);
+          return { ...wp, x: pt.x, y: pt.y };
+        });
+        setMilestones(calculated);
+      }
+    };
+
+    updateMetrics();
+    window.addEventListener('resize', updateMetrics);
+    return () => window.removeEventListener('resize', updateMetrics);
+  }, []);
+
+  // Track scroll position and move the luminous beacon along the spiral ribbon
+  useEffect(() => {
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+          const progress = docHeight > 0 ? Math.min(1, Math.max(0, window.scrollY / docHeight)) : 0;
+          setScrollProgress(progress);
+
+          if (pathRef.current && pathLength > 0) {
+            const currentPt = pathRef.current.getPointAtLength(progress * pathLength);
+            setGlowPoint(currentPt);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [pathLength]);
+
   return (
     <div className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
       
@@ -262,6 +328,153 @@ export const LearningCampsPage = () => {
           }
         }
       `}</style>
+
+      {/* ============================================================ */}
+      {/* 0. INTERACTIVE BACKGROUND SPIRAL RIBBON (Winding River Glow) */}
+      {/* ============================================================ */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-0 overflow-hidden">
+        <svg
+          viewBox="0 0 1000 3200"
+          preserveAspectRatio="none"
+          className="w-full h-full"
+        >
+          <defs>
+            {/* Base faint riverbed gradient */}
+            <linearGradient id="spiral-base-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#0a515b" stopOpacity="0.10" />
+              <stop offset="35%" stopColor="#21c715" stopOpacity="0.14" />
+              <stop offset="70%" stopColor="#c99a5d" stopOpacity="0.12" />
+              <stop offset="100%" stopColor="#0a515b" stopOpacity="0.10" />
+            </linearGradient>
+
+            {/* Glowing luminous active stream gradient */}
+            <linearGradient id="spiral-active-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#0a515b" />
+              <stop offset="25%" stopColor="#1EAA13" />
+              <stop offset="55%" stopColor="#21c715" />
+              <stop offset="80%" stopColor="#4bf319" />
+              <stop offset="100%" stopColor="#c99a5d" />
+            </linearGradient>
+
+            {/* Radiant glowing bloom filter */}
+            <filter id="ribbon-bloom" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="6" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+
+            {/* Intense Beacon Glow */}
+            <filter id="beacon-glow" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="glow" />
+              <feMerge>
+                <feMergeNode in="glow" />
+                <feMergeNode in="glow" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          {/* 1. Underlying Base Ribbon (Faint explorer guide trail) */}
+          <path
+            d={ribbonD}
+            fill="none"
+            stroke="url(#spiral-base-grad)"
+            strokeWidth="3"
+            strokeDasharray="10 8"
+            strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
+          />
+
+          {/* 2. Active Illuminated Spiral Ribbon (Grows and glows with scroll) */}
+          <path
+            ref={pathRef}
+            d={ribbonD}
+            fill="none"
+            stroke="url(#spiral-active-grad)"
+            strokeWidth="4.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            filter="url(#ribbon-bloom)"
+            style={{
+              strokeDasharray: pathLength || 4500,
+              strokeDashoffset: (pathLength || 4500) * (1 - scrollProgress),
+              transition: 'stroke-dashoffset 0.05s linear'
+            }}
+          />
+
+          {/* 3. Milestone Waypoints along the winding river ribbon */}
+          {milestones.map((ms, idx) => {
+            const isReached = scrollProgress >= ms.t;
+            return (
+              <g key={idx}>
+                {/* Glowing halo pulse when ribbon reaches this milestone */}
+                {isReached && (
+                  <circle
+                    cx={ms.x}
+                    cy={ms.y}
+                    r="22"
+                    fill="#21c715"
+                    fillOpacity="0.18"
+                    filter="url(#beacon-glow)"
+                  />
+                )}
+                {/* Milestone disc */}
+                <circle
+                  cx={ms.x}
+                  cy={ms.y}
+                  r={isReached ? 13 : 8}
+                  fill={isReached ? '#FFFFFF' : '#FAFDF8'}
+                  stroke={isReached ? '#21c715' : '#CBDCCB'}
+                  strokeWidth={isReached ? 3 : 1.5}
+                  filter={isReached ? 'drop-shadow(0 0 8px rgba(33,199,21,0.6))' : 'none'}
+                />
+                {/* Inner marker jewel */}
+                <circle
+                  cx={ms.x}
+                  cy={ms.y}
+                  r={isReached ? 5 : 3}
+                  fill={isReached ? '#0a515b' : '#A3B899'}
+                />
+              </g>
+            );
+          })}
+
+          {/* 4. Glowing Head Beacon (Descends and illuminates sections as you scroll) */}
+          {pathLength > 0 && (
+            <g>
+              {/* Giant atmospheric soft halo */}
+              <circle
+                cx={glowPoint.x}
+                cy={glowPoint.y}
+                r="38"
+                fill="#21c715"
+                fillOpacity="0.22"
+                filter="url(#beacon-glow)"
+              />
+              {/* Luminous emerald core */}
+              <circle
+                cx={glowPoint.x}
+                cy={glowPoint.y}
+                r="16"
+                fill="#4bf319"
+                fillOpacity="0.75"
+              />
+              {/* Brilliant diamond sparkling center */}
+              <circle
+                cx={glowPoint.x}
+                cy={glowPoint.y}
+                r="6.5"
+                fill="#FFFFFF"
+                filter="drop-shadow(0 0 6px #ffffff)"
+              />
+            </g>
+          )}
+        </svg>
+      </div>
 
       {/* Ambient Nature Lights */}
       <div className="absolute top-10 left-1/4 w-96 h-96 rounded-full bg-[#0a515b]/8 blur-3xl pointer-events-none" />
