@@ -129,7 +129,7 @@ export const PharaohsSection = ({
 
             {/* Grand Pharaonic Heading */}
             <h2 className="text-4xl sm:text-5xl lg:text-[62px] leading-[1.08] tracking-[-0.03em] mb-5 font-heading">
-              <span className="block font-black text-[#1C140A]">
+              <span className="block font-black text-[#0a515b]">
                 {isArabic ? 'طيور الفراعنة' : 'Pharaohs Birds'}
               </span>
               <span className="block font-serif italic font-normal text-[#c99a5d] drop-shadow-xs mt-1">

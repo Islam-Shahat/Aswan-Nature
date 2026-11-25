@@ -193,7 +193,7 @@ export const PharaohsPage = () => {
           </div>
 
           {/* Grand Pharaonic Heading */}
-          <h1 className="text-4xl sm:text-6xl lg:text-[76px] font-black tracking-[-0.03em] leading-[1.05] text-[#1C140A] font-heading mb-6">
+          <h1 className="text-4xl sm:text-6xl lg:text-[76px] font-black tracking-[-0.03em] leading-[1.05] text-[#0a515b] font-heading mb-6">
             <span className="block">
               {isAr ? 'طيور الفراعنة حيّة' : 'Pharaohs Birds Alive'}
             </span>
@@ -544,7 +544,7 @@ export const PharaohsPage = () => {
             𓍹 𓅃 𓋹 𓊽 𓍻
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#1C140A] tracking-tight mb-4 font-heading">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0a515b] tracking-tight mb-4 font-heading">
             {isAr ? 'عِش تجربة طيور الفراعنة الحصرية في أسوان' : 'Experience Pharaohs Birds Alive in Aswan'}
           </h2>
 
