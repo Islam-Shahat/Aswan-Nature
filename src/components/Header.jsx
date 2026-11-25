@@ -52,7 +52,6 @@ export const Header = ({
     { label: currentLang === 'AR' ? 'طيور الفراعنة حية' : 'Pharaohs Birds Alive', path: '/pharaohs' },
     { label: currentLang === 'AR' ? 'معسكرات التعلم' : 'Learning Camps', path: '/camps' },
     { label: currentLang === 'AR' ? 'معرض الصور' : 'Gallery', path: '/gallery' },
-    { label: currentLang === 'AR' ? 'من نحن' : 'About Us', path: '/about' },
     { label: currentLang === 'AR' ? 'تواصل معنا' : 'Contact', path: '/contact' },
   ];
 

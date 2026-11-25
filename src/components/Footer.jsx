@@ -84,11 +84,6 @@ export const Footer = ({
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-white transition-colors">
-                  {isAr ? 'من نحن' : 'About Us'}
-                </Link>
-              </li>
-              <li>
                 <button
                   onClick={onOpenPartners}
                   className="hover:text-white transition-colors text-left rtl:text-right cursor-pointer"
