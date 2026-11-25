@@ -211,7 +211,7 @@ export const LearningCampsPage = () => {
   const isAlternate = activeTab % 2 === 1;
 
   return (
-    <div className="pt-20 sm:pt-24 pb-16 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
+    <div className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
       
       {/* CSS Smooth Crossover Transitions */}
       <style>{`
@@ -235,22 +235,22 @@ export const LearningCampsPage = () => {
 
       {/* Ambient Nature Lights */}
       <div className="absolute top-10 left-1/4 w-96 h-96 rounded-full bg-[#0a515b]/8 blur-3xl pointer-events-none" />
-      <div className="absolute top-60 right-1/4 w-96 h-96 rounded-full bg-[#21c715]/10 blur-3xl pointer-events-none" />
+      <div className="absolute top-80 right-1/4 w-96 h-96 rounded-full bg-[#21c715]/10 blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
 
         {/* ============================================================ */}
-        {/* 1. HERO HEADER (Compact, inspiring & kid-friendly) */}
+        {/* 1. HERO HEADER (Inspiring, professional & kid-friendly) */}
         {/* ============================================================ */}
-        <div className="text-center max-w-3xl mx-auto mb-5 sm:mb-6">
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight mb-2 sm:mb-2.5 font-heading text-[#16241B]">
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] mb-4 font-heading text-[#16241B]">
             {isAr ? 'مغامرات استكشافية حقيقية.. ' : 'Real River Adventures for '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0a515b] via-[#10705f] to-[#21c715]">
               {isAr ? 'للمستكشفين الصغار! 🌿' : 'Curious Young Explorers 🌿'}
             </span>
           </h1>
 
-          <p className="text-xs sm:text-sm lg:text-[15px] text-[#4E6254] max-w-xl mx-auto font-medium leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-[#4E6254] max-w-2xl mx-auto font-medium leading-relaxed">
             {isAr
               ? 'وداعاً للشاشات وأهلاً بسحر الطبيعة! معسكرات تفاعلية آمنة تسلّم طفلك منظاره الخاص ليكتشف أندر طيور النيل ويتتبع آثار الحياة البرية بصحبة مرشدين بيئيين متخصصين.'
               : 'Step away from screens and into the wild! Kids explore untouched Nile islands with real binoculars, learn wildlife tracking, and earn their Junior Ranger badge with 100% certified safety.'}
@@ -260,13 +260,13 @@ export const LearningCampsPage = () => {
         {/* ============================================================ */}
         {/* 2. AUTO-PLAYING SHOWCASE CARD (Flips automatically every 10s) */}
         {/* ============================================================ */}
-        <div className="mb-16">
+        <div className="mb-20">
           <div className="bg-white rounded-3xl sm:rounded-[36px] border-2 border-[#CBDCCB] shadow-xl overflow-hidden p-2 sm:p-2.5">
-            <div className="flex flex-col lg:flex-row items-stretch relative min-h-[340px] sm:min-h-[380px]" dir="ltr">
+            <div className="flex flex-col lg:flex-row items-stretch relative min-h-[420px]" dir="ltr">
               
               {/* Photo Panel: Smoothly glides across and over the details panel */}
               <div
-                className={`w-full lg:w-1/2 relative min-h-[260px] sm:min-h-[340px] lg:min-h-[380px] overflow-hidden group z-20 rounded-2xl sm:rounded-[28px] shadow-2xl glide-panel-photo ${
+                className={`w-full lg:w-1/2 relative min-h-[320px] sm:min-h-[420px] overflow-hidden group z-20 rounded-2xl sm:rounded-[28px] shadow-2xl glide-panel-photo ${
                   isAlternate ? 'alt-active' : ''
                 }`}
               >
@@ -279,11 +279,11 @@ export const LearningCampsPage = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent pointer-events-none" />
 
                 {/* Bottom Real Photo Caption */}
-                <div className="absolute bottom-3 left-4 right-4 text-white pointer-events-none" dir={isAr ? 'rtl' : 'ltr'}>
-                  <div className="text-[11px] font-mono font-bold text-[#4bf319] block mb-0.5">
+                <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none" dir={isAr ? 'rtl' : 'ltr'}>
+                  <div className="text-xs font-mono font-bold text-[#4bf319] block mb-0.5">
                     📸 {isAr ? 'صورة حقيقية من معسكراتنا في أسوان' : 'Real Photo from Aswan Nature Camps'}
                   </div>
-                  <div className="text-xs sm:text-sm font-extrabold drop-shadow-sm">
+                  <div className="text-sm font-extrabold drop-shadow-sm">
                     {isAr ? currentCamp.captionAr : currentCamp.captionEn}
                   </div>
                 </div>
@@ -291,29 +291,29 @@ export const LearningCampsPage = () => {
 
               {/* Details Panel: Smoothly glides underneath to the other side */}
               <div
-                className={`w-full lg:w-1/2 p-5 sm:p-7 lg:p-8 flex flex-col justify-between bg-white z-10 glide-panel-details ${
+                className={`w-full lg:w-1/2 p-6 sm:p-10 flex flex-col justify-between bg-white z-10 glide-panel-details ${
                   isAlternate ? 'alt-active' : ''
                 }`}
                 dir={isAr ? 'rtl' : 'ltr'}
               >
                 <div key={currentCamp.id} className="animate-in fade-in duration-700 flex flex-col justify-between h-full">
                   <div>
-                    <h3 className="text-xl sm:text-2xl lg:text-[26px] font-black text-[#16241B] mb-2 leading-snug">
+                    <h3 className="text-2xl sm:text-3xl font-black text-[#16241B] mb-3 leading-snug">
                       {isAr ? currentCamp.nameAr : currentCamp.nameEn}
                     </h3>
 
-                    <p className="text-xs sm:text-sm text-[#4E6254] leading-relaxed mb-4 font-normal">
+                    <p className="text-sm sm:text-base text-[#4E6254] leading-relaxed mb-6 font-normal">
                       {isAr ? currentCamp.descAr : currentCamp.descEn}
                     </p>
 
                     {/* 3 Clear Perks */}
-                    <div className="space-y-2 mb-5">
+                    <div className="space-y-2.5 mb-8">
                       {(isAr ? currentCamp.perksAr : currentCamp.perksEn).map((perk, pIdx) => (
                         <div
                           key={pIdx}
-                          className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-2xl bg-[#FAFDF8] border border-[#E2E8DC] hover:border-[#21c715] transition-colors"
+                          className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAFDF8] border border-[#E2E8DC] hover:border-[#21c715] transition-colors"
                         >
-                          <div className="w-5 h-5 rounded-full bg-[#21c715]/15 text-[#21c715] flex items-center justify-center shrink-0 font-bold text-xs">
+                          <div className="w-6 h-6 rounded-full bg-[#21c715]/15 text-[#21c715] flex items-center justify-center shrink-0 font-bold text-xs">
                             ✓
                           </div>
                           <span className="text-xs sm:text-sm font-bold text-[#16241B]">
@@ -327,7 +327,7 @@ export const LearningCampsPage = () => {
                   {/* Booking Action */}
                   <button
                     onClick={() => handleOpenBooking(isAr ? currentCamp.nameAr : currentCamp.nameEn)}
-                    className={`w-full py-3 sm:py-3.5 px-5 rounded-2xl ${currentCamp.themeBg} hover:opacity-95 text-white font-black text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-2 group/btn`}
+                    className={`w-full py-4 px-6 rounded-2xl ${currentCamp.themeBg} hover:opacity-95 text-white font-black text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-2 group/btn`}
                   >
                     <span>{isAr ? 'احجز هذا المعسكر لطفلك 🎒' : 'Book This Camp Track 🎒'}</span>
                     <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1" />
