@@ -58,20 +58,6 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
     return () => el.removeEventListener('wheel', handleWheel);
   }, [handleNext, handlePrev, isAr]);
 
-  // Preload neighboring images aggressively so rotating the cylinder is instant with zero loading lag
-  useEffect(() => {
-    if (!photos || photos.length === 0) return;
-    const preloadOffsets = [-4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7];
-    preloadOffsets.forEach((offset) => {
-      const idx = ((activeIndex + offset) % total + total) % total;
-      const item = photos[idx];
-      if (item?.src) {
-        const img = new Image();
-        img.src = item.src;
-      }
-    });
-  }, [activeIndex, photos, total]);
-
   // Pointer / Mouse / Touch Drag Handlers
   const handlePointerDown = (e) => {
     setIsDragging(true);
@@ -189,14 +175,14 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
                     setActiveIndex(photoIndex);
                   }
                 }}
-                className={`group absolute w-[290px] h-[195px] sm:w-[420px] sm:h-[285px] lg:w-[540px] lg:h-[365px] xl:w-[620px] xl:h-[415px] rounded-2xl sm:rounded-3xl overflow-hidden bg-[#052429] will-change-transform ${
+                className={`group absolute w-[290px] h-[195px] sm:w-[420px] sm:h-[285px] lg:w-[540px] lg:h-[365px] xl:w-[620px] xl:h-[415px] rounded-2xl sm:rounded-3xl overflow-hidden bg-white will-change-transform ${
                   isDragging
                     ? 'transition-none'
                     : 'transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]'
                 } ${
                   isCenter
                     ? 'border-2 border-[#0a515b] shadow-[0_30px_70px_-12px_rgba(10,81,91,0.45)] ring-4 ring-[#0a515b]/20 cursor-pointer'
-                    : 'border border-[#CBDCCB]/40 shadow-2xl cursor-pointer hover:border-[#0a515b]/60'
+                    : 'border border-[#CBDCCB] shadow-2xl cursor-pointer hover:border-[#0a515b]/60'
                 }`}
                 style={{
                   transform: `translate3d(${x}px, 0, ${z}px) rotateY(${rotateY}deg) scale(${scale})`,
@@ -209,8 +195,7 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
                 <img
                   src={photo.src}
                   alt={isAr ? photo.titleAr : photo.titleEn}
-                  loading="eager"
-                  decoding="async"
+                  loading="lazy"
                   draggable={false}
                   className="w-full h-full object-cover pointer-events-none select-none transition-transform duration-700 ease-out group-hover:scale-105"
                 />

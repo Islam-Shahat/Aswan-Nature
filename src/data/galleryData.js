@@ -200,6 +200,14 @@ export const galleryPhotos = [
     "locationEn": "Old Aswan Dam Reservoir"
   },
   {
+    "id": 26,
+    "src": "/gallery-images/363272924_s8.jpg",
+    "titleAr": "مسافر حر على درب الهجرة الكبرى",
+    "titleEn": "Free Wanderer of the Great Flyway",
+    "locationAr": "مسار هجرة الطيور، أسوان",
+    "locationEn": "Migratory Route, Aswan"
+  },
+  {
     "id": 27,
     "src": "/gallery-images/4-1-636x426.jpg",
     "titleAr": "بريق الزمرد والفيروز فوق أغصان النيل",
