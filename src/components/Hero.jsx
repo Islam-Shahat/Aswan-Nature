@@ -11,9 +11,12 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
         className={`absolute inset-0 w-full h-full object-cover -z-30 transition-transform duration-700 ease-in-out ${
           currentLang === 'AR' ? 'scale-x-[-1]' : 'scale-x-100'
         }`}
-        src="/assets/hero-aswan-nile-2x.webp"
+        src="/assets/hero-aswan-nile.webp"
+        srcSet="/assets/hero-aswan-nile.webp 1280w, /assets/hero-aswan-nile-2x.webp 2560w"
+        sizes="100vw"
         alt="Nile boat tour and flying birds in Aswan"
         fetchPriority="high"
+        decoding="async"
         style={{ objectPosition: '78% 30%' }}
       />
       

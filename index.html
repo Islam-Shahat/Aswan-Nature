@@ -7,13 +7,20 @@
     <meta name="description" content="Discover birdwatching in Aswan with Aswan Nature. Explore Nile bird tours, Aswan Reservoir wildlife, Pharaohs Birds Alive and educational nature camps." />
     <meta name="theme-color" content="#243B2A" />
     <title>Home | Birdwatching &amp; Nature in Aswan</title>
+
     <!-- Preload Hero LCP image for sub-second paint -->
-    <link rel="preload" as="image" href="/assets/hero-aswan-nile-2x.webp" type="image/webp" />
+    <link rel="preload" as="image" href="/assets/hero-aswan-nile.webp" type="image/webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/assets/hero-aswan-nile-2x.webp" type="image/webp" media="(min-width: 1280px)" fetchpriority="high" />
     <link rel="preload" as="image" href="/assets/flying-bird.gif" type="image/gif" />
-    <!-- Google Fonts: DM Sans, Manrope, Alexandria, Cormorant Garamond, Instrument Serif -->
+
+    <!-- Google Fonts: Non-render-blocking with font-display swap -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,400..700&family=Manrope:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,500;1,600;1,700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800&family=Manrope:wght@600;700;800&family=Instrument+Serif:ital@0;1&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800&family=Manrope:wght@600;700;800&family=Instrument+Serif:ital@0;1&display=swap" media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,800&family=Manrope:wght@600;700;800&family=Instrument+Serif:ital@0;1&display=swap" />
+    </noscript>
   </head>
   <body class="bg-[#F8FAF5] text-[#19261E] antialiased selection:bg-[#2BE019] selection:text-black">
     <div id="root"></div>
