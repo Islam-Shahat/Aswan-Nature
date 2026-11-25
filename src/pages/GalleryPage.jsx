@@ -38,7 +38,10 @@ export const GalleryPage = () => {
 
   return (
     <div
-      className={`bg-[#F8FAF5] ${
+      style={{
+        background: 'radial-gradient(circle at 50% 50%, #167a88 0%, #0a515b 45%, #05262c 82%, #021417 100%) fixed',
+      }}
+      className={`${
         viewMode === '3d'
           ? 'h-screen max-h-screen overflow-hidden flex flex-col justify-between pt-26 sm:pt-28 lg:pt-[120px] pb-2 sm:pb-3'
           : 'min-h-screen pt-28 sm:pt-36 pb-24'
@@ -46,24 +49,24 @@ export const GalleryPage = () => {
     >
       {/* Elegant Nile Teal Gradient Divider Bisected by Centered Title */}
       <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-2 sm:mb-2.5 px-4 sm:px-8 overflow-hidden shrink-0">
-        <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent via-[#0a515b]/50 to-[#0a515b]" />
-        <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
-        <h1 className="px-3 sm:px-6 text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#16241B] shrink-0 text-center">
+        <div className="flex-1 h-[1.5px] bg-gradient-to-r from-transparent via-white/40 to-white/90" />
+        <div className="w-1.5 h-1.5 rounded-full bg-[#2BE019] shrink-0 hidden sm:block shadow-[0_0_8px_#2BE019]" />
+        <h1 className="px-3 sm:px-6 text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.5)] shrink-0 text-center">
           {isAr ? 'معرض صور الحياة البرية' : 'Wildlife Photo Gallery'}
         </h1>
-        <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
-        <div className="flex-1 h-[2px] bg-gradient-to-r from-[#0a515b] via-[#0a515b]/50 to-transparent" />
+        <div className="w-1.5 h-1.5 rounded-full bg-[#2BE019] shrink-0 hidden sm:block shadow-[0_0_8px_#2BE019]" />
+        <div className="flex-1 h-[1.5px] bg-gradient-to-r from-white/90 via-white/40 to-transparent" />
       </div>
 
       {/* View Mode Toggle: 3D Curved Showcase vs Full Grid */}
       <div className="flex items-center justify-center mb-2 sm:mb-2.5 shrink-0">
-        <div className="inline-flex items-center p-1 rounded-full bg-white border border-[#CBDCCB] shadow-xs">
+        <div className="inline-flex items-center p-1 rounded-full bg-black/30 backdrop-blur-md border border-white/20 shadow-lg">
           <button
             onClick={() => setViewMode('3d')}
             className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
               viewMode === '3d'
-                ? 'bg-[#0a515b] text-white shadow-sm'
-                : 'text-[#556F5C] hover:text-[#16241B]'
+                ? 'bg-white text-[#0a515b] shadow-sm font-extrabold'
+                : 'text-white/75 hover:text-white'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -73,8 +76,8 @@ export const GalleryPage = () => {
             onClick={() => setViewMode('grid')}
             className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all duration-200 cursor-pointer ${
               viewMode === 'grid'
-                ? 'bg-[#0a515b] text-white shadow-sm'
-                : 'text-[#556F5C] hover:text-[#16241B]'
+                ? 'bg-white text-[#0a515b] shadow-sm font-extrabold'
+                : 'text-white/75 hover:text-white'
             }`}
           >
             <Grid3X3 className="w-3.5 h-3.5" />
@@ -100,7 +103,7 @@ export const GalleryPage = () => {
               <div
                 key={photo.id || i}
                 onClick={() => setSelectedIndex(i)}
-                className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#101D16] border border-[#E2E8DC] shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer aspect-[4/3]"
+                className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#072428] border border-white/20 shadow-md hover:shadow-2xl hover:border-white/50 transition-all duration-300 cursor-pointer aspect-[4/3]"
               >
                 <img
                   src={photo.src}

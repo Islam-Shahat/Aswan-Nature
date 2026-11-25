@@ -217,7 +217,7 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
         key={activeIndex} 
         className="text-center mt-2 sm:mt-2.5 min-h-[32px] px-4 animate-in fade-in slide-in-from-bottom-1 duration-300 shrink-0"
       >
-        <p className="text-sm sm:text-base lg:text-lg font-bold text-[#16241B] tracking-tight">
+        <p className="text-sm sm:text-base lg:text-lg font-bold text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] tracking-tight">
           {isAr ? currentPhoto.titleAr : currentPhoto.titleEn}
         </p>
       </div>
@@ -226,19 +226,19 @@ export const CurvedCylinderCarousel = ({ photos, isAr, onPhotoClick }) => {
       <div className="flex items-center gap-4 sm:gap-6 mt-1.5 sm:mt-2 z-10 shrink-0">
         <button
           onClick={isAr ? handleNext : handlePrev}
-          className="p-2.5 sm:p-3 rounded-full bg-white hover:bg-[#0a515b] hover:text-white text-[#16241B] border border-[#CBDCCB] shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer active:scale-95"
+          className="p-2.5 sm:p-3 rounded-full bg-white/95 hover:bg-white text-[#0a515b] border border-white/40 shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
           aria-label="Previous"
         >
           <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 rtl:rotate-180" />
         </button>
 
-        <span className="text-xs sm:text-sm font-mono font-bold text-[#0a515b] bg-[#0a515b]/10 px-3.5 py-1.5 rounded-full border border-[#0a515b]/20">
+        <span className="text-xs sm:text-sm font-mono font-bold text-white bg-white/15 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/25 shadow-inner">
           {activeIndex + 1} / {total}
         </span>
 
         <button
           onClick={isAr ? handlePrev : handleNext}
-          className="p-2.5 sm:p-3 rounded-full bg-white hover:bg-[#0a515b] hover:text-white text-[#16241B] border border-[#CBDCCB] shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer active:scale-95"
+          className="p-2.5 sm:p-3 rounded-full bg-white/95 hover:bg-white text-[#0a515b] border border-white/40 shadow-lg hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer"
           aria-label="Next"
         >
           <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 rtl:rotate-180" />
