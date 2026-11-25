@@ -17,7 +17,7 @@ import {
   X
 } from 'lucide-react';
 
-// 3 Primary Camp Tracks featuring real photos
+// 4 Primary Camp Tracks featuring real photos
 const camps = [
   {
     id: 'junior',
@@ -78,6 +78,36 @@ const camps = [
     themeColor: '#c99a5d',
     themeBg: 'bg-[#c99a5d]',
     lightBg: 'bg-[#c99a5d]/15'
+  },
+  {
+    id: 'trackers',
+    emoji: '🐾',
+    nameAr: 'مغامرة تتبع الأثر وبطاقات الطيور',
+    nameEn: 'Wildlife Trackers & Nature Artists',
+    ageAr: 'الأعمار: ٦ - ١٥ سنة',
+    ageEn: 'Ages: 6–15 Years',
+    durationAr: 'يوم استكشافي كامل (٥ ساعات)',
+    durationEn: 'Full Day Quest (5 Hours)',
+    tagAr: 'أنشطة تفاعلية وبطاقات تعريف 🎨',
+    tagEn: 'Interactive ID & Art 🎨',
+    descAr: 'تجارب حسية ممتعة! يفك الأطفال أسرار آثار أقدام الطيور في رمال الجزر، ويطابقون أنواع الطيور الحية ببطاقات تعريف ملونة مع أنشطة رسم حية.',
+    descEn: 'Hands-on river quest! Kids decode real wildlife footprints along sandy Nile shores, identify living birds with official field flashcards, and sketch in their journals.',
+    image: '/camps-images/kids-cards.jpg',
+    captionAr: 'أطفالنا مع بطاقات توثيق الطيور الميدانية',
+    captionEn: 'Kids with official wildlife species flashcards',
+    perksAr: [
+      'مجموعة بطاقات توثيق حصرية وألوان رسم الطبيعة لكل طفل',
+      'تحديات تتبع أثر الطيور والحيوانات النيلية على الرمال بأمان',
+      'شهادة المستكشف الميداني وشارة عالم الطبيعة الصغير'
+    ],
+    perksEn: [
+      'Exclusive bird identification flashcards & field sketching kit',
+      'Fun wildlife footprint tracking challenges on pristine river shores',
+      'Field Explorer Certificate & Young Naturalist badge'
+    ],
+    themeColor: '#0a515b',
+    themeBg: 'bg-[#0a515b]',
+    lightBg: 'bg-[#0a515b]/10'
   },
   {
     id: 'school',
