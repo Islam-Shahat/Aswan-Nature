@@ -279,17 +279,27 @@ export const LearningCampsPage = () => {
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
               
-              {/* Left / Top: Real Photo from the Camps */}
-              <div className="lg:col-span-6 relative min-h-[300px] sm:min-h-[400px] overflow-hidden group">
+              {/* Left / Top: Real Photo from the Camps (Full uncropped photo with ambient background) */}
+              <div className="lg:col-span-6 relative min-h-[300px] sm:min-h-[400px] overflow-hidden bg-[#0c1f19] flex items-center justify-center group">
+                {/* Soft ambient blur of the same photo so edges blend smoothly */}
+                <img
+                  src={currentCamp.image}
+                  alt=""
+                  aria-hidden="true"
+                  className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-35 scale-110 pointer-events-none"
+                />
+                <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+
+                {/* Complete uncropped photo */}
                 <img
                   src={currentCamp.image}
                   alt={currentCamp.nameEn}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-106"
+                  className="relative z-10 w-full h-full object-contain p-2 sm:p-3 transition-transform duration-700 group-hover:scale-[1.02]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+                <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/80 via-black/15 to-transparent pointer-events-none" />
 
                 {/* Bottom Real Photo Caption */}
-                <div className="absolute bottom-4 left-4 right-4 text-white">
+                <div className="absolute bottom-4 left-4 right-4 z-30 text-white pointer-events-none">
                   <div className="text-xs font-mono font-bold text-[#4bf319] block mb-0.5">
                     📸 {isAr ? 'صورة حقيقية من معسكراتنا في أسوان' : 'Real Photo from Aswan Nature Camps'}
                   </div>
