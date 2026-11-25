@@ -193,14 +193,14 @@ export const LearningCampsPage = () => {
   const { currentLang, handleOpenBooking } = useOutletContext();
   const isAr = currentLang === 'AR';
 
-  // Active camp track with 10-second auto-cycle
+  // Active camp track with 5-second auto-cycle
   const [activeTab, setActiveTab] = useState(0);
 
-  // Auto-flip every 10 seconds automatically
+  // Auto-flip every 5 seconds automatically
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveTab((prev) => (prev + 1) % camps.length);
-    }, 10000);
+    }, 5000);
     return () => clearInterval(timer);
   }, []);
 
