@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import {
   Compass,
@@ -23,8 +23,17 @@ export const LearningCampsPage = () => {
   const { currentLang, handleOpenBooking } = useOutletContext();
   const isAr = currentLang === 'AR';
 
-  // Active camp track tab
+  // Active camp track with 10-second auto-cycle
   const [activeTab, setActiveTab] = useState(0);
+
+  // Auto-flip every 10 seconds automatically
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveTab((prev) => (prev + 1) % camps.length);
+    }, 10000);
+    return () => clearInterval(timer);
+  }, [camps.length]);
+
   // Selected scrapbook photo for full zoom
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
@@ -245,17 +254,9 @@ export const LearningCampsPage = () => {
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
 
         {/* ============================================================ */}
-        {/* 1. PLAYFUL HERO HEADER WITH REAL POLAROIDS */}
+        {/* 1. HERO HEADER (No badge span, no redundant buttons) */}
         {/* ============================================================ */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border-2 border-[#CBDCCB] shadow-xs mb-4 cursor-default">
-            <span className="text-base">🏕️</span>
-            <span className="text-xs sm:text-sm font-extrabold text-[#0a515b] tracking-wide uppercase">
-              {isAr ? 'معسكرات الطبيعة التفاعلية للأطفال' : 'WILD NATURE CAMPS FOR KIDS'}
-            </span>
-            <span className="text-base">✨</span>
-          </div>
-
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] mb-4 font-heading text-[#16241B]">
             {isAr ? 'حيث تبدأ أعظم مغامرات الطفولة.. ' : 'Where Real Childhood Adventures.. '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0a515b] via-[#10705f] to-[#21c715]">
@@ -263,73 +264,52 @@ export const LearningCampsPage = () => {
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base lg:text-lg text-[#4E6254] max-w-xl mx-auto font-medium leading-relaxed mb-6">
+          <p className="text-sm sm:text-base lg:text-lg text-[#4E6254] max-w-xl mx-auto font-medium leading-relaxed">
             {isAr
               ? 'معسكرات مليئة بالبهجة والمرح! نُسلّم أطفالك مناظير حقيقية ليرصدوا أندر الطيور بأنفسهم في بيئة آمنة ١٠٠٪ وبإشراف مرشدين متخصصين.'
               : 'Joyful, hands-on river camps! Kids get real binoculars to spot rare Nile wildlife themselves, guided safely by passionate naturalists.'}
           </p>
-
-          {/* Quick Action Buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <button
-              onClick={() => handleOpenBooking(isAr ? 'معسكر المستكشف الصغير' : 'Junior River Rangers')}
-              className="px-8 py-3.5 rounded-full bg-[#0a515b] hover:bg-[#073b42] text-white font-extrabold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all cursor-pointer active:scale-95 flex items-center gap-2"
-            >
-              <span>{isAr ? 'احجز مقعد طفلك الآن 🎒' : 'Book Explorer Spot 🎒'}</span>
-              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-            </button>
-
-            <a
-              href="#scrapbook"
-              className="px-6 py-3.5 rounded-full bg-white hover:bg-[#F0F5EC] text-[#0a515b] border-2 border-[#CBDCCB] font-extrabold text-xs sm:text-sm shadow-xs transition-all flex items-center gap-2"
-            >
-              <Camera className="w-4 h-4 text-[#21c715]" />
-              <span>{isAr ? 'شاهد صور الأطفال في المعسكر' : 'View Kids Photos'}</span>
-            </a>
-          </div>
         </div>
 
         {/* ============================================================ */}
-        {/* 2. INTERACTIVE 3-CAMP DISCOVERY HUB (Tabs + Real Photos) */}
+        {/* 2. AUTO-PLAYING SHOWCASE CARD (Flips automatically every 10s) */}
         {/* ============================================================ */}
         <div className="mb-20">
-          {/* Tab Buttons */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-6 overflow-x-auto pb-2 px-1">
-            {camps.map((camp, idx) => (
-              <button
-                key={camp.id}
-                onClick={() => setActiveTab(idx)}
-                className={`flex items-center gap-2.5 px-4 sm:px-6 py-3 rounded-2xl font-extrabold text-xs sm:text-sm transition-all duration-300 cursor-pointer shadow-xs active:scale-95 whitespace-nowrap ${
-                  activeTab === idx
-                    ? `${camp.themeBg} text-white shadow-lg scale-105`
-                    : 'bg-white hover:bg-[#F0F5EC] text-[#3A4E40] border border-[#CBDCCB]'
-                }`}
-              >
-                <span className="text-xl">{camp.emoji}</span>
-                <span>{isAr ? camp.nameAr : camp.nameEn}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Active Camp Card with REAL Photo */}
-          <div className="bg-white rounded-3xl sm:rounded-[36px] border-2 border-[#CBDCCB] shadow-xl overflow-hidden">
+          <div
+            key={currentCamp.id}
+            className="bg-white rounded-3xl sm:rounded-[36px] border-2 border-[#CBDCCB] shadow-xl overflow-hidden animate-in fade-in duration-500"
+          >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
               
               {/* Left / Top: Real Photo from the Camps */}
-              <div className="lg:col-span-6 relative min-h-[280px] sm:min-h-[360px] overflow-hidden group">
+              <div className="lg:col-span-6 relative min-h-[300px] sm:min-h-[400px] overflow-hidden group">
                 <img
                   src={currentCamp.image}
                   alt={currentCamp.nameEn}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106"
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-106"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
 
                 {/* Top Badge */}
-                <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4">
+                <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4 flex items-center gap-2">
                   <span className="px-4 py-1.5 rounded-full bg-white text-[#16241B] font-black text-xs shadow-md border border-[#CBDCCB] flex items-center gap-1.5">
                     <span>{currentCamp.emoji}</span>
                     <span>{isAr ? currentCamp.tagAr : currentCamp.tagEn}</span>
                   </span>
+                </div>
+
+                {/* Subtle 10-second auto-cycle indicator dots */}
+                <div className="absolute top-4 right-4 rtl:right-auto rtl:left-4 flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full">
+                  {camps.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveTab(i)}
+                      className={`h-2 rounded-full transition-all duration-500 cursor-pointer ${
+                        activeTab === i ? 'w-6 bg-[#21c715]' : 'w-2 bg-white/50 hover:bg-white'
+                      }`}
+                      aria-label={`Camp ${i + 1}`}
+                    />
+                  ))}
                 </div>
 
                 {/* Bottom Real Photo Caption */}
