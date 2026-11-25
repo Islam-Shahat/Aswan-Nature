@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Calendar, Users, ArrowRight, Sun, Glasses, ChevronDown } from 'lucide-react';
+import { Calendar, Users, ArrowRight, Glasses, ChevronDown } from 'lucide-react';
 
 export const QuickBooking = ({
   onCheckAvailability,
@@ -86,7 +86,7 @@ export const QuickBooking = ({
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <div id="booking-widget" className="relative z-20 max-w-7xl mx-auto px-6 lg:px-12 -mt-10 lg:-mt-14 mb-16">
+    <div id="booking-widget" className="relative z-20 max-w-7xl mx-auto px-6 lg:px-12 -mt-10 lg:-mt-14 mb-2 sm:mb-4">
       {/* Floating Card with Scroll-Driven Traveling Border Beam */}
       <div
         ref={containerRef}
@@ -249,36 +249,6 @@ export const QuickBooking = ({
             </button>
           </div>
         </form>
-      </div>
-
-      {/* Egyptian Rates Notice underneath matching local-note in Figma */}
-      <div className="mt-4 flex items-center justify-center gap-2 text-xs sm:text-sm text-[#4E6254] font-medium text-center px-4">
-        <Sun className="w-4 h-4 text-[#8FA494] shrink-0" />
-        <span>
-          {currentLang === 'AR' ?
-          <>
-              مصري؟ الطبيعة أقرب مما تتخيل.{' '}
-              <button
-              type="button"
-              onClick={onOpenEgyptianRates}
-              className="font-bold underline text-[#194025] hover:text-[#2BE019] transition-colors inline-flex items-center gap-0.5 ml-1">
-              
-                اكتشف أسعار المصريين الخاصة ↗
-              </button>
-            </> :
-
-          <>
-              Egyptian? Nature is closer than you think.{' '}
-              <button
-              type="button"
-              onClick={onOpenEgyptianRates}
-              className="font-bold underline text-[#194025] hover:text-[#2BE019] transition-colors inline-flex items-center gap-0.5 ml-1">
-              
-                Discover special Egyptian rates ↗
-              </button>
-            </>
-          }
-        </span>
       </div>
     </div>
   );

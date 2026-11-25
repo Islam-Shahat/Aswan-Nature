@@ -135,7 +135,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
   ];
 
   return (
-    <section id="about" className="py-20 lg:py-28 bg-[#EAF0E5] relative">
+    <section id="about" className="pt-6 sm:pt-10 pb-20 lg:pb-28 bg-[#EAF0E5] relative">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-4xl mx-auto mb-14 sm:mb-20">
