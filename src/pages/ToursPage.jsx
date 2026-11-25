@@ -1,116 +1,204 @@
-import React from 'react';
-import { useOutletContext, Link } from 'react-router-dom';
-import { Clock, MapPin, CheckCircle2 } from 'lucide-react';
-import { toursData } from '../data/toursData';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useOutletContext, useSearchParams } from 'react-router-dom';
+import {
+  Compass,
+  Sparkles,
+  ArrowRight,
+  HelpCircle,
+  CheckCircle2,
+  FilterX
+} from 'lucide-react';
+import { toursList } from '../data/toursData';
+import { TourFilterBar } from '../components/tours/TourFilterBar';
+import { TourCard } from '../components/tours/TourCard';
+import { TourDetailModal } from '../components/tours/TourDetailModal';
+import { TourComparisonTable } from '../components/tours/TourComparisonTable';
+import { EcoCampsSection } from '../components/tours/EcoCampsSection';
+import { BookingDrawer } from '../components/tours/BookingDrawer';
 
 export const ToursPage = () => {
-  const { currentLang, handleOpenBooking } = useOutletContext();
+  const { currentLang } = useOutletContext();
   const isAr = currentLang === 'AR';
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const tourList = Object.values(toursData);
+  // Dual Filtering States
+  const [selectedCategory, setSelectedCategory] = useState(
+    searchParams.get('category') || 'all'
+  );
+  const [selectedZone, setSelectedZone] = useState(
+    searchParams.get('zone') || 'all'
+  );
+
+  // Modals & Drawers States
+  const [detailTourId, setDetailTourId] = useState(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [bookingTourId, setBookingTourId] = useState('nile-tour');
+  const [isBookingDrawerOpen, setIsBookingDrawerOpen] = useState(false);
+
+  // Check URL query parameters for pre-opened modals or bookings
+  useEffect(() => {
+    const tourParam = searchParams.get('tour');
+    if (tourParam) {
+      setBookingTourId(tourParam);
+      setIsBookingDrawerOpen(true);
+    }
+  }, [searchParams]);
+
+  // Handle smooth scroll to Eco-Camps section
+  const handleScrollToEcoCamps = () => {
+    const el = document.getElementById('eco-camps');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Dual Filtering Computation with useMemo for zero lag
+  const filteredTours = useMemo(() => {
+    return toursList.filter((tour) => {
+      // Category match
+      let matchCategory = true;
+      if (selectedCategory === 'camps') {
+        // When camps is selected, all tours or camps can show, and we scroll to camps
+        matchCategory = true;
+      } else if (selectedCategory !== 'all') {
+        matchCategory = tour.category === selectedCategory;
+      }
+
+      // Zone match
+      let matchZone = true;
+      if (selectedZone !== 'all') {
+        matchZone = tour.zone === selectedZone;
+      }
+
+      return matchCategory && matchZone;
+    });
+  }, [selectedCategory, selectedZone]);
+
+  // Modal Openers
+  const handleViewItinerary = (tourId) => {
+    setDetailTourId(tourId);
+    setIsDetailOpen(true);
+  };
+
+  const handleBookNow = (tourId) => {
+    setBookingTourId(tourId);
+    setIsBookingDrawerOpen(true);
+  };
 
   return (
-    <div className="pt-28 sm:pt-36 pb-20 bg-[#F8FAF5] min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Elegant Nile Teal Gradient Divider Bisected by Centered Title (Matches Gallery style) */}
-        <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-12 sm:mb-16 px-4 sm:px-8 overflow-hidden">
-          <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent via-[#0a515b]/50 to-[#0a515b]" />
-          <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
-          <h1 className="px-3 sm:px-6 text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#16241B] shrink-0 text-center font-heading">
-            {isAr ? 'جولاتنا' : 'Our Tours'}
-          </h1>
-          <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
-          <div className="flex-1 h-[2px] bg-gradient-to-r from-[#0a515b] via-[#0a515b]/50 to-transparent" />
+    <div className="pt-28 sm:pt-36 pb-24 bg-[#F8FAF5] min-h-screen text-[#16241B]">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12">
+        {/* ============================================================ */}
+        {/* 1. HERO HEADER WITH NILE TEAL GRADIENT DIVIDER */}
+        {/* ============================================================ */}
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+          {/* Elegant Nile Teal Gradient Divider */}
+          <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-4 overflow-hidden">
+            <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent via-[#0a515b]/50 to-[#0a515b]" />
+            <div className="w-2 h-2 rounded-full bg-[#0a515b] shrink-0" />
+            <h1 className="px-3 sm:px-6 text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[#16241B] shrink-0 font-heading">
+              {isAr ? 'جولات رصد الطيور والطبيعة' : 'Our Nature & Birding Tours'}
+            </h1>
+            <div className="w-2 h-2 rounded-full bg-[#0a515b] shrink-0" />
+            <div className="flex-1 h-[2px] bg-gradient-to-r from-[#0a515b] via-[#0a515b]/50 to-transparent" />
+          </div>
+
+          <p className="text-sm sm:text-base text-[#4E6254] leading-relaxed font-medium">
+            {isAr
+              ? 'تجارب بيئية حصرية مصممة بعناية: من رحلات القارب الهادئة بين جزر الشلال الأول، إلى مراقبة جوارح الخزان، وربط الطيور الحية بنقوش الفراعنة المقدسة في معبد فيلة.'
+              : 'Handcrafted naturalist experiences across Aswan: from peaceful boat-only First Cataract cruises and mountain raptor safaris to live comparisons with sacred pharaonic reliefs.'}
+          </p>
         </div>
 
-        {/* Tours Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {tourList.map((tour) => (
-            <div
-              key={tour.id}
-              className="bg-white rounded-3xl overflow-hidden border border-[#E2E8DC] shadow-[0_10px_30px_rgba(20,40,25,0.06)] hover:shadow-[0_20px_45px_rgba(20,40,25,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col group"
-            >
-              {/* Image Banner */}
-              <div className="relative h-64 overflow-hidden">
-                <img
-                  src={tour.image}
-                  alt={isAr ? tour.titleAr : tour.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4 bg-white/90 backdrop-blur-md px-3 py-1 rounded-full text-xs font-bold text-[#16241B] shadow-xs">
-                  {isAr ? tour.badgeAr : tour.badge}
-                </div>
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <div className="text-[11px] font-bold uppercase tracking-wider text-[#48e714] mb-1">
-                    {isAr ? tour.eyebrowAr : tour.eyebrow}
-                  </div>
-                  <h3 className="text-xl font-bold">{isAr ? tour.titleAr : tour.title}</h3>
-                </div>
-              </div>
+        {/* ============================================================ */}
+        {/* 2. DUAL-FILTERING SYSTEM (Category & Geographic Zone) */}
+        {/* ============================================================ */}
+        <TourFilterBar
+          selectedCategory={selectedCategory}
+          onSelectCategory={(cat) => setSelectedCategory(cat)}
+          selectedZone={selectedZone}
+          onSelectZone={(zone) => setSelectedZone(zone)}
+          totalCount={toursList.length}
+          filteredCount={filteredTours.length}
+          isAr={isAr}
+          onEcoCampClick={handleScrollToEcoCamps}
+        />
 
-              {/* Body */}
-              <div className="p-6 flex-1 flex flex-col justify-between">
-                <div>
-                  {/* Meta details */}
-                  <div className="flex items-center gap-4 text-xs font-semibold text-[#556F5C] mb-4 pb-4 border-b border-[#F0F4EC]">
-                    <span className="flex items-center gap-1.5">
-                      <Clock className="w-3.5 h-3.5 text-[#21c715]" />
-                      {isAr ? tour.durationAr : tour.duration}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-[#21c715]" />
-                      {isAr ? tour.locationAr : tour.location}
-                    </span>
-                  </div>
-
-                  <p className="text-sm text-[#4A5D50] leading-relaxed mb-6 line-clamp-3">
-                    {isAr ? tour.descAr : tour.desc}
-                  </p>
-
-                  {/* Key Highlights */}
-                  <div className="space-y-2 mb-6">
-                    {(isAr ? tour.highlightsAr : tour.highlights).slice(0, 3).map((item, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-[#2E4133]">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#21c715] flex-shrink-0 mt-0.5" />
-                        <span className="line-clamp-1">{item}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Footer Actions */}
-                <div className="pt-4 border-t border-[#F0F4EC] flex items-center justify-between gap-3">
-                  <div>
-                    <span className="text-[11px] uppercase tracking-wider text-[#6B8572] block font-semibold">
-                      {isAr ? 'يبدأ من' : 'From'}
-                    </span>
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="text-xl font-extrabold text-[#16241B]">{tour.priceUsd}</span>
-                      <span className="text-xs font-semibold text-[#66806C]">({tour.priceEgp})</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <Link
-                      to={`/tours/${tour.id}`}
-                      className="px-4 py-2.5 rounded-full border border-[#D8E2D2] text-[#16241B] text-xs font-bold hover:bg-[#F0F4EC] transition-colors"
-                    >
-                      {isAr ? 'التفاصيل' : 'Details'}
-                    </Link>
-                    <button
-                      onClick={() => handleOpenBooking(isAr ? tour.titleAr : tour.title)}
-                      className="px-4 py-2.5 rounded-full bg-[#21c715] hover:bg-[#1bb010] text-white text-xs font-bold shadow-sm transition-all hover:scale-105 cursor-pointer"
-                    >
-                      {isAr ? 'احجز' : 'Book'}
-                    </button>
-                  </div>
-                </div>
-              </div>
+        {/* ============================================================ */}
+        {/* 3. TOURS GRID (Filtered Live) */}
+        {/* ============================================================ */}
+        {filteredTours.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-20">
+            {filteredTours.map((tour) => (
+              <TourCard
+                key={tour.id}
+                tour={tour}
+                isAr={isAr}
+                onViewItinerary={handleViewItinerary}
+                onBookNow={handleBookNow}
+              />
+            ))}
+          </div>
+        ) : (
+          /* Empty Filter State */
+          <div className="p-10 sm:p-14 rounded-3xl bg-white border border-[#CBDCCB] text-center max-w-lg mx-auto mb-20 shadow-sm">
+            <div className="w-14 h-14 rounded-full bg-[#0a515b]/10 text-[#0a515b] mx-auto flex items-center justify-center mb-4">
+              <FilterX className="w-7 h-7" />
             </div>
-          ))}
-        </div>
+            <h3 className="text-lg font-black text-[#16241B] mb-2">
+              {isAr ? 'لا توجد جولات مطابقة لهذا الفلتر' : 'No tours match this filter combination'}
+            </h3>
+            <p className="text-xs text-[#556F5C] mb-6">
+              {isAr
+                ? 'جرب اختيار منطقة جغرافية أخرى أو إظهار كافة التجارب.'
+                : 'Try adjusting your geographic zone or reset your filters to see all experiences.'}
+            </p>
+            <button
+              onClick={() => {
+                setSelectedCategory('all');
+                setSelectedZone('all');
+              }}
+              className="py-2.5 px-6 rounded-full bg-[#0a515b] text-white text-xs font-bold hover:bg-[#073b42] transition-colors cursor-pointer"
+            >
+              {isAr ? 'عرض جميع الجولات' : 'Reset All Filters'}
+            </button>
+          </div>
+        )}
+
+        {/* ============================================================ */}
+        {/* 4. INTERACTIVE COMPARISON MATRIX TABLE */}
+        {/* ============================================================ */}
+        <TourComparisonTable
+          isAr={isAr}
+          onSelectTour={handleBookNow}
+        />
+
+        {/* ============================================================ */}
+        {/* 5. ECO-CAMPS & EDUCATIONAL PROGRAMS SECTION */}
+        {/* ============================================================ */}
+        <EcoCampsSection isAr={isAr} />
       </div>
+
+      {/* ============================================================ */}
+      {/* 6. TOUR DETAIL MODAL */}
+      {/* ============================================================ */}
+      <TourDetailModal
+        tourId={detailTourId}
+        isOpen={isDetailOpen}
+        onClose={() => setIsDetailOpen(false)}
+        onBookNow={handleBookNow}
+        isAr={isAr}
+      />
+
+      {/* ============================================================ */}
+      {/* 7. DYNAMIC BOOKING DRAWER & PRICE CALCULATOR */}
+      {/* ============================================================ */}
+      <BookingDrawer
+        isOpen={isBookingDrawerOpen}
+        onClose={() => setIsBookingDrawerOpen(false)}
+        initialTourId={bookingTourId}
+        isAr={isAr}
+      />
     </div>
   );
 };
