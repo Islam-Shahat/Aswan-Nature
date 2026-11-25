@@ -241,17 +241,17 @@ export const LearningCampsPage = () => {
   const isAlternate = activeTab % 2 === 1;
 
   // ============================================================
-  // SPIRAL RIVER RIBBON: Scroll-Linked Background Illumination
+  // SPIRAL RIVER RIBBON: Scroll-Linked Background Illumination (Nile Blue)
   // ============================================================
   const [scrollProgress, setScrollProgress] = useState(0);
   const pathRef = useRef(null);
   const [pathLength, setPathLength] = useState(0);
-  const [glowPoint, setGlowPoint] = useState({ x: 500, y: 40 });
+  const [glowPoint, setGlowPoint] = useState({ x: 520, y: 165 });
   const [milestones, setMilestones] = useState([]);
 
-  // Meandering spiral path coordinates across 1000 x 3200 virtual plane
+  // Meandering spiral path coordinates starting cleanly AFTER the navbar (Y=165)
   const ribbonD =
-    "M 500,40 C 740,120 880,300 830,460 C 770,620 540,680 320,650 C 100,620 30,780 70,960 C 120,1160 420,1240 740,1220 C 960,1200 990,1400 910,1560 C 800,1740 520,1780 280,1720 C 80,1660 20,1840 50,2000 C 90,2180 370,2260 700,2240 C 930,2220 970,2420 890,2580 C 800,2740 540,2800 300,2740 C 100,2700 40,2880 120,3000 C 200,3120 420,3170 500,3200";
+    "M 520,165 C 740,220 880,340 830,480 C 770,620 540,680 320,650 C 100,620 30,780 70,960 C 120,1160 420,1240 740,1220 C 960,1200 990,1400 910,1560 C 800,1740 520,1780 280,1720 C 80,1660 20,1840 50,2000 C 90,2180 370,2260 700,2240 C 930,2220 970,2420 890,2580 C 800,2740 540,2800 300,2740 C 100,2700 40,2880 120,3000 C 200,3120 420,3170 500,3200";
 
   // Measure path length and calculate milestone positions
   useEffect(() => {
@@ -261,7 +261,7 @@ export const LearningCampsPage = () => {
         setPathLength(len);
 
         const waypointConfig = [
-          { t: 0.03, icon: '🌿' },
+          { t: 0.03, icon: '🌊' },
           { t: 0.24, icon: '🏕️' },
           { t: 0.52, icon: '📸' },
           { t: 0.80, icon: '🎒' },
@@ -330,7 +330,7 @@ export const LearningCampsPage = () => {
       `}</style>
 
       {/* ============================================================ */}
-      {/* 0. INTERACTIVE BACKGROUND SPIRAL RIBBON (Winding River Glow) */}
+      {/* 0. INTERACTIVE BACKGROUND SPIRAL RIBBON (Nile Blue Signature) */}
       {/* ============================================================ */}
       <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-0 overflow-hidden">
         <svg
@@ -339,21 +339,22 @@ export const LearningCampsPage = () => {
           className="w-full h-full"
         >
           <defs>
-            {/* Base faint riverbed gradient */}
+            {/* Base faint riverbed gradient in Nile Blue */}
             <linearGradient id="spiral-base-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#0a515b" stopOpacity="0.10" />
-              <stop offset="35%" stopColor="#21c715" stopOpacity="0.14" />
-              <stop offset="70%" stopColor="#c99a5d" stopOpacity="0.12" />
-              <stop offset="100%" stopColor="#0a515b" stopOpacity="0.10" />
+              <stop offset="0%" stopColor="#0a515b" stopOpacity="0.14" />
+              <stop offset="40%" stopColor="#0e6b79" stopOpacity="0.20" />
+              <stop offset="75%" stopColor="#149bb0" stopOpacity="0.18" />
+              <stop offset="100%" stopColor="#0a515b" stopOpacity="0.14" />
             </linearGradient>
 
-            {/* Glowing luminous active stream gradient */}
+            {/* Glowing luminous active stream gradient in Nile Blue */}
             <linearGradient id="spiral-active-grad" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="#0a515b" />
-              <stop offset="25%" stopColor="#1EAA13" />
-              <stop offset="55%" stopColor="#21c715" />
-              <stop offset="80%" stopColor="#4bf319" />
-              <stop offset="100%" stopColor="#c99a5d" />
+              <stop offset="25%" stopColor="#0c6370" />
+              <stop offset="50%" stopColor="#0e7787" />
+              <stop offset="75%" stopColor="#129cb3" />
+              <stop offset="90%" stopColor="#1cb8d1" />
+              <stop offset="100%" stopColor="#5ee4f7" />
             </linearGradient>
 
             {/* Radiant glowing bloom filter */}
@@ -377,7 +378,7 @@ export const LearningCampsPage = () => {
             </filter>
           </defs>
 
-          {/* 1. Underlying Base Ribbon (Faint explorer guide trail) */}
+          {/* 1. Underlying Base Ribbon (Faint explorer guide trail in Nile Blue) */}
           <path
             d={ribbonD}
             fill="none"
@@ -388,7 +389,7 @@ export const LearningCampsPage = () => {
             vectorEffect="non-scaling-stroke"
           />
 
-          {/* 2. Active Illuminated Spiral Ribbon (Grows and glows with scroll) */}
+          {/* 2. Active Illuminated Spiral Ribbon (Grows and glows with scroll in Nile Blue) */}
           <path
             ref={pathRef}
             d={ribbonD}
@@ -417,8 +418,8 @@ export const LearningCampsPage = () => {
                     cx={ms.x}
                     cy={ms.y}
                     r="22"
-                    fill="#21c715"
-                    fillOpacity="0.18"
+                    fill="#0e7787"
+                    fillOpacity="0.22"
                     filter="url(#beacon-glow)"
                   />
                 )}
@@ -428,22 +429,22 @@ export const LearningCampsPage = () => {
                   cy={ms.y}
                   r={isReached ? 13 : 8}
                   fill={isReached ? '#FFFFFF' : '#FAFDF8'}
-                  stroke={isReached ? '#21c715' : '#CBDCCB'}
+                  stroke={isReached ? '#0e7787' : '#B8CDCF'}
                   strokeWidth={isReached ? 3 : 1.5}
-                  filter={isReached ? 'drop-shadow(0 0 8px rgba(33,199,21,0.6))' : 'none'}
+                  filter={isReached ? 'drop-shadow(0 0 10px rgba(14, 119, 135, 0.75))' : 'none'}
                 />
-                {/* Inner marker jewel */}
+                {/* Inner marker jewel in Nile Blue */}
                 <circle
                   cx={ms.x}
                   cy={ms.y}
                   r={isReached ? 5 : 3}
-                  fill={isReached ? '#0a515b' : '#A3B899'}
+                  fill={isReached ? '#0a515b' : '#88A2A5'}
                 />
               </g>
             );
           })}
 
-          {/* 4. Glowing Head Beacon (Descends and illuminates sections as you scroll) */}
+          {/* 4. Glowing Head Beacon (Descends and illuminates sections as you scroll in Nile Blue) */}
           {pathLength > 0 && (
             <g>
               {/* Giant atmospheric soft halo */}
@@ -451,17 +452,17 @@ export const LearningCampsPage = () => {
                 cx={glowPoint.x}
                 cy={glowPoint.y}
                 r="38"
-                fill="#21c715"
-                fillOpacity="0.22"
+                fill="#0e7787"
+                fillOpacity="0.25"
                 filter="url(#beacon-glow)"
               />
-              {/* Luminous emerald core */}
+              {/* Luminous Nile Cyan-Blue core */}
               <circle
                 cx={glowPoint.x}
                 cy={glowPoint.y}
                 r="16"
-                fill="#4bf319"
-                fillOpacity="0.75"
+                fill="#1cb8d1"
+                fillOpacity="0.85"
               />
               {/* Brilliant diamond sparkling center */}
               <circle
@@ -469,7 +470,7 @@ export const LearningCampsPage = () => {
                 cy={glowPoint.y}
                 r="6.5"
                 fill="#FFFFFF"
-                filter="drop-shadow(0 0 6px #ffffff)"
+                filter="drop-shadow(0 0 8px #5ee4f7)"
               />
             </g>
           )}
