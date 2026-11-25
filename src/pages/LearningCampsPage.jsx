@@ -6,598 +6,396 @@ import {
   Sparkles,
   ShieldCheck,
   Star,
-  BookOpen,
-  Palette,
-  Tent,
   ArrowRight,
-  ChevronDown,
   CheckCircle2,
-  TreePine,
   Backpack,
-  Smile,
-  Heart,
+  Clock,
   Users,
-  Clock
+  ChevronRight
 } from 'lucide-react';
 
 export const LearningCampsPage = () => {
   const { currentLang, handleOpenBooking } = useOutletContext();
   const isAr = currentLang === 'AR';
 
-  // Interactive active kit item
-  const [selectedKitIndex, setSelectedKitIndex] = useState(0);
+  // Active camp tab for clean, non-cluttered interactive experience
+  const [activeTab, setActiveTab] = useState(0);
+  const [activeGear, setActiveGear] = useState(0);
 
-  // Field explorer kit items given to each child
-  const explorerKit = [
+  const camps = [
     {
-      icon: '🔭',
-      titleAr: 'منظار المستكشف الميداني',
-      titleEn: 'Junior Field Binoculars',
-      descAr: 'منظار مخصص للأطفال خفيف الوزن وآمن ضد الصدمات، بتقريب 8X وعدسات معالجة لرؤية ريش الطيور بوضوح فائق.',
-      descEn: 'Kid-safe lightweight 8x shockproof binoculars tailored for small hands to observe plumage and flight patterns up to 8x magnification.',
-      tagAr: 'لكل طفل',
-      tagEn: 'Included for Every Child',
-      color: '#0a515b'
-    },
-    {
-      icon: '📖',
-      titleAr: 'سجل الطبيعة المقاوم للماء',
-      titleEn: 'Waterproof Field Journal',
-      descAr: 'دفتر استكشاف خاص بالطفل لتدوين الملاحظات، وجمع أختام الطيور المكتشفة، وحل ألغاز المحميات الطبيعية.',
-      descEn: 'A personalized waterproof field notebook with identification checklists, bird tracks, and nature observation logs.',
-      tagAr: 'توثيق وتعلّم',
-      tagEn: 'Field Documentation',
-      color: '#21c715'
-    },
-    {
-      icon: '🎨',
-      titleAr: 'حقيبة الرسم بالألوان المائية',
-      titleEn: 'Island Wildlife Sketch Kit',
-      descAr: 'ألوان ومخططات بيئية تتيح للطفل رسم الطيور والزهور النيلية على ضفاف الجزيرة وسط أجواء هادئة وملهمة.',
-      descEn: 'Natural non-toxic watercolor palette and archival paper for riverbank nature sketching and creative wildlife expression.',
-      tagAr: 'إبداع فني',
-      tagEn: 'Creative Art',
-      color: '#c99a5d'
-    },
-    {
-      icon: '🏅',
-      titleAr: 'وسام ودبلوم حارس النيل الشاب',
-      titleEn: 'Junior River Ranger Diploma',
-      descAr: 'شهادة وميدالية تذكارية رسمية معتمدة تُسلَّم للطفل في ختام المعسكر تتويجاً لمجهوده في حماية بيئة النهر.',
-      descEn: 'An official certificate and engraved ranger badge presented during the sunset ceremony recognizing conservation stewardship.',
-      tagAr: 'شهادة معتمدة',
-      tagEn: 'Official Ranger Badge',
-      color: '#0a515b'
-    }
-  ];
-
-  // Camp Programs with kids-friendly themes
-  const campPrograms = [
-    {
-      id: 'young-naturalists',
-      title: isAr ? 'معسكر المستكشفين الصغار' : 'Junior River Rangers Camp',
-      age: isAr ? 'الأعمار: ٧ - ١٤ سنة' : 'Ages: 7–14 Years',
-      badge: isAr ? 'الأكثر طلباً للأطفال 🌟' : 'Most Popular for Kids 🌟',
-      badgeColor: 'bg-[#21c715] text-white',
-      accentColor: '#0a515b',
-      duration: isAr ? 'يومان / عطلة نهاية الأسبوع' : '2 Days / Weekend Experience',
-      desc: isAr
-        ? 'مغامرة مليئة بالحماس يتعلم فيها الطفل أسرار رصد الطيور، قراءة خريطة النيل، وتحديد أصوات الكائنات البرية بأمان تام وبإشراف مرشدين متخصصين.'
-        : 'An exciting hands-on adventure where kids master real binoculars, decode river wildlife tracks, and learn bird calls safely with certified naturalist mentors.',
-      features: isAr
-        ? [
-            'ورشة تفاعلية لتعليم استخدام التلسكوبات والمناظير',
-            'حقيبة المستكشف الكاملة وسجل ميداني خاص بكل طفل',
-            'إشراف كامل بنسبة مرشد لكل ٤ أطفال مع سترات نجاة',
-            'تتويج رسمي بوسام وشهادة حارس النيل المعتمد'
-          ]
-        : [
-            'Hands-on spotting scope & binocular handling games',
-            'Full Explorer Backpack with waterproof journal & sketch set',
-            '1:4 educator-to-child ratio with specialized safety gear',
-            'Sunset graduation ceremony with official ranger medal'
-          ],
+      id: 'junior',
+      emoji: '🏕️',
+      nameAr: 'معسكر المستكشف الصغير',
+      nameEn: 'Junior River Rangers',
+      ageAr: 'الأعمار: ٧ - ١٤ سنة',
+      ageEn: 'Ages: 7–14 Years',
+      durationAr: 'يومان (نهاية الأسبوع)',
+      durationEn: '2 Days / Weekend',
+      tagAr: 'الأكثر حماساً للأطفال ⭐',
+      tagEn: 'Kids Favorite ⭐',
+      descAr: 'مغامرة نهرية مليئة بالمرح! يتعلم فيها طفلك رصد الطيور بالمناظير الحقيقية، واستكشاف جزر النيل مع مرشدين متخصصين.',
+      descEn: 'A real river adventure! Kids master field binoculars, decode wild bird calls, and explore hidden Nile islands with expert guides.',
+      perksAr: [
+        'منظار ميداني حقيقي وسجل استكشاف لكل طفل',
+        'نسبة إشراف مرشد لكل ٤ أطفال مع سترات نجاة',
+        'ميدالية وشهادة حارس النيل الشاب الرسمية'
+      ],
+      perksEn: [
+        'Real field binoculars & discovery journal for every child',
+        'Attentive 1:4 guide ratio with certified child life vests',
+        'Official Junior River Ranger medal & certificate'
+      ],
       image: '/assets/woodland-kingfisher.jpg',
-      highlightTag: isAr ? 'مغامرة واستكشاف' : 'Adventure & Discovery'
+      themeBg: 'bg-[#0a515b]',
+      lightBg: 'bg-[#0a515b]/10',
+      accentColor: '#0a515b'
     },
     {
-      id: 'family-discovery',
-      title: isAr ? 'خلوة الاستكشاف العائلي' : 'Family River Discovery Retreat',
-      age: isAr ? 'لكافة أفراد العائلة' : 'All Ages / Families',
-      badge: isAr ? 'مغامرة عائلية ممتعة 👨‍👩‍👧‍👦' : 'Family Bonding 👨‍👩‍👧‍👦',
-      badgeColor: 'bg-[#c99a5d] text-white',
-      accentColor: '#c99a5d',
-      duration: isAr ? 'يوم كامل (٦ ساعات تفاعلية)' : 'Full Day (6 Interactive Hours)',
-      desc: isAr
-        ? 'فرصة ذهبية للأسر للتواصل وقضاء وقت ثمين بعيداً عن الشاشات، استكشاف جزر الشلال الأول الهادئة وتناول غداء نوبي طازج على جزيرة نيلية خاصة.'
-        : 'Disconnect from screens and reconnect with loved ones on private river channels. Families explore secluded islands and enjoy an authentic Nubian picnic lunch.',
-      features: isAr
-        ? [
-            'قارب بيئي خاص بالكامل للعائلة مع قائد نوبي خبير',
-            'أنشطة وألعاب بيئية مشتركة تجمع الأطفال والآباء',
-            'مأدبة غداء نوبي صحية وطازجة على جزيرة خاصة',
-            'ألبوم صور عائلي توثيقي مهدى للأسرة بنهاية اليوم'
-          ]
-        : [
-            'Fully private chartered eco-boat with seasoned Nubian captain',
-            'Fun interactive nature challenges connecting parents & children',
-            'Fresh organic Nubian island lunch in shaded scenic grove',
-            'Complimentary high-res wildlife family photo package'
-          ],
+      id: 'family',
+      emoji: '👨‍👩‍👧‍👦',
+      nameAr: 'مغامرة الاستكشاف العائلي',
+      nameEn: 'Family Island Retreat',
+      ageAr: 'لكل العائلة والأطفال',
+      ageEn: 'All Ages & Families',
+      durationAr: 'يوم كامل (٦ ساعات)',
+      durationEn: 'Full Day (6 Hours)',
+      tagAr: 'مغامرة عائلية ممتعة 🌿',
+      tagEn: 'Family Adventure 🌿',
+      descAr: 'يوم استثنائي بعيداً عن الشاشات! قارب بيئي خاص لعائلتك، ألعاب استكشاف بين الجزر، وغداء نوبي لذيذ في قلب الطبيعة.',
+      descEn: 'Disconnect from screens! A private chartered eco-boat for your family, island treasure spotting, and a delicious Nubian picnic.',
+      perksAr: [
+        'قارب خاص بالكامل للعائلة مع قائد نوبي خبير',
+        'أنشطة وتحديات استكشاف تناسب كل الأعمار',
+        'غداء نوبي طازج على جزيرة هادئة خاصة'
+      ],
+      perksEn: [
+        '100% Private eco-boat charter with Nubian captain',
+        'Fun multi-generational nature games & wildlife spotting',
+        'Fresh local island picnic in a peaceful river grove'
+      ],
       image: '/assets/white-egret-shore.jpg',
-      highlightTag: isAr ? 'عائلي وترفيهي' : 'Family & Nature'
+      themeBg: 'bg-[#c99a5d]',
+      lightBg: 'bg-[#c99a5d]/15',
+      accentColor: '#c99a5d'
     },
     {
-      id: 'school-expeditions',
-      title: isAr ? 'رحلات المدارس والمجموعات الميدانية' : 'Academic & School Field Safaris',
-      age: isAr ? 'المدارس والجامعات' : 'Schools & Academic Groups',
-      badge: isAr ? 'معتمد علمياً وبيئياً 🎓' : 'Curriculum Aligned 🎓',
-      badgeColor: 'bg-[#0a515b] text-white',
-      accentColor: '#1EAA13',
-      duration: isAr ? 'برامج مخصصة (يوم أو أكثر)' : 'Custom Tailored Expeditions',
-      desc: isAr
-        ? 'برامج بيئية تفاعلية مصممة للمدارس الدولية والمحلية تغطي علوم التنوع الحيوي، مسارات الهجرة، وأسرار النيل بتجارب معملية مبسطة في الطبيعة.'
-        : 'Educational field ecology curriculum designed for international schools, focusing on freshwater conservation, flyway migration, and outdoor science labs.',
-      features: isAr
-        ? [
-            'تجارب علمية لقياس جودة مياه النيل وجمع العينات',
-            'محتوى متوافق مع المناهج التعليمية الدولية (IB / Cambridge)',
-            'إشراف طبي وأمني متكامل وخطة سلامة معتمدة',
-            'شهادات مشاركة بيئية لجميع الطلاب والمشاركين'
-          ]
-        : [
-            'Hands-on river water quality & biodiversity field testing',
-            'Structured curriculum aligned with international science goals',
-            'Full medical support, vetted risk management, and child safeguarding',
-            'Official scientific expedition certificate for all students'
-          ],
+      id: 'school',
+      emoji: '🎓',
+      nameAr: 'رحلات المدارس الاستكشافية',
+      nameEn: 'School Field Safaris',
+      ageAr: 'المدارس والمجموعات',
+      ageEn: 'Schools & Youth Groups',
+      durationAr: 'برامج يومية مرنة',
+      durationEn: 'Custom Day Trips',
+      tagAr: 'تعلّم تطبيقي تفاعلي 🔬',
+      tagEn: 'Interactive STEM 🔬',
+      descAr: 'فصل تعليمي مفتوح في أحضان الطبيعة! تجارب بيئية تفاعلية، دراسة الطيور المهاجرة، ومحتوى متوافق مع المناهج الدولية.',
+      descEn: 'The classroom without walls! Interactive outdoor ecology, water quality tests, and bird flyway science led by marine biologists.',
+      perksAr: [
+        'تجارب عملية لقياس نقاء المياه ورصد التنوع الحيوي',
+        'محتوى متوافق مع مناهج العلوم الدولية المعتمدة',
+        'تأمين أمني وطبي كامل بنسبة أمان ١٠٠٪'
+      ],
+      perksEn: [
+        'Hands-on freshwater testing & bird census tracking',
+        'Curriculum-aligned outdoor environmental science',
+        'Full medical risk-assessment & child safety protocols'
+      ],
       image: '/assets/kingfisher.webp',
-      highlightTag: isAr ? 'تعليمي ومنهجي' : 'STEM & Ecology'
+      themeBg: 'bg-[#1EAA13]',
+      lightBg: 'bg-[#1EAA13]/10',
+      accentColor: '#1EAA13'
     }
   ];
 
-  // Daily adventure steps for kids
-  const adventureSteps = [
+  const currentCamp = camps[activeTab];
+
+  // What kids receive - 4 playful clickable items
+  const gearItems = [
     {
-      step: '01',
-      time: '09:00 AM',
-      icon: '🚤',
-      titleAr: 'إبحار سفينة المستكشفين',
-      titleEn: 'Boarding the Explorer Boat',
-      descAr: 'توزيع حقائب المستكشفين، وارتداء سترات النجاة الملونة، وبدء الإبحار في قنوات النيل الهادئة.',
-      descEn: 'Kids put on their comfy life vests, receive their explorer backpacks, and board the silent eco-boat.'
+      emoji: '🔭',
+      titleAr: 'منظار الصغار',
+      titleEn: 'Real Binoculars',
+      descAr: 'مقاوم للصدمات وخفيف، يقرب الطيور 8X!',
+      descEn: 'Shockproof & lightweight 8x zoom for tiny hands!'
     },
     {
-      step: '02',
-      time: '10:30 AM',
-      icon: '🔭',
-      titleAr: 'رصد صيد طائر الرفراف والبلشون',
-      titleEn: 'Spotting the Pied Kingfisher',
-      descAr: 'استخدام المناظير الميدانية لترقب غطسات صيد الرفراف وتوثيق أماكن أعشاش الطيور في سجل الطبيعة.',
-      descEn: 'Young eyes use scopes to catch the famous kingfisher hovering dive and record sightings in their field journals.'
+      emoji: '📖',
+      titleAr: 'دفتر المستكشف',
+      titleEn: 'Field Journal',
+      descAr: 'مقاوم للماء لجمع الأختام ورسم الآثار!',
+      descEn: 'Waterproof logbook for nature stickers & sketches!'
     },
     {
-      step: '03',
-      time: '12:30 PM',
-      icon: '🏕️',
-      titleAr: 'نزهة الجزيرة وحكايات النيل',
-      titleEn: 'Island Picnic & River Lore',
-      descAr: 'الرسو على جزيرة رملية هادئة لتناول وجبة خفيفة صحية والاستماع لقصص الفراعنة والطيور المقدسة.',
-      descEn: 'Landing on a safe sandy islet for delicious organic refreshments and captivating Nubian river tales.'
+      emoji: '🎨',
+      titleAr: 'ألوان النيل',
+      titleEn: 'Nature Art Kit',
+      descAr: 'ألوان مائية آمنة لرسم الطبيعة على الجزيرة!',
+      descEn: 'Safe watercolor palette to paint island flowers & birds!'
     },
     {
-      step: '04',
-      time: '02:00 PM',
-      icon: '🎨',
-      titleAr: 'مختبر الرسم وتدوين الملاحظات',
-      titleEn: 'Nature Art & Track Lab',
-      descAr: 'ورشة رسم حية بالألوان المائية في الهواء الطلق، مع مطابقة آثار أقدام الطيور على الرمال.',
-      descEn: 'Open-air creative painting session and hands-on identification of riverbank footprints and feathers.'
-    },
-    {
-      step: '05',
-      time: '03:30 PM',
-      icon: '🏅',
-      titleAr: 'حفل تتويج حماة النيل الصغار',
-      titleEn: 'Ranger Medal Ceremony',
-      descAr: 'أداء قسم حماية البيئة وتسليم وسام حارس النيل الرسمي ودبلوم المستكشف الصغير وسط تصفيق الجميع.',
-      descEn: 'Reciting the Young Ranger Nature Pledge and proudly receiving the official Junior Naturalist medal.'
+      emoji: '🏅',
+      titleAr: 'وسام البطولة',
+      titleEn: 'Ranger Medal',
+      descAr: 'ميدالية حارس النيل الذهبية في حفل الغروب!',
+      descEn: 'Shiny gold ranger medal presented at sunset!'
     }
   ];
 
   return (
-    <div className="pt-24 sm:pt-30 lg:pt-34 pb-28 bg-[#F8FAF5] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
-      {/* Playful Floating Nature Elements & Clouds Background */}
-      <div className="absolute top-12 left-10 w-72 h-72 rounded-full bg-[#0a515b]/6 blur-3xl pointer-events-none" />
-      <div className="absolute top-44 right-8 w-80 h-80 rounded-full bg-[#21c715]/8 blur-3xl pointer-events-none" />
-      <div className="absolute top-[800px] left-1/3 w-96 h-96 rounded-full bg-[#c99a5d]/10 blur-3xl pointer-events-none" />
+    <div className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
+      
+      {/* Playful Floating CSS Animations & Blobs */}
+      <style>{`
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(-12px) rotate(4deg); }
+        }
+        @keyframes float-reverse {
+          0%, 100% { transform: translateY(0px) rotate(0deg); }
+          50% { transform: translateY(12px) rotate(-4deg); }
+        }
+        @keyframes pop-pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+        .animate-float-slow {
+          animation: float-slow 5s ease-in-out infinite;
+        }
+        .animate-float-reverse {
+          animation: float-reverse 6s ease-in-out infinite;
+        }
+        .animate-pop-pulse {
+          animation: pop-pulse 3s ease-in-out infinite;
+        }
+      `}</style>
 
-      {/* Subtle Treasure-Map Dotted Trail Decoration (SVG) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M -50,150 Q 300,50 600,200 T 1200,120 T 1800,280"
-            fill="none"
-            stroke="#0a515b"
-            strokeWidth="2.5"
-            strokeDasharray="8 12"
-          />
-          <path
-            d="M 50,650 Q 400,520 800,680 T 1500,580 T 2100,720"
-            fill="none"
-            stroke="#21c715"
-            strokeWidth="2.5"
-            strokeDasharray="8 14"
-          />
-        </svg>
+      {/* Floating Animated Emojis & Nature Badges */}
+      <div className="absolute top-28 left-6 sm:left-14 animate-float-slow pointer-events-none select-none z-10 hidden sm:block">
+        <div className="w-14 h-14 rounded-2xl bg-white shadow-lg border-2 border-[#CBDCCB] flex items-center justify-center text-2xl rotate-[-8deg] hover:rotate-12 transition-transform">
+          🏕️
+        </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-12 relative z-10">
-        
+      <div className="absolute top-44 right-6 sm:right-16 animate-float-reverse pointer-events-none select-none z-10 hidden sm:block">
+        <div className="w-14 h-14 rounded-2xl bg-white shadow-lg border-2 border-[#CBDCCB] flex items-center justify-center text-2xl rotate-[10deg]">
+          🔭
+        </div>
+      </div>
+
+      <div className="absolute top-[480px] left-4 animate-float-slow pointer-events-none select-none z-10 hidden lg:block">
+        <div className="w-12 h-12 rounded-2xl bg-[#f4e8ce] shadow-md border border-[#c99a5d] flex items-center justify-center text-xl rotate-[-12deg]">
+          🦅
+        </div>
+      </div>
+
+      {/* Background Glows */}
+      <div className="absolute top-10 left-1/4 w-96 h-96 rounded-full bg-[#0a515b]/8 blur-3xl pointer-events-none" />
+      <div className="absolute top-80 right-1/4 w-96 h-96 rounded-full bg-[#21c715]/10 blur-3xl pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
+
         {/* ============================================================ */}
-        {/* 1. PLAYFUL HERO HEADER (Kids Explorer Theme) */}
+        {/* 1. PLAYFUL HERO (Clean, Punchy & Joyful) */}
         {/* ============================================================ */}
-        <div className="max-w-4xl mx-auto text-center mb-16 sm:mb-20">
-          {/* Playful Explorer Badge */}
-          <div className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white border-2 border-[#CBDCCB] shadow-sm mb-6 hover:scale-105 transition-transform cursor-default">
-            <span className="text-lg">🏕️</span>
-            <span className="text-xs sm:text-sm font-extrabold tracking-wider uppercase text-[#0a515b]">
-              {isAr ? 'مخيمات المستكشف الصغير في أسوان' : 'JUNIOR NILE WILDLIFE RANGERS'}
+        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
+          {/* Top Pill */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border-2 border-[#CBDCCB] shadow-xs mb-4 animate-pop-pulse cursor-default">
+            <span className="text-base">🎒</span>
+            <span className="text-xs sm:text-sm font-extrabold text-[#0a515b] tracking-wide uppercase">
+              {isAr ? 'مخيمات المستكشف الصغير' : 'Junior River Explorers'}
             </span>
-            <span className="text-lg">🔭</span>
+            <span className="text-base">✨</span>
           </div>
 
-          {/* Child-Friendly Creative Headline */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] mb-6 font-heading">
-            <span className="block text-[#16241B]">
-              {isAr ? 'حيث يلتقي المستكشفون الصغار' : 'Where Young Explorers Meet'}
-            </span>
-            <span className="inline-block mt-1 font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-[#0a515b] via-[#127361] to-[#21c715] drop-shadow-xs">
-              {isAr ? 'بسحر الطبيعة وحرية النيل!' : 'The Wild Wonders of the Nile!'}
+          {/* Big Friendly Title */}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] mb-4 font-heading text-[#16241B]">
+            {isAr ? 'مغامرات النيل.. ' : 'Wild River Camps.. '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0a515b] via-[#10705f] to-[#21c715]">
+              {isAr ? 'للأبطال الصغار! 🌿' : 'For Young Heroes! 🌿'}
             </span>
           </h1>
 
-          {/* Inspiring Subtitle */}
-          <p className="text-base sm:text-lg lg:text-xl text-[#455A4C] leading-relaxed max-w-2xl mx-auto mb-8 font-medium">
+          <p className="text-sm sm:text-base lg:text-lg text-[#4E6254] max-w-xl mx-auto font-medium leading-relaxed">
             {isAr
-              ? 'أعظم فصول التعلّم لا جدران لها! معسكرات تفاعلية مليئة بالمرح والشغف، يتعلم فيها أطفالك رصد أندر الطيور بالمناظير الحقيقية، واستكشاف جزر النيل بأمان تام ١٠٠٪.'
-              : 'The greatest classroom has no walls! Immersive, fun-filled nature expeditions where kids discover rare birds with real binoculars, decode river secrets, and earn official junior ranger honors with 100% verified safety.'}
+              ? 'حيث يلتقي فضول الأطفال بسحر الطبيعة! نأخذ صغارك في رحلات آمنة ١٠٠٪ ليرصدوا أندر الطيور بأنفسهم.'
+              : 'Where curiosity meets the wild! 100% safe, joyful expeditions where kids spot rare birds with real scopes.'}
           </p>
+        </div>
 
-          {/* Fast Interactive Explorer Highlights Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-3 text-xs sm:text-sm font-bold">
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#CBDCCB] text-[#0a515b] shadow-xs">
-              <CheckCircle2 className="w-4 h-4 text-[#21c715]" />
-              <span>{isAr ? 'مناظير ميدانية حقيقية لكل طفل' : 'Real Field Binoculars for Each Child'}</span>
+        {/* ============================================================ */}
+        {/* 2. PLAYFUL CAMP SELECTOR TABS (Smooth Transition, No Clutter) */}
+        {/* ============================================================ */}
+        <div className="flex items-center justify-center gap-2 sm:gap-3 mb-8 overflow-x-auto pb-2 px-2">
+          {camps.map((camp, idx) => (
+            <button
+              key={camp.id}
+              onClick={() => setActiveTab(idx)}
+              className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-2xl font-extrabold text-xs sm:text-sm transition-all duration-300 cursor-pointer shadow-xs active:scale-95 whitespace-nowrap ${
+                activeTab === idx
+                  ? `${camp.themeBg} text-white shadow-lg scale-105`
+                  : 'bg-white hover:bg-[#F0F5EC] text-[#3A4E40] border border-[#CBDCCB]'
+              }`}
+            >
+              <span className="text-lg">{camp.emoji}</span>
+              <span>{isAr ? camp.nameAr : camp.nameEn}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* ============================================================ */}
+        {/* 3. ACTIVE CAMP INTERACTIVE SHOWCASE CARD (Springy & Visual) */}
+        {/* ============================================================ */}
+        <div className="bg-white rounded-3xl sm:rounded-[36px] border-2 border-[#CBDCCB] shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden mb-14">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
+            
+            {/* Visual Image Side with Floating Badges */}
+            <div className="lg:col-span-6 relative min-h-[260px] sm:min-h-[340px] overflow-hidden group">
+              <img
+                src={currentCamp.image}
+                alt={currentCamp.nameEn}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+              {/* Top Floating Tag */}
+              <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4">
+                <span className="px-4 py-1.5 rounded-full bg-white/95 text-[#16241B] font-black text-xs shadow-md border border-[#CBDCCB]">
+                  {isAr ? currentCamp.tagAr : currentCamp.tagEn}
+                </span>
+              </div>
+
+              {/* Bottom Quick Info */}
+              <div className="absolute bottom-4 left-4 right-4 text-white flex items-center justify-between text-xs font-bold">
+                <div className="flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full">
+                  <Users className="w-3.5 h-3.5 text-[#21c715]" />
+                  <span>{isAr ? currentCamp.ageAr : currentCamp.ageEn}</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full">
+                  <Clock className="w-3.5 h-3.5 text-[#21c715]" />
+                  <span>{isAr ? currentCamp.durationAr : currentCamp.durationEn}</span>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#CBDCCB] text-[#0a515b] shadow-xs">
-              <ShieldCheck className="w-4 h-4 text-[#21c715]" />
-              <span>{isAr ? 'سترات نجاة مخصصة وإشراف ١:٤' : 'Custom Life Vests & 1:4 Guide Ratio'}</span>
-            </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-[#CBDCCB] text-[#0a515b] shadow-xs">
-              <Award className="w-4 h-4 text-[#c99a5d]" />
-              <span>{isAr ? 'شهادة وميدالية حارس النيل المعتمد' : 'Official Junior Ranger Badge & Medal'}</span>
+
+            {/* Content Side - Clean, Engaging, Zero Clutter */}
+            <div className="lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-2xl">{currentCamp.emoji}</span>
+                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0a515b]">
+                    {isAr ? currentCamp.ageAr : currentCamp.ageEn}
+                  </span>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl font-black text-[#16241B] mb-3 leading-tight">
+                  {isAr ? currentCamp.nameAr : currentCamp.nameEn}
+                </h2>
+
+                <p className="text-sm sm:text-base text-[#4E6254] leading-relaxed mb-6">
+                  {isAr ? currentCamp.descAr : currentCamp.descEn}
+                </p>
+
+                {/* 3 Playful Highlights */}
+                <div className="space-y-3 mb-8">
+                  {(isAr ? currentCamp.perksAr : currentCamp.perksEn).map((perk, pIdx) => (
+                    <div
+                      key={pIdx}
+                      className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAFDF8] border border-[#E2E8DC] hover:border-[#21c715] transition-colors"
+                    >
+                      <div className="w-6 h-6 rounded-full bg-[#21c715]/15 text-[#21c715] flex items-center justify-center shrink-0 font-bold text-xs">
+                        ✓
+                      </div>
+                      <span className="text-xs sm:text-sm font-bold text-[#16241B]">
+                        {perk}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Big Playful Bouncy Button */}
+              <button
+                onClick={() => handleOpenBooking(isAr ? currentCamp.nameAr : currentCamp.nameEn)}
+                className={`w-full py-4 px-6 rounded-2xl ${currentCamp.themeBg} hover:opacity-95 text-white font-black text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-2 group/btn`}
+              >
+                <span>{isAr ? 'احجز مغامرة طفلك الآن 🎒' : 'Book Child’s Adventure Now 🎒'}</span>
+                <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1" />
+              </button>
             </div>
           </div>
         </div>
 
         {/* ============================================================ */}
-        {/* 2. THE EXPLORER'S BACKPACK (حقيبة المستكشف الصغير) */}
+        {/* 4. "WHAT'S IN THE EXPLORER BACKPACK" (4 Interactive Pop Cards) */}
         {/* ============================================================ */}
-        <div className="mb-20 sm:mb-24">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#0a515b] mb-2">
-              <Backpack className="w-4 h-4 text-[#21c715]" />
-              <span>{isAr ? 'هدايا ومعدات كل طفل' : "WHAT'S IN THE EXPLORER BACKPACK"}</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#16241B]">
-              {isAr ? 'حقيبة المستكشف الصغير' : 'The Young Naturalist Field Kit'}
-            </h2>
-            <p className="text-sm sm:text-base text-[#556F5C] mt-2">
-              {isAr
-                ? 'يحصل كل طفل ينضم لمعسكراتنا على حقيبته الميدانية الخاصة، ليتحول إلى باحث بيئي حقيقي!'
-                : 'Every young participant receives their own official field backpack loaded with real exploration gear!'}
-            </p>
+        <div className="mb-14 text-center">
+          <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#0a515b] mb-2">
+            <Backpack className="w-4 h-4 text-[#21c715]" />
+            <span>{isAr ? 'هدية لكل طفل' : 'EVERY CHILD GETS A KIT'}</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {explorerKit.map((item, idx) => (
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-[#16241B] mb-6">
+            {isAr ? 'ماذا يوجد داخل حقيبة المستكشف؟ 🎒' : "What's in the Explorer Backpack? 🎒"}
+          </h3>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+            {gearItems.map((gear, gIdx) => (
               <div
-                key={idx}
-                onClick={() => setSelectedKitIndex(idx)}
-                className={`group p-6 rounded-3xl bg-white border-2 transition-all duration-300 cursor-pointer flex flex-col justify-between ${
-                  selectedKitIndex === idx
-                    ? 'border-[#0a515b] shadow-[0_16px_35px_-8px_rgba(10,81,91,0.22)] -translate-y-1.5'
-                    : 'border-[#E2E8DC] hover:border-[#0a515b]/50 hover:shadow-md'
+                key={gIdx}
+                onClick={() => setActiveGear(gIdx)}
+                className={`p-5 rounded-3xl bg-white border-2 transition-all duration-300 cursor-pointer flex flex-col items-center text-center group active:scale-95 ${
+                  activeGear === gIdx
+                    ? 'border-[#0a515b] shadow-lg -translate-y-1 bg-[#FAFDF8]'
+                    : 'border-[#CBDCCB] hover:border-[#0a515b]/60 hover:shadow-md'
                 }`}
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-4xl filter drop-shadow-xs group-hover:scale-115 transition-transform duration-300">
-                      {item.icon}
-                    </span>
-                    <span className="text-[11px] font-bold px-2.5 py-1 rounded-full bg-[#0a515b]/10 text-[#0a515b]">
-                      {isAr ? item.tagAr : item.tagEn}
-                    </span>
-                  </div>
-                  <h3 className="text-base sm:text-lg font-bold text-[#16241B] mb-2">
-                    {isAr ? item.titleAr : item.titleEn}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#556F5C] leading-relaxed">
-                    {isAr ? item.descAr : item.descEn}
-                  </p>
-                </div>
-
-                <div className="mt-5 pt-3 border-t border-[#F0F4EC] flex items-center justify-between text-xs font-bold text-[#0a515b]">
-                  <span>{isAr ? 'مشمول في كل حجز' : 'Provided in Camp'}</span>
-                  <CheckCircle2 className="w-4 h-4 text-[#21c715]" />
-                </div>
+                <span className="text-4xl mb-2 filter drop-shadow-xs group-hover:scale-120 transition-transform duration-300">
+                  {gear.emoji}
+                </span>
+                <h4 className="text-sm sm:text-base font-extrabold text-[#16241B] mb-1">
+                  {isAr ? gear.titleAr : gear.titleEn}
+                </h4>
+                <p className="text-[11px] sm:text-xs text-[#556F5C] leading-snug">
+                  {isAr ? gear.descAr : gear.descEn}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
         {/* ============================================================ */}
-        {/* 3. SUPER SAFETY & PEACE OF MIND FOR PARENTS */}
+        {/* 5. PARENT PEACE OF MIND & SUPER SAFETY (Compact Pill Bar) */}
         {/* ============================================================ */}
-        <div className="rounded-3xl sm:rounded-[36px] overflow-hidden bg-gradient-to-br from-[#0a515b] via-[#094852] to-[#042429] text-white p-7 sm:p-12 lg:p-16 mb-20 sm:mb-28 shadow-2xl relative">
-          {/* Decorative Playful Wave Lines */}
-          <div className="absolute -right-20 -bottom-20 w-80 h-80 rounded-full bg-[#21c715]/15 blur-3xl pointer-events-none" />
+        <div className="bg-[#0a515b] rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden mb-12">
+          {/* Subtle Decorative Star */}
+          <div className="absolute -right-6 -bottom-6 text-7xl opacity-10 select-none">
+            ⭐
+          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10">
-            <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-xs font-extrabold uppercase tracking-widest text-[#4bf319] mb-4">
-                <ShieldCheck className="w-4 h-4 text-[#4bf319]" />
-                <span>{isAr ? 'سلامة معتمدة ١٠٠٪ وراحة بال تامة' : 'CERTIFIED SAFETY FIRST'}</span>
+          <div className="flex items-center gap-4 text-center sm:text-left rtl:sm:text-right">
+            <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-3xl shrink-0">
+              🦺
+            </div>
+            <div>
+              <div className="text-xs font-mono font-bold text-[#4bf319] uppercase tracking-wider mb-0.5">
+                {isAr ? 'سلامة معتمدة ١٠٠٪' : '100% CERTIFIED SAFETY'}
               </div>
-
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight mb-5">
+              <h4 className="text-base sm:text-lg font-bold text-white">
                 {isAr
-                  ? 'مغامرات تلهم العقول بأعلى معايير الأمان المائي'
-                  : 'Inspiring young minds with gold-standard river safety'}
-              </h2>
-
-              <p className="text-[#D6E6DB] text-sm sm:text-base lg:text-[17px] leading-relaxed mb-8">
-                {isAr
-                  ? 'نعلم أن أمان طفلك هو أولويتك المطلقة، وهو أولويتنا أيضاً. جميع قواربنا مجهزة بأحدث سترات نجاة مخصصة للأطفال ومطابقة لمعايير السلامة الدولية، مع مرافقة مرشدين معتمدين في الإسعافات الأولية والسلامة النهرية بنسبة مرشد لكل ٤ أطفال.'
-                  : 'We know your child’s safety is your number one priority—and it’s ours too. Every vessel features tailored child life jackets, first-aid equipment, and CPR-certified aquatic educators maintaining an intimate 1:4 guide-to-child ratio.'}
-              </p>
-
-              {/* Trust Badges Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 text-xs font-bold">
-                <div className="p-3.5 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-xs flex items-center gap-2.5">
-                  <span className="text-xl">🦺</span>
-                  <div>
-                    <div className="text-white">{isAr ? 'سترات نجاة مخصصة' : 'Custom Life Vests'}</div>
-                    <div className="text-[11px] text-[#A9C7B2] font-normal">{isAr ? 'مقاسات ملائمة للأطفال' : 'Perfect child sizing'}</div>
-                  </div>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-xs flex items-center gap-2.5">
-                  <span className="text-xl">🧑‍🏫</span>
-                  <div>
-                    <div className="text-white">{isAr ? 'نسبة إشراف ١:٤' : '1:4 Educator Ratio'}</div>
-                    <div className="text-[11px] text-[#A9C7B2] font-normal">{isAr ? 'رعاية واهتمام فردي' : 'Attentive supervision'}</div>
-                  </div>
-                </div>
-
-                <div className="p-3.5 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-xs flex items-center gap-2.5">
-                  <span className="text-xl">🩺</span>
-                  <div>
-                    <div className="text-white">{isAr ? 'إسعافات مائية معتمدة' : 'CPR Certified Staff'}</div>
-                    <div className="text-[11px] text-[#A9C7B2] font-normal">{isAr ? 'جاهزية طبية متكاملة' : 'Immediate medical readiness'}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Side Playful Visual Card */}
-            <div className="lg:col-span-5 relative">
-              <div className="relative rounded-3xl overflow-hidden border-2 border-white/30 shadow-2xl aspect-[4/3] group">
-                <img
-                  src="/assets/kingfisher.webp"
-                  alt="Young Explorer Nature Mascot"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <span className="text-xs font-mono font-bold text-[#4bf319] block mb-1">
-                    {isAr ? 'صياد النيل المرح 🌟' : 'River Kingfisher Mascot 🌟'}
-                  </span>
-                  <div className="text-sm font-bold">
-                    {isAr ? 'تعلم كيف يصطاد الرفراف بدقة خيالية!' : 'Learn how kingfishers hover and dive with pin-point precision!'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating Kid Sticker Badge */}
-              <div className="absolute -top-4 -right-4 bg-[#c99a5d] text-[#1C1306] font-black text-xs px-3.5 py-2 rounded-2xl border-2 border-white shadow-xl flex items-center gap-1.5 rotate-6">
-                <span>⭐</span>
-                <span>{isAr ? 'معتمد 100% للأطفال' : '100% Kid Safe'}</span>
-              </div>
+                  ? 'راحة بال تامة للآباء: سترات نجاة مريحة للأطفال ومرافقة مرشد لكل ٤ أطفال.'
+                  : 'Absolute peace of mind: tailored child life jackets & strict 1:4 guide ratio.'}
+              </h4>
             </div>
           </div>
-        </div>
 
-        {/* ============================================================ */}
-        {/* 4. THE 3 CAMP PROGRAMS (Child-Centered & Colorful) */}
-        {/* ============================================================ */}
-        <div className="mb-24 sm:mb-28">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#0a515b] mb-2">
-              <TreePine className="w-4 h-4 text-[#21c715]" />
-              <span>{isAr ? 'خيارات المعسكرات المتاحة' : 'CAMP PROGRAMS & TRACKS'}</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#16241B]">
-              {isAr ? 'اختر مغامرة طفلك القادمة' : 'Choose Your Young Explorer’s Adventure'}
-            </h2>
-            <p className="text-sm sm:text-base text-[#556F5C] mt-2">
-              {isAr
-                ? 'صُممت برامجنا بعناية لتناسب كل مرحلة عمرية وتمنح الطفل تجربة ممتعة تبقى في ذاكرته للأبد.'
-                : 'Carefully curated experiential tracks designed to spark lifelong wonder and love for the natural world.'}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {campPrograms.map((prog) => (
-              <div
-                key={prog.id}
-                className="group relative rounded-3xl sm:rounded-[32px] bg-white border-2 border-[#CBDCCB] shadow-sm hover:shadow-2xl hover:border-[#0a515b] transition-all duration-300 flex flex-col justify-between overflow-hidden"
-              >
-                {/* Top Image Banner */}
-                <div className="relative h-56 w-full overflow-hidden">
-                  <img
-                    src={prog.image}
-                    alt={prog.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-                  {/* Top Floating Badge */}
-                  <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4">
-                    <span className={`inline-block px-3.5 py-1.5 rounded-full text-xs font-extrabold shadow-md ${prog.badgeColor}`}>
-                      {prog.badge}
-                    </span>
-                  </div>
-
-                  {/* Bottom Image Tag */}
-                  <div className="absolute bottom-3 left-4 rtl:left-auto rtl:right-4 text-white text-xs font-bold flex items-center gap-2">
-                    <Clock className="w-3.5 h-3.5 text-[#21c715]" />
-                    <span>{prog.duration}</span>
-                  </div>
-                </div>
-
-                {/* Content Box */}
-                <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="text-xs font-mono font-bold text-[#0a515b] mb-1">
-                      {prog.age}
-                    </div>
-                    <h3 className="text-xl sm:text-2xl font-black text-[#16241B] mb-3 leading-snug">
-                      {prog.title}
-                    </h3>
-                    <p className="text-xs sm:text-sm text-[#556F5C] leading-relaxed mb-6 font-normal">
-                      {prog.desc}
-                    </p>
-
-                    {/* Features Checklist */}
-                    <div className="space-y-2.5 mb-7">
-                      {prog.features.map((feat, fIdx) => (
-                        <div key={fIdx} className="flex items-start gap-2.5 text-xs text-[#2A4030]">
-                          <CheckCircle2 className="w-4 h-4 text-[#21c715] shrink-0 mt-0.5" />
-                          <span className="font-medium">{feat}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Book Button */}
-                  <button
-                    onClick={() => handleOpenBooking(prog.title)}
-                    className="w-full py-3.5 px-6 rounded-2xl bg-[#0a515b] hover:bg-[#073940] text-white font-bold text-xs sm:text-sm transition-all duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer active:scale-95 group/btn"
-                  >
-                    <span>{isAr ? 'احجز مقعد المستكشف الصغير' : 'Reserve Explorer Spot'}</span>
-                    <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1" />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ============================================================ */}
-        {/* 5. A DAY OF ADVENTURE: TIMELINE (يوم في حياة المستكشف) */}
-        {/* ============================================================ */}
-        <div className="mb-24 sm:mb-28 bg-[#EBF3E8] rounded-3xl sm:rounded-[36px] p-6 sm:p-10 lg:p-14 border border-[#CBDCCB] shadow-sm">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#0a515b] mb-2">
-              <Smile className="w-4 h-4 text-[#21c715]" />
-              <span>{isAr ? 'كيف يقضي الأطفال يومهم؟' : 'A DAY OF WONDER & DISCOVERY'}</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#16241B]">
-              {isAr ? 'يوم في حياة المستكشف الصغير' : 'A Day in the Life of a Junior Ranger'}
-            </h2>
-            <p className="text-xs sm:text-sm text-[#556F5C] mt-2">
-              {isAr
-                ? 'جدول تفاعلي مليء بالأنشطة والمرح من الإبحار الصباحي وحتى التتويج في الغروب.'
-                : 'A carefully paced sequence of river observation, creative science, and joyful island play.'}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4 sm:gap-6 relative">
-            {adventureSteps.map((s, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-2xl sm:rounded-3xl p-5 border border-[#CBDCCB] shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow relative"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-3xl">{s.icon}</span>
-                    <span className="text-[11px] font-mono font-bold px-2 py-0.5 rounded-full bg-[#0a515b]/10 text-[#0a515b]">
-                      {s.time}
-                    </span>
-                  </div>
-                  <h3 className="text-sm sm:text-base font-bold text-[#16241B] mb-2 leading-tight">
-                    {isAr ? s.titleAr : s.titleEn}
-                  </h3>
-                  <p className="text-xs text-[#556F5C] leading-relaxed">
-                    {isAr ? s.descAr : s.descEn}
-                  </p>
-                </div>
-
-                <div className="mt-4 pt-2 border-t border-[#F0F4EC] text-[11px] font-mono font-bold text-[#21c715]">
-                  Step {s.step}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ============================================================ */}
-        {/* 6. JUNIOR NATURE RANGER PLEDGE & INQUIRY BANNER */}
-        {/* ============================================================ */}
-        <div className="text-center bg-white rounded-3xl sm:rounded-[36px] p-8 sm:p-14 border-2 border-[#CBDCCB] shadow-xl max-w-4xl mx-auto relative overflow-hidden">
-          {/* Subtle Golden Seal in Background */}
-          <div className="absolute -top-10 -right-10 text-8xl opacity-10 select-none">
-            🦅
-          </div>
-
-          <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-[#21c715]/15 border-2 border-[#21c715] flex items-center justify-center mx-auto mb-5 text-2xl sm:text-3xl">
-            🌱
-          </div>
-
-          <span className="text-xs font-extrabold uppercase tracking-widest text-[#0a515b] block mb-2">
-            {isAr ? 'عهد أبطال الطبيعة الصغار' : 'THE JUNIOR NATURALIST OATH'}
-          </span>
-
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#16241B] mb-4">
-            {isAr
-              ? '«نقسم على حماية النيل، ورعاية الطيور، وأن نترك الطبيعة أجمل مما كانت!»'
-              : '“We promise to guard the Nile, protect its wild birds, and leave nature better than we found it!”'}
-          </h2>
-
-          <p className="text-xs sm:text-base text-[#556F5C] max-w-xl mx-auto mb-8 leading-relaxed">
-            {isAr
-              ? 'هل ترغب في تسجيل طفلك أو مدرستك في أحد معسكراتنا الاستكشافية القادمة؟ تواصل معنا اليوم لتنسيق موعد التجربة.'
-              : 'Ready to ignite your child’s lifelong love for wildlife and natural science? Inquire now to secure upcoming camp dates.'}
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              onClick={() => handleOpenBooking('Junior Naturalists Camp')}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#0a515b] hover:bg-[#073b42] text-white font-extrabold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-2"
-            >
-              <span>{isAr ? 'انضم إلى معسكر المستكشف الصغير' : 'Join Junior Ranger Camp'}</span>
-              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-            </button>
-
-            <button
-              onClick={() => handleOpenBooking('Family Discovery Retreat')}
-              className="w-full sm:w-auto px-8 py-4 rounded-full bg-white hover:bg-[#F3F8F2] text-[#0a515b] border-2 border-[#0a515b] font-extrabold text-sm sm:text-base shadow-xs hover:shadow transition-all duration-200 cursor-pointer active:scale-95"
-            >
-              <span>{isAr ? 'استفسار عن المعسكرات العائلية' : 'Inquire for Families'}</span>
-            </button>
-          </div>
+          <button
+            onClick={() => handleOpenBooking('Junior Naturalists Camp')}
+            className="px-6 py-3 rounded-full bg-[#21c715] hover:bg-[#1db312] text-white font-extrabold text-xs sm:text-sm shadow-md transition-all shrink-0 cursor-pointer active:scale-95"
+          >
+            {isAr ? 'تحدث معنا واستفسر 💬' : 'Inquire & Chat 💬'}
+          </button>
         </div>
 
       </div>
