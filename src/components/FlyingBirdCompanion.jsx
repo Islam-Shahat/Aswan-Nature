@@ -142,8 +142,8 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
         : (isArabic ? 'left' : 'right');
       state.activeSide = targetSide;
 
-      // Responsive margin constants adjusted for enlarged bird scale
-      const birdWidth = winWidth < 640 ? 144 : winWidth < 1024 ? 190 : 230;
+      // Responsive margin constants
+      const birdWidth = winWidth < 640 ? 110 : winWidth < 1024 ? 140 : 160;
       const margin = winWidth < 640 ? 12 : winWidth < 1024 ? 24 : 36;
 
       // 3. Compute target horizontal position (Deterministic LTR coordinate system)
@@ -238,13 +238,13 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
           <img
             src="/assets/flying-bird.gif"
             alt="Flying bird companion"
-            className="w-36 sm:w-44 md:w-52 lg:w-60 xl:w-64 h-auto drop-shadow-[0_12px_28px_rgba(0,0,0,0.28)] hover:scale-105 transition-transform duration-200"
+            className="w-28 sm:w-36 md:w-40 lg:w-44 h-auto drop-shadow-[0_10px_22px_rgba(0,0,0,0.24)] hover:scale-105 transition-transform duration-200"
             draggable="false"
           />
 
           {/* Interactive Tooltip on Hover */}
           <div
-            className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none absolute -bottom-8 whitespace-nowrap bg-black/85 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-lg border border-white/10 ${
+            className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none absolute -bottom-7 whitespace-nowrap bg-black/85 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-lg border border-white/10 ${
               isAr ? 'left-2' : 'right-2'
             }`}
           >
