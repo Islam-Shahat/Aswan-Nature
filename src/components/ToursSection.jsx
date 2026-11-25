@@ -116,16 +116,15 @@ export const ToursSection = ({
       {/* Pinned Sticky Stage - Stays locked in viewport while scrolling through the 3 cards */}
       <div className="sticky top-0 min-h-screen h-[100dvh] flex flex-col justify-center overflow-hidden py-8 sm:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
-          {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4">
-            <div>
-              <span className="text-xs uppercase tracking-[0.2em] text-[#0a515b] font-bold block mb-2">
-                {isAr ? 'اختر نوع مغامرتك' : 'FIND YOUR KIND OF ADVENTURE'}
-              </span>
-              <h2 className="text-2xl sm:text-3xl lg:text-[42px] font-extrabold tracking-[-0.03em] leading-tight text-[#16241B] font-heading">
-                {isAr ? 'استثنائية، بطبيعتها.' : 'Extraordinary, by nature.'}
-              </h2>
-            </div>
+          {/* Header with Nile Teal Gradient Divider (Matches Gallery style) */}
+          <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8 px-4 sm:px-8 overflow-hidden">
+            <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent via-[#0a515b]/50 to-[#0a515b]" />
+            <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
+            <h2 className="px-3 sm:px-6 text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#16241B] shrink-0 text-center font-heading">
+              {isAr ? 'جولاتنا' : 'Our Tours'}
+            </h2>
+            <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
+            <div className="flex-1 h-[2px] bg-gradient-to-r from-[#0a515b] via-[#0a515b]/50 to-transparent" />
           </div>
 
           {/* 3 Tour Cards - Smooth focus sequence (Center -> Right -> Left) */}

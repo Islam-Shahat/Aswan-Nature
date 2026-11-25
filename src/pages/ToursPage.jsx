@@ -1,10 +1,10 @@
 import React from 'react';
 import { useOutletContext, Link } from 'react-router-dom';
-import { Clock, MapPin, ShieldCheck, CheckCircle2, Sparkles } from 'lucide-react';
+import { Clock, MapPin, CheckCircle2 } from 'lucide-react';
 import { toursData } from '../data/toursData';
 
 export const ToursPage = () => {
-  const { currentLang, handleOpenBooking, setEgyptianRatesOpen } = useOutletContext();
+  const { currentLang, handleOpenBooking } = useOutletContext();
   const isAr = currentLang === 'AR';
 
   const tourList = Object.values(toursData);
@@ -12,32 +12,15 @@ export const ToursPage = () => {
   return (
     <div className="pt-28 sm:pt-36 pb-20 bg-[#F8FAF5] min-h-screen">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#16241B]/5 border border-[#16241B]/10 text-xs font-bold uppercase tracking-[0.2em] text-[#16241B] mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#21c715]" />
-            <span>{isAr ? 'برامج رصد واستكشاف الطبيعة' : 'WILDLIFE & RIVER EXPEDITIONS'}</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#16241B] mb-6">
-            {isAr ? 'جولات استثنائية بطبيعتها' : 'Extraordinary, by nature.'}
+        {/* Elegant Nile Teal Gradient Divider Bisected by Centered Title (Matches Gallery style) */}
+        <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-12 sm:mb-16 px-4 sm:px-8 overflow-hidden">
+          <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent via-[#0a515b]/50 to-[#0a515b]" />
+          <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
+          <h1 className="px-3 sm:px-6 text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#16241B] shrink-0 text-center font-heading">
+            {isAr ? 'جولاتنا' : 'Our Tours'}
           </h1>
-          <p className="text-lg text-[#556F5C] leading-relaxed">
-            {isAr
-              ? 'صممت جولاتنا بأيدي علماء طيور وبحارة نوبيين محليين لتوفر لك تجربة هادئة، أصيلة، وقريبة من أندر طيور النيل دون إزعاج موائلها.'
-              : 'Our tours are crafted by local ornithologists and native Nubian captains to offer intimate, quiet, and ethical bird encounters along untouched river channels.'}
-          </p>
-
-          {/* Egyptian rate notice banner */}
-          <div className="mt-6 inline-flex items-center gap-3 bg-[#EEF4EB] border border-[#D5E3D2] px-5 py-2.5 rounded-2xl text-xs sm:text-sm text-[#234B30]">
-            <ShieldCheck className="w-4 h-4 text-[#21c715] flex-shrink-0" />
-            <span>{isAr ? 'أسعار تفضيلية خاصة للمصريين والطلاب.' : 'Special subsidized rates available for Egyptian citizens & students.'}</span>
-            <button
-              onClick={() => setEgyptianRatesOpen(true)}
-              className="font-bold underline text-[#147a0c] hover:text-[#0f6009] cursor-pointer ml-1"
-            >
-              {isAr ? 'عرض التفاصيل' : 'View details'}
-            </button>
-          </div>
+          <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
+          <div className="flex-1 h-[2px] bg-gradient-to-r from-[#0a515b] via-[#0a515b]/50 to-transparent" />
         </div>
 
         {/* Tours Grid */}
