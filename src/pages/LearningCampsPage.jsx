@@ -11,17 +11,24 @@ import {
   Backpack,
   Clock,
   Users,
-  ChevronRight
+  Camera,
+  Heart,
+  Smile,
+  ChevronLeft,
+  ChevronRight,
+  X
 } from 'lucide-react';
 
 export const LearningCampsPage = () => {
   const { currentLang, handleOpenBooking } = useOutletContext();
   const isAr = currentLang === 'AR';
 
-  // Active camp tab for clean, non-cluttered interactive experience
+  // Active camp track tab
   const [activeTab, setActiveTab] = useState(0);
-  const [activeGear, setActiveGear] = useState(0);
+  // Selected scrapbook photo for full zoom
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
 
+  // 3 Primary Camp Tracks featuring real photos
   const camps = [
     {
       id: 'junior',
@@ -30,335 +37,451 @@ export const LearningCampsPage = () => {
       nameEn: 'Junior River Rangers',
       ageAr: 'الأعمار: ٧ - ١٤ سنة',
       ageEn: 'Ages: 7–14 Years',
-      durationAr: 'يومان (نهاية الأسبوع)',
+      durationAr: 'يومان (عطلة نهاية الأسبوع)',
       durationEn: '2 Days / Weekend',
-      tagAr: 'الأكثر حماساً للأطفال ⭐',
-      tagEn: 'Kids Favorite ⭐',
-      descAr: 'مغامرة نهرية مليئة بالمرح! يتعلم فيها طفلك رصد الطيور بالمناظير الحقيقية، واستكشاف جزر النيل مع مرشدين متخصصين.',
-      descEn: 'A real river adventure! Kids master field binoculars, decode wild bird calls, and explore hidden Nile islands with expert guides.',
+      tagAr: 'الأكثر حماساً وطلباً ⭐',
+      tagEn: 'Most Popular for Kids ⭐',
+      descAr: 'مغامرة برية حقيقية! يتسلّم طفلك منظاره الخاص، ويتعلم رصد الطيور والتعرف على آثار الحيوانات فوق جزر النيل الهادئة بأمان تام.',
+      descEn: 'A true river safari! Kids receive real field binoculars, learn to spot elusive kingfishers, and decode nature clues on safe river isles.',
+      image: '/camps-images/kids-binoculars.jpg',
+      captionAr: 'أطفالنا يرصدون الطيور بالمناظير في الجزيرة',
+      captionEn: 'Kids spotting river birds with real field scopes',
       perksAr: [
         'منظار ميداني حقيقي وسجل استكشاف لكل طفل',
-        'نسبة إشراف مرشد لكل ٤ أطفال مع سترات نجاة',
-        'ميدالية وشهادة حارس النيل الشاب الرسمية'
+        'مرافقة متخصصة بنسبة مرشد لكل ٤ أطفال',
+        'تتويج رسمي بوسام حارس النيل ودبلوم المستكشف'
       ],
       perksEn: [
-        'Real field binoculars & discovery journal for every child',
-        'Attentive 1:4 guide ratio with certified child life vests',
-        'Official Junior River Ranger medal & certificate'
+        'Real child-friendly binoculars & waterproof field journal',
+        'Strict 1:4 guide-to-child ratio for maximum attention & safety',
+        'Official Junior River Ranger medal and ceremony diploma'
       ],
-      image: '/assets/woodland-kingfisher.jpg',
+      themeColor: '#0a515b',
       themeBg: 'bg-[#0a515b]',
-      lightBg: 'bg-[#0a515b]/10',
-      accentColor: '#0a515b'
+      lightBg: 'bg-[#0a515b]/10'
     },
     {
       id: 'family',
       emoji: '👨‍👩‍👧‍👦',
-      nameAr: 'مغامرة الاستكشاف العائلي',
+      nameAr: 'خلوة الاستكشاف العائلي',
       nameEn: 'Family Island Retreat',
-      ageAr: 'لكل العائلة والأطفال',
-      ageEn: 'All Ages & Families',
-      durationAr: 'يوم كامل (٦ ساعات)',
+      ageAr: 'للعائلات وجميع الأعمار',
+      ageEn: 'All Ages / Families',
+      durationAr: 'يوم كامل (٦ ساعات تفاعلية)',
       durationEn: 'Full Day (6 Hours)',
-      tagAr: 'مغامرة عائلية ممتعة 🌿',
+      tagAr: 'تجربة أسرية لا تُنسى 🌿',
       tagEn: 'Family Adventure 🌿',
-      descAr: 'يوم استثنائي بعيداً عن الشاشات! قارب بيئي خاص لعائلتك، ألعاب استكشاف بين الجزر، وغداء نوبي لذيذ في قلب الطبيعة.',
-      descEn: 'Disconnect from screens! A private chartered eco-boat for your family, island treasure spotting, and a delicious Nubian picnic.',
+      descAr: 'افصلوا عن الشاشات والروتين! قارب بيئي خاص لعائلتك يبحر بين جزر الشلال الأول، مع ألعاب رصد الطبيعة وغداء نوبي لذيذ على جزيرة خاصة.',
+      descEn: 'Disconnect from screens! A private chartered eco-boat for your family exploring serene Nile islets, with fun spotting quests and fresh island lunch.',
+      image: '/camps-images/kids-telescope.jpg',
+      captionAr: 'استكشاف عائلي للتلسكوب وأعشاش الطيور',
+      captionEn: 'Family nature quest with field telescope',
       perksAr: [
         'قارب خاص بالكامل للعائلة مع قائد نوبي خبير',
-        'أنشطة وتحديات استكشاف تناسب كل الأعمار',
-        'غداء نوبي طازج على جزيرة هادئة خاصة'
+        'تحديات وألعاب استكشافية تجمع الأبناء والآباء',
+        'غداء نوبي طازج على جزيرة نيلية مظللة'
       ],
       perksEn: [
-        '100% Private eco-boat charter with Nubian captain',
-        'Fun multi-generational nature games & wildlife spotting',
-        'Fresh local island picnic in a peaceful river grove'
+        '100% Private chartered boat with experienced captain',
+        'Fun multi-generational bird identification challenges',
+        'Authentic fresh Nubian picnic lunch on a secluded island'
       ],
-      image: '/assets/white-egret-shore.jpg',
+      themeColor: '#c99a5d',
       themeBg: 'bg-[#c99a5d]',
-      lightBg: 'bg-[#c99a5d]/15',
-      accentColor: '#c99a5d'
+      lightBg: 'bg-[#c99a5d]/15'
     },
     {
       id: 'school',
       emoji: '🎓',
-      nameAr: 'رحلات المدارس الاستكشافية',
+      nameAr: 'رحلات المدارس والجامعات',
       nameEn: 'School Field Safaris',
-      ageAr: 'المدارس والمجموعات',
-      ageEn: 'Schools & Youth Groups',
-      durationAr: 'برامج يومية مرنة',
-      durationEn: 'Custom Day Trips',
-      tagAr: 'تعلّم تطبيقي تفاعلي 🔬',
-      tagEn: 'Interactive STEM 🔬',
-      descAr: 'فصل تعليمي مفتوح في أحضان الطبيعة! تجارب بيئية تفاعلية، دراسة الطيور المهاجرة، ومحتوى متوافق مع المناهج الدولية.',
-      descEn: 'The classroom without walls! Interactive outdoor ecology, water quality tests, and bird flyway science led by marine biologists.',
+      ageAr: 'المدارس والمجموعات الطلابية',
+      ageEn: 'Schools & Student Groups',
+      durationAr: 'برامج علمية مخصصة',
+      durationEn: 'Custom Tailored Safaris',
+      tagAr: 'تعليم تطبيقي ومنهجي 🔬',
+      tagEn: 'Curriculum Aligned 🔬',
+      descAr: 'الفصل التعليمي الأوسع في الهواء الطلق! تجارب تفاعلية لدراسة جودة مياه النيل ومسارات هجرة الطيور العالمية بمرافقة باحثين بيئيين.',
+      descEn: 'The greatest classroom without walls! Interactive hands-on freshwater ecology, bird banding science, and biodiversity surveys.',
+      image: '/camps-images/kids-circle.jpg',
+      captionAr: 'حلقة نقاش وتجارب بيئية حية في المحمية',
+      captionEn: 'Outdoor biology circle & field experiments',
       perksAr: [
-        'تجارب عملية لقياس نقاء المياه ورصد التنوع الحيوي',
-        'محتوى متوافق مع مناهج العلوم الدولية المعتمدة',
+        'تجارب معملية مبسطة في الطبيعة وجمع عينات المياه',
+        'محتوى متوافق مع مناهج العلوم الدولية (IB / Cambridge)',
         'تأمين أمني وطبي كامل بنسبة أمان ١٠٠٪'
       ],
       perksEn: [
-        'Hands-on freshwater testing & bird census tracking',
-        'Curriculum-aligned outdoor environmental science',
-        'Full medical risk-assessment & child safety protocols'
+        'Hands-on water quality testing & biodiversity census',
+        'Aligned with international IB & Cambridge biology criteria',
+        'Complete medical risk-assessment & child safeguarding'
       ],
-      image: '/assets/kingfisher.webp',
+      themeColor: '#1EAA13',
       themeBg: 'bg-[#1EAA13]',
-      lightBg: 'bg-[#1EAA13]/10',
-      accentColor: '#1EAA13'
+      lightBg: 'bg-[#1EAA13]/10'
     }
   ];
 
   const currentCamp = camps[activeTab];
 
-  // What kids receive - 4 playful clickable items
-  const gearItems = [
+  // Scrapbook moments (Real kids in action)
+  const scrapbookPhotos = [
+    {
+      src: '/camps-images/kids-binoculars.jpg',
+      titleAr: 'رصد الطيور بالمناظير',
+      titleEn: 'Field Binoculars Session',
+      sticker: '🔭 8X Zoom!',
+      rotate: '-rotate-2'
+    },
+    {
+      src: '/camps-images/kids-cards.jpg',
+      titleAr: 'بطاقات توثيق الطيور',
+      titleEn: 'Species Identification Cards',
+      sticker: '⭐ Super Smart!',
+      rotate: 'rotate-2'
+    },
+    {
+      src: '/camps-images/kids-smiling.jpg',
+      titleAr: 'ابتسامات المستكشفين',
+      titleEn: 'Joy of Discovery',
+      sticker: '😄 Big Smiles!',
+      rotate: '-rotate-1'
+    },
+    {
+      src: '/camps-images/kids-telescope.jpg',
+      titleAr: 'تلسكوب المحميات الطبيعية',
+      titleEn: 'Tripod Telescope Spotting',
+      sticker: '🦅 Eagle Eyes!',
+      rotate: 'rotate-3'
+    },
+    {
+      src: '/camps-images/kids-outdoor.jpg',
+      titleAr: 'تتبع آثار الحيوانات في الرمال',
+      titleEn: 'Wildlife Footprint Tracking',
+      sticker: '🐾 Animal Tracks!',
+      rotate: '-rotate-2'
+    },
+    {
+      src: '/camps-images/kids-circle.jpg',
+      titleAr: 'حلقة حكايات النيل الاستكشافية',
+      titleEn: 'Nature Circle & Lore',
+      sticker: '🌿 Nature Club!',
+      rotate: 'rotate-1'
+    }
+  ];
+
+  // 4 Explorer Gear items given to each child
+  const kitItems = [
     {
       emoji: '🔭',
-      titleAr: 'منظار الصغار',
-      titleEn: 'Real Binoculars',
-      descAr: 'مقاوم للصدمات وخفيف، يقرب الطيور 8X!',
-      descEn: 'Shockproof & lightweight 8x zoom for tiny hands!'
+      titleAr: 'منظار الصغار الحقيقي',
+      titleEn: 'Real 8X Binoculars',
+      descAr: 'خفيف ومقاوم للصدمات لتقريب الطيور 8 أضعاف',
+      descEn: 'Kid-sized shockproof optics with crystal clear focus'
     },
     {
       emoji: '📖',
-      titleAr: 'دفتر المستكشف',
-      titleEn: 'Field Journal',
-      descAr: 'مقاوم للماء لجمع الأختام ورسم الآثار!',
-      descEn: 'Waterproof logbook for nature stickers & sketches!'
+      titleAr: 'سجل الطبيعة المقاوم للماء',
+      titleEn: 'Waterproof Journal',
+      descAr: 'لتدوين الملاحظات وجمع أختام الطيور المكتشفة',
+      descEn: 'Logbook with bird checklists & nature stickers'
     },
     {
       emoji: '🎨',
-      titleAr: 'ألوان النيل',
-      titleEn: 'Nature Art Kit',
-      descAr: 'ألوان مائية آمنة لرسم الطبيعة على الجزيرة!',
-      descEn: 'Safe watercolor palette to paint island flowers & birds!'
+      titleAr: 'ألوان الرسم المائية',
+      titleEn: 'Island Art Set',
+      descAr: 'ألوان آمنة لرسم الطبيعة على ضفاف الجزيرة',
+      descEn: 'Non-toxic watercolors for riverbank sketching'
     },
     {
       emoji: '🏅',
-      titleAr: 'وسام البطولة',
-      titleEn: 'Ranger Medal',
-      descAr: 'ميدالية حارس النيل الذهبية في حفل الغروب!',
-      descEn: 'Shiny gold ranger medal presented at sunset!'
+      titleAr: 'وسام حارس النيل الذهبي',
+      titleEn: 'Ranger Medal & Diploma',
+      descAr: 'ميدالية رسمية معتمدة يتسلمها الطفل في حفل الغروب',
+      descEn: 'Official engraved metal badge & graduation diploma'
     }
   ];
 
   return (
     <div className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
       
-      {/* Playful Floating CSS Animations & Blobs */}
+      {/* CSS Floating Animations */}
       <style>{`
-        @keyframes float-slow {
+        @keyframes float-soft {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-12px) rotate(4deg); }
+          50% { transform: translateY(-10px) rotate(3deg); }
         }
-        @keyframes float-reverse {
+        @keyframes float-soft-alt {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(12px) rotate(-4deg); }
+          50% { transform: translateY(10px) rotate(-3deg); }
         }
-        @keyframes pop-pulse {
-          0%, 100% { transform: scale(1); }
-          50% { transform: scale(1.05); }
+        .animate-float-soft {
+          animation: float-soft 5s ease-in-out infinite;
         }
-        .animate-float-slow {
-          animation: float-slow 5s ease-in-out infinite;
-        }
-        .animate-float-reverse {
-          animation: float-reverse 6s ease-in-out infinite;
-        }
-        .animate-pop-pulse {
-          animation: pop-pulse 3s ease-in-out infinite;
+        .animate-float-soft-alt {
+          animation: float-soft-alt 6s ease-in-out infinite;
         }
       `}</style>
 
-      {/* Floating Animated Emojis & Nature Badges */}
-      <div className="absolute top-28 left-6 sm:left-14 animate-float-slow pointer-events-none select-none z-10 hidden sm:block">
-        <div className="w-14 h-14 rounded-2xl bg-white shadow-lg border-2 border-[#CBDCCB] flex items-center justify-center text-2xl rotate-[-8deg] hover:rotate-12 transition-transform">
-          🏕️
+      {/* Decorative Floating Colorful Stickers */}
+      <div className="absolute top-28 left-6 sm:left-12 animate-float-soft pointer-events-none select-none z-10 hidden sm:block">
+        <div className="px-3.5 py-2 rounded-2xl bg-[#0a515b] text-white font-extrabold text-xs shadow-lg rotate-[-8deg] border-2 border-white flex items-center gap-1.5">
+          <span>🔭</span>
+          <span>{isAr ? 'مستكشفو النيل' : 'Junior Rangers'}</span>
         </div>
       </div>
 
-      <div className="absolute top-44 right-6 sm:right-16 animate-float-reverse pointer-events-none select-none z-10 hidden sm:block">
-        <div className="w-14 h-14 rounded-2xl bg-white shadow-lg border-2 border-[#CBDCCB] flex items-center justify-center text-2xl rotate-[10deg]">
-          🔭
+      <div className="absolute top-36 right-6 sm:right-14 animate-float-soft-alt pointer-events-none select-none z-10 hidden sm:block">
+        <div className="px-3.5 py-2 rounded-2xl bg-[#c99a5d] text-[#1C1306] font-extrabold text-xs shadow-lg rotate-[8deg] border-2 border-white flex items-center gap-1.5">
+          <span>⭐</span>
+          <span>{isAr ? 'أمان ١٠٠٪ للأطفال' : '100% Kid Safe'}</span>
         </div>
       </div>
 
-      <div className="absolute top-[480px] left-4 animate-float-slow pointer-events-none select-none z-10 hidden lg:block">
-        <div className="w-12 h-12 rounded-2xl bg-[#f4e8ce] shadow-md border border-[#c99a5d] flex items-center justify-center text-xl rotate-[-12deg]">
-          🦅
-        </div>
-      </div>
-
-      {/* Background Glows */}
+      {/* Ambient Nature Lights */}
       <div className="absolute top-10 left-1/4 w-96 h-96 rounded-full bg-[#0a515b]/8 blur-3xl pointer-events-none" />
       <div className="absolute top-80 right-1/4 w-96 h-96 rounded-full bg-[#21c715]/10 blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
 
         {/* ============================================================ */}
-        {/* 1. PLAYFUL HERO (Clean, Punchy & Joyful) */}
+        {/* 1. PLAYFUL HERO HEADER WITH REAL POLAROIDS */}
         {/* ============================================================ */}
-        <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          {/* Top Pill */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border-2 border-[#CBDCCB] shadow-xs mb-4 animate-pop-pulse cursor-default">
-            <span className="text-base">🎒</span>
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border-2 border-[#CBDCCB] shadow-xs mb-4 cursor-default">
+            <span className="text-base">🏕️</span>
             <span className="text-xs sm:text-sm font-extrabold text-[#0a515b] tracking-wide uppercase">
-              {isAr ? 'مخيمات المستكشف الصغير' : 'Junior River Explorers'}
+              {isAr ? 'معسكرات الطبيعة التفاعلية للأطفال' : 'WILD NATURE CAMPS FOR KIDS'}
             </span>
             <span className="text-base">✨</span>
           </div>
 
-          {/* Big Friendly Title */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] mb-4 font-heading text-[#16241B]">
-            {isAr ? 'مغامرات النيل.. ' : 'Wild River Camps.. '}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] mb-4 font-heading text-[#16241B]">
+            {isAr ? 'حيث تبدأ أعظم مغامرات الطفولة.. ' : 'Where Real Childhood Adventures.. '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0a515b] via-[#10705f] to-[#21c715]">
-              {isAr ? 'للأبطال الصغار! 🌿' : 'For Young Heroes! 🌿'}
+              {isAr ? 'في قلب النيل! 🌿' : 'Begin on the Nile! 🌿'}
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base lg:text-lg text-[#4E6254] max-w-xl mx-auto font-medium leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-[#4E6254] max-w-xl mx-auto font-medium leading-relaxed mb-6">
             {isAr
-              ? 'حيث يلتقي فضول الأطفال بسحر الطبيعة! نأخذ صغارك في رحلات آمنة ١٠٠٪ ليرصدوا أندر الطيور بأنفسهم.'
-              : 'Where curiosity meets the wild! 100% safe, joyful expeditions where kids spot rare birds with real scopes.'}
+              ? 'معسكرات مليئة بالبهجة والمرح! نُسلّم أطفالك مناظير حقيقية ليرصدوا أندر الطيور بأنفسهم في بيئة آمنة ١٠٠٪ وبإشراف مرشدين متخصصين.'
+              : 'Joyful, hands-on river camps! Kids get real binoculars to spot rare Nile wildlife themselves, guided safely by passionate naturalists.'}
           </p>
-        </div>
 
-        {/* ============================================================ */}
-        {/* 2. PLAYFUL CAMP SELECTOR TABS (Smooth Transition, No Clutter) */}
-        {/* ============================================================ */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 mb-8 overflow-x-auto pb-2 px-2">
-          {camps.map((camp, idx) => (
+          {/* Quick Action Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
             <button
-              key={camp.id}
-              onClick={() => setActiveTab(idx)}
-              className={`flex items-center gap-2 px-4 sm:px-6 py-3 rounded-2xl font-extrabold text-xs sm:text-sm transition-all duration-300 cursor-pointer shadow-xs active:scale-95 whitespace-nowrap ${
-                activeTab === idx
-                  ? `${camp.themeBg} text-white shadow-lg scale-105`
-                  : 'bg-white hover:bg-[#F0F5EC] text-[#3A4E40] border border-[#CBDCCB]'
-              }`}
+              onClick={() => handleOpenBooking(isAr ? 'معسكر المستكشف الصغير' : 'Junior River Rangers')}
+              className="px-8 py-3.5 rounded-full bg-[#0a515b] hover:bg-[#073b42] text-white font-extrabold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all cursor-pointer active:scale-95 flex items-center gap-2"
             >
-              <span className="text-lg">{camp.emoji}</span>
-              <span>{isAr ? camp.nameAr : camp.nameEn}</span>
+              <span>{isAr ? 'احجز مقعد طفلك الآن 🎒' : 'Book Explorer Spot 🎒'}</span>
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
             </button>
-          ))}
+
+            <a
+              href="#scrapbook"
+              className="px-6 py-3.5 rounded-full bg-white hover:bg-[#F0F5EC] text-[#0a515b] border-2 border-[#CBDCCB] font-extrabold text-xs sm:text-sm shadow-xs transition-all flex items-center gap-2"
+            >
+              <Camera className="w-4 h-4 text-[#21c715]" />
+              <span>{isAr ? 'شاهد صور الأطفال في المعسكر' : 'View Kids Photos'}</span>
+            </a>
+          </div>
         </div>
 
         {/* ============================================================ */}
-        {/* 3. ACTIVE CAMP INTERACTIVE SHOWCASE CARD (Springy & Visual) */}
+        {/* 2. INTERACTIVE 3-CAMP DISCOVERY HUB (Tabs + Real Photos) */}
         {/* ============================================================ */}
-        <div className="bg-white rounded-3xl sm:rounded-[36px] border-2 border-[#CBDCCB] shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden mb-14">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
-            
-            {/* Visual Image Side with Floating Badges */}
-            <div className="lg:col-span-6 relative min-h-[260px] sm:min-h-[340px] overflow-hidden group">
-              <img
-                src={currentCamp.image}
-                alt={currentCamp.nameEn}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        <div className="mb-20">
+          {/* Tab Buttons */}
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-6 overflow-x-auto pb-2 px-1">
+            {camps.map((camp, idx) => (
+              <button
+                key={camp.id}
+                onClick={() => setActiveTab(idx)}
+                className={`flex items-center gap-2.5 px-4 sm:px-6 py-3 rounded-2xl font-extrabold text-xs sm:text-sm transition-all duration-300 cursor-pointer shadow-xs active:scale-95 whitespace-nowrap ${
+                  activeTab === idx
+                    ? `${camp.themeBg} text-white shadow-lg scale-105`
+                    : 'bg-white hover:bg-[#F0F5EC] text-[#3A4E40] border border-[#CBDCCB]'
+                }`}
+              >
+                <span className="text-xl">{camp.emoji}</span>
+                <span>{isAr ? camp.nameAr : camp.nameEn}</span>
+              </button>
+            ))}
+          </div>
 
-              {/* Top Floating Tag */}
-              <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4">
-                <span className="px-4 py-1.5 rounded-full bg-white/95 text-[#16241B] font-black text-xs shadow-md border border-[#CBDCCB]">
-                  {isAr ? currentCamp.tagAr : currentCamp.tagEn}
-                </span>
-              </div>
+          {/* Active Camp Card with REAL Photo */}
+          <div className="bg-white rounded-3xl sm:rounded-[36px] border-2 border-[#CBDCCB] shadow-xl overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
+              
+              {/* Left / Top: Real Photo from the Camps */}
+              <div className="lg:col-span-6 relative min-h-[280px] sm:min-h-[360px] overflow-hidden group">
+                <img
+                  src={currentCamp.image}
+                  alt={currentCamp.nameEn}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-              {/* Bottom Quick Info */}
-              <div className="absolute bottom-4 left-4 right-4 text-white flex items-center justify-between text-xs font-bold">
-                <div className="flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full">
-                  <Users className="w-3.5 h-3.5 text-[#21c715]" />
-                  <span>{isAr ? currentCamp.ageAr : currentCamp.ageEn}</span>
-                </div>
-                <div className="flex items-center gap-1.5 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full">
-                  <Clock className="w-3.5 h-3.5 text-[#21c715]" />
-                  <span>{isAr ? currentCamp.durationAr : currentCamp.durationEn}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Content Side - Clean, Engaging, Zero Clutter */}
-            <div className="lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-2xl">{currentCamp.emoji}</span>
-                  <span className="text-xs font-mono font-bold uppercase tracking-wider text-[#0a515b]">
-                    {isAr ? currentCamp.ageAr : currentCamp.ageEn}
+                {/* Top Badge */}
+                <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4">
+                  <span className="px-4 py-1.5 rounded-full bg-white text-[#16241B] font-black text-xs shadow-md border border-[#CBDCCB] flex items-center gap-1.5">
+                    <span>{currentCamp.emoji}</span>
+                    <span>{isAr ? currentCamp.tagAr : currentCamp.tagEn}</span>
                   </span>
                 </div>
 
-                <h2 className="text-2xl sm:text-3xl font-black text-[#16241B] mb-3 leading-tight">
-                  {isAr ? currentCamp.nameAr : currentCamp.nameEn}
-                </h2>
-
-                <p className="text-sm sm:text-base text-[#4E6254] leading-relaxed mb-6">
-                  {isAr ? currentCamp.descAr : currentCamp.descEn}
-                </p>
-
-                {/* 3 Playful Highlights */}
-                <div className="space-y-3 mb-8">
-                  {(isAr ? currentCamp.perksAr : currentCamp.perksEn).map((perk, pIdx) => (
-                    <div
-                      key={pIdx}
-                      className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAFDF8] border border-[#E2E8DC] hover:border-[#21c715] transition-colors"
-                    >
-                      <div className="w-6 h-6 rounded-full bg-[#21c715]/15 text-[#21c715] flex items-center justify-center shrink-0 font-bold text-xs">
-                        ✓
-                      </div>
-                      <span className="text-xs sm:text-sm font-bold text-[#16241B]">
-                        {perk}
-                      </span>
-                    </div>
-                  ))}
+                {/* Bottom Real Photo Caption */}
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <div className="text-xs font-mono font-bold text-[#4bf319] block mb-0.5">
+                    📸 {isAr ? 'صورة حقيقية من معسكراتنا في أسوان' : 'Real Photo from Aswan Nature Camps'}
+                  </div>
+                  <div className="text-sm font-extrabold drop-shadow-sm">
+                    {isAr ? currentCamp.captionAr : currentCamp.captionEn}
+                  </div>
                 </div>
               </div>
 
-              {/* Big Playful Bouncy Button */}
-              <button
-                onClick={() => handleOpenBooking(isAr ? currentCamp.nameAr : currentCamp.nameEn)}
-                className={`w-full py-4 px-6 rounded-2xl ${currentCamp.themeBg} hover:opacity-95 text-white font-black text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-2 group/btn`}
-              >
-                <span>{isAr ? 'احجز مغامرة طفلك الآن 🎒' : 'Book Child’s Adventure Now 🎒'}</span>
-                <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1" />
-              </button>
+              {/* Right / Bottom: Camp Details (Concise, punchy, zero fluff) */}
+              <div className="lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between">
+                <div>
+                  {/* Meta pills */}
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#0a515b]/10 text-[#0a515b] text-xs font-bold">
+                      <Users className="w-3.5 h-3.5" />
+                      <span>{isAr ? currentCamp.ageAr : currentCamp.ageEn}</span>
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#21c715]/15 text-[#167010] text-xs font-bold">
+                      <Clock className="w-3.5 h-3.5" />
+                      <span>{isAr ? currentCamp.durationAr : currentCamp.durationEn}</span>
+                    </span>
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl font-black text-[#16241B] mb-3 leading-snug">
+                    {isAr ? currentCamp.nameAr : currentCamp.nameEn}
+                  </h3>
+
+                  <p className="text-sm sm:text-base text-[#4E6254] leading-relaxed mb-6 font-normal">
+                    {isAr ? currentCamp.descAr : currentCamp.descEn}
+                  </p>
+
+                  {/* 3 Clear Perks */}
+                  <div className="space-y-2.5 mb-8">
+                    {(isAr ? currentCamp.perksAr : currentCamp.perksEn).map((perk, pIdx) => (
+                      <div
+                        key={pIdx}
+                        className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAFDF8] border border-[#E2E8DC] hover:border-[#21c715] transition-colors"
+                      >
+                        <div className="w-6 h-6 rounded-full bg-[#21c715]/15 text-[#21c715] flex items-center justify-center shrink-0 font-bold text-xs">
+                          ✓
+                        </div>
+                        <span className="text-xs sm:text-sm font-bold text-[#16241B]">
+                          {perk}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Booking Action */}
+                <button
+                  onClick={() => handleOpenBooking(isAr ? currentCamp.nameAr : currentCamp.nameEn)}
+                  className={`w-full py-4 px-6 rounded-2xl ${currentCamp.themeBg} hover:opacity-95 text-white font-black text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-2 group/btn`}
+                >
+                  <span>{isAr ? 'احجز هذا المعسكر لطفلك 🎒' : 'Book This Camp Track 🎒'}</span>
+                  <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1" />
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
         {/* ============================================================ */}
-        {/* 4. "WHAT'S IN THE EXPLORER BACKPACK" (4 Interactive Pop Cards) */}
+        {/* 3. REAL KIDS IN ACTION: SCRAPBOOK GALLERY (Photos from ZIP) */}
         {/* ============================================================ */}
-        <div className="mb-14 text-center">
-          <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#0a515b] mb-2">
-            <Backpack className="w-4 h-4 text-[#21c715]" />
-            <span>{isAr ? 'هدية لكل طفل' : 'EVERY CHILD GETS A KIT'}</span>
+        <div id="scrapbook" className="mb-20">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#0a515b] mb-2">
+              <Camera className="w-4 h-4 text-[#21c715]" />
+              <span>{isAr ? 'ألبوم صور أبطالنا الصغار' : 'LITTLE EXPLORERS ALBUM'}</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#16241B] mb-2">
+              {isAr ? 'لحظات حقيقية لا تُنسى في النيل 📸' : 'Real Unforgettable River Moments 📸'}
+            </h2>
+            <p className="text-xs sm:text-sm text-[#556F5C]">
+              {isAr
+                ? 'شاهد فرحة الأطفال أثناء رصد الطيور، وتتبع آثار الحيوانات، وتعلّم أسرار النيل!'
+                : 'See the genuine joy of kids spotting wildlife, reading tracks, and learning nature lore!'}
+            </p>
           </div>
 
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-[#16241B] mb-6">
-            {isAr ? 'ماذا يوجد داخل حقيبة المستكشف؟ 🎒' : "What's in the Explorer Backpack? 🎒"}
-          </h3>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-            {gearItems.map((gear, gIdx) => (
+          {/* Playful Scrapbook Grid with Polaroid Styling & Stickers */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+            {scrapbookPhotos.map((photo, pIdx) => (
               <div
-                key={gIdx}
-                onClick={() => setActiveGear(gIdx)}
-                className={`p-5 rounded-3xl bg-white border-2 transition-all duration-300 cursor-pointer flex flex-col items-center text-center group active:scale-95 ${
-                  activeGear === gIdx
-                    ? 'border-[#0a515b] shadow-lg -translate-y-1 bg-[#FAFDF8]'
-                    : 'border-[#CBDCCB] hover:border-[#0a515b]/60 hover:shadow-md'
-                }`}
+                key={pIdx}
+                onClick={() => setSelectedPhoto(photo)}
+                className={`group relative bg-white p-3 sm:p-4 rounded-3xl border-2 border-[#CBDCCB] shadow-md hover:shadow-2xl hover:scale-103 hover:border-[#0a515b] transition-all duration-300 cursor-pointer select-none ${photo.rotate} hover:rotate-0 hover:z-20`}
               >
-                <span className="text-4xl mb-2 filter drop-shadow-xs group-hover:scale-120 transition-transform duration-300">
-                  {gear.emoji}
+                {/* Photo Frame */}
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden mb-3 bg-[#EAF0E5]">
+                  <img
+                    src={photo.src}
+                    alt={photo.titleEn}
+                    loading="lazy"
+                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
+
+                  {/* Tape / Sticker Effect */}
+                  <div className="absolute top-2 right-2 rtl:right-auto rtl:left-2 bg-white/95 text-[#0a515b] font-black text-[10px] sm:text-xs px-2.5 py-1 rounded-full shadow-sm border border-[#CBDCCB]">
+                    {photo.sticker}
+                  </div>
+                </div>
+
+                {/* Polaroid Caption */}
+                <div className="text-center">
+                  <h4 className="text-xs sm:text-sm font-extrabold text-[#16241B] group-hover:text-[#0a515b] transition-colors line-clamp-1">
+                    {isAr ? photo.titleAr : photo.titleEn}
+                  </h4>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ============================================================ */}
+        {/* 4. WHAT EVERY CHILD GETS (Interactive 4-Card Explorer Kit) */}
+        {/* ============================================================ */}
+        <div className="mb-20 text-center">
+          <div className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-widest text-[#0a515b] mb-2">
+            <Backpack className="w-4 h-4 text-[#21c715]" />
+            <span>{isAr ? 'حقيبة المستكشف الشاب' : "WHAT'S IN THE EXPLORER BACKPACK"}</span>
+          </div>
+
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-[#16241B] mb-2">
+            {isAr ? 'كل طفل يستلم حقيبته الاستكشافية الكاملة! 🎒' : 'Every Child Receives Their Full Explorer Kit! 🎒'}
+          </h3>
+          <p className="text-xs sm:text-sm text-[#556F5C] mb-8">
+            {isAr ? 'معدات حقيقية تحفز الطفل على التعلّم والملاحظة وتظل معه كذكرى جميلة' : 'Real exploration gear that inspires observation and stays with them forever'}
+          </p>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
+            {kitItems.map((item, idx) => (
+              <div
+                key={idx}
+                className="p-5 rounded-3xl bg-white border-2 border-[#CBDCCB] shadow-xs hover:shadow-lg hover:border-[#0a515b] hover:-translate-y-1 transition-all duration-300 flex flex-col items-center text-center group"
+              >
+                <span className="text-4xl mb-3 group-hover:scale-120 transition-transform duration-300">
+                  {item.emoji}
                 </span>
                 <h4 className="text-sm sm:text-base font-extrabold text-[#16241B] mb-1">
-                  {isAr ? gear.titleAr : gear.titleEn}
+                  {isAr ? item.titleAr : item.titleEn}
                 </h4>
                 <p className="text-[11px] sm:text-xs text-[#556F5C] leading-snug">
-                  {isAr ? gear.descAr : gear.descEn}
+                  {isAr ? item.descAr : item.descEn}
                 </p>
               </div>
             ))}
@@ -366,7 +489,7 @@ export const LearningCampsPage = () => {
         </div>
 
         {/* ============================================================ */}
-        {/* 5. PARENT PEACE OF MIND & SUPER SAFETY (Compact Pill Bar) */}
+        {/* 5. PARENT TRUST & GOLD-STANDARD SAFETY (Clean Pill Card) */}
         {/* ============================================================ */}
         <div className="bg-[#0a515b] rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden mb-12">
           {/* Subtle Decorative Star */}
@@ -380,25 +503,77 @@ export const LearningCampsPage = () => {
             </div>
             <div>
               <div className="text-xs font-mono font-bold text-[#4bf319] uppercase tracking-wider mb-0.5">
-                {isAr ? 'سلامة معتمدة ١٠٠٪' : '100% CERTIFIED SAFETY'}
+                {isAr ? 'سلامة معتمدة ١٠٠٪ وراحة بال تامة للآباء' : '100% CERTIFIED SAFETY & PARENT PEACE OF MIND'}
               </div>
-              <h4 className="text-base sm:text-lg font-bold text-white">
+              <h4 className="text-sm sm:text-lg font-bold text-white leading-snug">
                 {isAr
-                  ? 'راحة بال تامة للآباء: سترات نجاة مريحة للأطفال ومرافقة مرشد لكل ٤ أطفال.'
-                  : 'Absolute peace of mind: tailored child life jackets & strict 1:4 guide ratio.'}
+                  ? 'سترات نجاة مخصصة ومريحة للأطفال، قوارب بيئية مظللة، ومرافقة مرشد لكل ٤ أطفال.'
+                  : 'Tailored child life jackets, shaded eco-boats, and dedicated 1:4 guide-to-child supervision.'}
               </h4>
             </div>
           </div>
 
           <button
-            onClick={() => handleOpenBooking('Junior Naturalists Camp')}
-            className="px-6 py-3 rounded-full bg-[#21c715] hover:bg-[#1db312] text-white font-extrabold text-xs sm:text-sm shadow-md transition-all shrink-0 cursor-pointer active:scale-95"
+            onClick={() => handleOpenBooking('Junior River Rangers')}
+            className="px-6 py-3 rounded-full bg-[#21c715] hover:bg-[#1cb011] text-white font-extrabold text-xs sm:text-sm shadow-md transition-all shrink-0 cursor-pointer active:scale-95 flex items-center gap-2"
           >
-            {isAr ? 'تحدث معنا واستفسر 💬' : 'Inquire & Chat 💬'}
+            <span>{isAr ? 'استفسر أو احجز المقعد 💬' : 'Inquire & Reserve 💬'}</span>
+            <ArrowRight className="w-4 h-4 rtl:rotate-180" />
           </button>
         </div>
 
       </div>
+
+      {/* ============================================================ */}
+      {/* 6. LIGHTBOX FOR SCRAPBOOK PHOTO INSPECTION */}
+      {/* ============================================================ */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <div
+            className="relative max-w-2xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl p-4 sm:p-6"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedPhoto(null)}
+              className="absolute top-4 right-4 rtl:right-auto rtl:left-4 z-20 p-2.5 rounded-full bg-black/60 text-white hover:bg-[#0a515b] transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="aspect-[4/3] rounded-2xl overflow-hidden mb-4 bg-black">
+              <img
+                src={selectedPhoto.src}
+                alt={selectedPhoto.titleEn}
+                className="w-full h-full object-contain"
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div>
+                <span className="text-xs font-mono font-bold text-[#0a515b] block mb-0.5">
+                  {selectedPhoto.sticker}
+                </span>
+                <h3 className="text-base sm:text-lg font-black text-[#16241B]">
+                  {isAr ? selectedPhoto.titleAr : selectedPhoto.titleEn}
+                </h3>
+              </div>
+              <button
+                onClick={() => {
+                  setSelectedPhoto(null);
+                  handleOpenBooking('Junior River Rangers');
+                }}
+                className="px-5 py-2.5 rounded-full bg-[#0a515b] text-white font-bold text-xs hover:bg-[#073b42] transition-colors cursor-pointer"
+              >
+                {isAr ? 'احجز التجربة' : 'Book Camp'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
