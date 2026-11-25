@@ -240,20 +240,20 @@ export const LearningCampsPage = () => {
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
 
         {/* ============================================================ */}
-        {/* 1. HERO HEADER (No badge span, no redundant buttons) */}
+        {/* 1. HERO HEADER (Inspiring, professional & kid-friendly) */}
         {/* ============================================================ */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-12">
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] mb-4 font-heading text-[#16241B]">
-            {isAr ? 'حيث تبدأ أعظم مغامرات الطفولة.. ' : 'Where Real Childhood Adventures.. '}
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.15] mb-4 font-heading text-[#16241B]">
+            {isAr ? 'مغامرات استكشافية حقيقية.. ' : 'Real River Adventures for '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0a515b] via-[#10705f] to-[#21c715]">
-              {isAr ? 'في قلب النيل! 🌿' : 'Begin on the Nile! 🌿'}
+              {isAr ? 'للمستكشفين الصغار! 🌿' : 'Curious Young Explorers 🌿'}
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base lg:text-lg text-[#4E6254] max-w-xl mx-auto font-medium leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-[#4E6254] max-w-2xl mx-auto font-medium leading-relaxed">
             {isAr
-              ? 'معسكرات مليئة بالبهجة والمرح! نُسلّم أطفالك مناظير حقيقية ليرصدوا أندر الطيور بأنفسهم في بيئة آمنة ١٠٠٪ وبإشراف مرشدين متخصصين.'
-              : 'Joyful, hands-on river camps! Kids get real binoculars to spot rare Nile wildlife themselves, guided safely by passionate naturalists.'}
+              ? 'وداعاً للشاشات وأهلاً بسحر الطبيعة! معسكرات تفاعلية آمنة تسلّم طفلك منظاره الخاص ليكتشف أندر طيور النيل ويتتبع آثار الحياة البرية بصحبة مرشدين بيئيين متخصصين.'
+              : 'Step away from screens and into the wild! Kids explore untouched Nile islands with real binoculars, learn wildlife tracking, and earn their Junior Ranger badge with 100% certified safety.'}
           </p>
         </div>
 
