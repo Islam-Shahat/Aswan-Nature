@@ -430,40 +430,6 @@ export const LearningCampsPage = () => {
           </div>
         </div>
 
-        {/* ============================================================ */}
-        {/* 5. PARENT TRUST & GOLD-STANDARD SAFETY (Clean Pill Card) */}
-        {/* ============================================================ */}
-        <div className="bg-[#0a515b] rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden mb-12">
-          {/* Subtle Decorative Star */}
-          <div className="absolute -right-6 -bottom-6 text-7xl opacity-10 select-none">
-            ⭐
-          </div>
-
-          <div className="flex items-center gap-4 text-center sm:text-left rtl:sm:text-right">
-            <div className="w-14 h-14 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center text-3xl shrink-0">
-              🦺
-            </div>
-            <div>
-              <div className="text-xs font-mono font-bold text-[#4bf319] uppercase tracking-wider mb-0.5">
-                {isAr ? 'سلامة معتمدة ١٠٠٪ وراحة بال تامة للآباء' : '100% CERTIFIED SAFETY & PARENT PEACE OF MIND'}
-              </div>
-              <h4 className="text-sm sm:text-lg font-bold text-white leading-snug">
-                {isAr
-                  ? 'سترات نجاة مخصصة ومريحة للأطفال، قوارب بيئية مظللة، ومرافقة مرشد لكل ٤ أطفال.'
-                  : 'Tailored child life jackets, shaded eco-boats, and dedicated 1:4 guide-to-child supervision.'}
-              </h4>
-            </div>
-          </div>
-
-          <button
-            onClick={() => handleOpenBooking('Junior River Rangers')}
-            className="px-6 py-3 rounded-full bg-[#21c715] hover:bg-[#1cb011] text-white font-extrabold text-xs sm:text-sm shadow-md transition-all shrink-0 cursor-pointer active:scale-95 flex items-center gap-2"
-          >
-            <span>{isAr ? 'استفسر أو احجز المقعد 💬' : 'Inquire & Reserve 💬'}</span>
-            <ArrowRight className="w-4 h-4 rtl:rotate-180" />
-          </button>
-        </div>
-
       </div>
 
       {/* ============================================================ */}
