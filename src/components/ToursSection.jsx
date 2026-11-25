@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Clock, MapPin, ArrowRight, ArrowUpRight } from 'lucide-react';
 
 export const ToursSection = ({
@@ -7,6 +8,7 @@ export const ToursSection = ({
   currentLang = 'EN'
 }) => {
   const isAr = currentLang === 'AR';
+  const navigate = useNavigate();
   const sectionRef = useRef(null);
 
   // Cards layout in DOM:
@@ -236,16 +238,21 @@ export const ToursSection = ({
                       </div>
                     </div>
 
-                    <div
-                      className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-full transition-all duration-300 ${
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate('/tours');
+                      }}
+                      className={`inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-1.5 rounded-full transition-all duration-300 cursor-pointer ${
                         isFocused
-                          ? 'bg-[#1EAA13] text-white shadow-xs'
+                          ? 'bg-[#1EAA13] hover:bg-[#18910f] text-white shadow-xs hover:scale-105 active:scale-95'
                           : 'text-[#16241B] group-hover:text-[#0a515b]'
                       }`}
                     >
-                      <span>{isAr ? 'استكشف الجولة' : 'Explore Tour'}</span>
+                      <span>{isAr ? 'المزيد' : 'See More'}</span>
                       <ArrowRight className={`w-3.5 h-3.5 rtl:rotate-180 ${isFocused ? 'text-white' : ''}`} />
-                    </div>
+                    </button>
                   </div>
                 </div>
               );

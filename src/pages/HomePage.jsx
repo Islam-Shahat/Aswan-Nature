@@ -50,8 +50,8 @@ export const HomePage = () => {
 
       {/* Tours Showcase */}
       <ToursSection
-        onSelectTour={(tour) => handleOpenBooking(tour)}
-        onExploreTourDetails={(tourId) => navigate(`/tours/${tourId}`)}
+        onSelectTour={() => navigate('/tours')}
+        onExploreTourDetails={() => navigate('/tours')}
         currentLang={currentLang}
       />
 
