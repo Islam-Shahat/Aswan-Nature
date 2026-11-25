@@ -208,6 +208,7 @@ export const LearningCampsPage = () => {
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   const currentCamp = camps[activeTab] || camps[0];
+  const isAlternate = activeTab % 2 === 1;
 
   return (
     <div className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
@@ -221,6 +222,45 @@ export const LearningCampsPage = () => {
         @keyframes float-soft-alt {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(10px) rotate(-3deg); }
+        }
+        @keyframes camp-fade-slide-left {
+          0% {
+            opacity: 0;
+            transform: translateX(-35px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @keyframes camp-fade-slide-right {
+          0% {
+            opacity: 0;
+            transform: translateX(35px);
+          }
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+        @keyframes camp-card-enter {
+          0% {
+            opacity: 0;
+            transform: scale(0.985);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        .animate-camp-card {
+          animation: camp-card-enter 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .animate-slide-from-left {
+          animation: camp-fade-slide-left 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .animate-slide-from-right {
+          animation: camp-fade-slide-right 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .animate-float-soft {
           animation: float-soft 5s ease-in-out infinite;
@@ -275,12 +315,18 @@ export const LearningCampsPage = () => {
         <div className="mb-20">
           <div
             key={currentCamp.id}
-            className="bg-white rounded-3xl sm:rounded-[36px] border-2 border-[#CBDCCB] shadow-xl overflow-hidden animate-in fade-in duration-500"
+            className="bg-white rounded-3xl sm:rounded-[36px] border-2 border-[#CBDCCB] shadow-xl overflow-hidden animate-camp-card"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
               
-              {/* Left / Top: Real Photo from the Camps */}
-              <div className="lg:col-span-6 relative min-h-[300px] sm:min-h-[400px] overflow-hidden group">
+              {/* Photo Column: Alternates sides on desktop every 10s */}
+              <div
+                className={`lg:col-span-6 relative min-h-[320px] sm:min-h-[420px] overflow-hidden group order-1 ${
+                  isAlternate
+                    ? 'lg:order-2 animate-slide-from-right'
+                    : 'lg:order-1 animate-slide-from-left'
+                }`}
+              >
                 <img
                   src={currentCamp.image}
                   alt={currentCamp.nameEn}
@@ -299,8 +345,14 @@ export const LearningCampsPage = () => {
                 </div>
               </div>
 
-              {/* Right / Bottom: Camp Details (Concise, punchy, zero fluff) */}
-              <div className="lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between">
+              {/* Camp Details Column: Alternates opposite to the photo */}
+              <div
+                className={`lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between order-2 ${
+                  isAlternate
+                    ? 'lg:order-1 animate-slide-from-left'
+                    : 'lg:order-2 animate-slide-from-right'
+                }`}
+              >
                 <div>
                   <h3 className="text-2xl sm:text-3xl font-black text-[#16241B] mb-3 leading-snug">
                     {isAr ? currentCamp.nameAr : currentCamp.nameEn}
