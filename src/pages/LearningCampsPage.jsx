@@ -241,37 +241,52 @@ export const LearningCampsPage = () => {
   const isAlternate = activeTab % 2 === 1;
 
   // ============================================================
-  // SPIRAL RIVER RIBBON: Pure Scroll-Linked Stream (Nile Blue)
+  // SPIRAL RIVER RIBBON: Eye-Level Scroll-Linked Stream (Nile Blue)
   // ============================================================
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const pathRef = useRef(null);
-  const [pathLength, setPathLength] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0.08);
+  const containerRef = useRef(null);
 
   // Meandering spiral path coordinates starting cleanly AFTER the navbar (Y=165)
   const ribbonD =
     "M 520,165 C 740,220 880,340 830,480 C 770,620 540,680 320,650 C 100,620 30,780 70,960 C 120,1160 420,1240 740,1220 C 960,1200 990,1400 910,1560 C 800,1740 520,1780 280,1720 C 80,1660 20,1840 50,2000 C 90,2180 370,2260 700,2240 C 930,2220 970,2420 890,2580 C 800,2740 540,2800 300,2740 C 100,2700 40,2880 120,3000 C 200,3120 420,3170 500,3200";
 
-  // Measure path length on mount and window resize
-  useEffect(() => {
-    const updateLength = () => {
-      if (pathRef.current) {
-        setPathLength(pathRef.current.getTotalLength());
-      }
-    };
-    updateLength();
-    window.addEventListener('resize', updateLength);
-    return () => window.removeEventListener('resize', updateLength);
-  }, []);
-
-  // Track scroll position to draw the ribbon smoothly down the page
+  // Track scroll position to draw the ribbon at viewer eye level all the way to the end of the page
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = docHeight > 0 ? Math.min(1, Math.max(0, window.scrollY / docHeight)) : 0;
-          setScrollProgress(progress);
+          if (containerRef.current) {
+            const rect = containerRef.current.getBoundingClientRect();
+            const winHeight = window.innerHeight;
+            // Eye level sits comfortably at ~55% of the viewport height
+            const eyeInContainer = winHeight * 0.55 - rect.top;
+            const totalH = rect.height;
+
+            if (totalH > 0) {
+              // Reached or scrolled past bottom
+              if (rect.bottom <= winHeight + 60) {
+                setScrollProgress(1);
+              } else {
+                const rawProgress = eyeInContainer / totalH;
+                // Minimum initial trace of 8% so start is visible near top, max 100%
+                setScrollProgress(Math.min(1, Math.max(0.08, rawProgress)));
+              }
+            }
+          } else {
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress =
+              docHeight > 0
+                ? Math.min(
+                    1,
+                    Math.max(
+                      0.08,
+                      (window.scrollY + window.innerHeight * 0.55) / document.documentElement.scrollHeight
+                    )
+                  )
+                : 0.08;
+            setScrollProgress(progress);
+          }
           ticking = false;
         });
         ticking = true;
@@ -279,12 +294,19 @@ export const LearningCampsPage = () => {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   return (
-    <div className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
+    <div
+      ref={containerRef}
+      className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden"
+    >
       
       {/* CSS Smooth Crossover Transitions */}
       <style>{`
@@ -356,21 +378,39 @@ export const LearningCampsPage = () => {
             vectorEffect="non-scaling-stroke"
           />
 
-          {/* 2. Active Illuminated Spiral Ribbon (Grows and glides with scroll all the way down) */}
+          {/* 2. Outer Glowing Cyan Halo (follows viewer eye level) */}
           <path
-            ref={pathRef}
+            pathLength="1000"
             d={ribbonD}
             fill="none"
-            stroke="url(#spiral-active-grad)"
-            strokeWidth="5"
+            stroke="#1cb8d1"
+            strokeWidth="11"
+            strokeOpacity="0.32"
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
             filter="url(#ribbon-bloom)"
             style={{
-              strokeDasharray: pathLength || 4500,
-              strokeDashoffset: (pathLength || 4500) * (1 - scrollProgress),
-              transition: 'stroke-dashoffset 0.05s linear'
+              strokeDasharray: 1000,
+              strokeDashoffset: 1000 * (1 - scrollProgress),
+              transition: 'stroke-dashoffset 0.08s ease-out'
+            }}
+          />
+
+          {/* 3. Core Illuminated Nile Blue Ribbon (Pure Ribbon Stream) */}
+          <path
+            pathLength="1000"
+            d={ribbonD}
+            fill="none"
+            stroke="url(#spiral-active-grad)"
+            strokeWidth="5.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            style={{
+              strokeDasharray: 1000,
+              strokeDashoffset: 1000 * (1 - scrollProgress),
+              transition: 'stroke-dashoffset 0.08s ease-out'
             }}
           />
         </svg>
