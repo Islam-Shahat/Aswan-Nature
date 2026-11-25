@@ -186,35 +186,44 @@ export const PharaohsSection = ({
               </div>
             </div>
 
-            {/* Regal Pharaonic Gold CTA Button */}
-            <div className="flex flex-wrap items-center gap-4 mb-9">
+            {/* Creative Pharaonic "See More" Portal Button & Stele */}
+            <div className="flex flex-wrap items-center gap-3.5 mb-8">
               <button
                 onClick={onDiscoverClick}
                 type="button"
-                className="group relative inline-flex items-center gap-3 px-8 py-4 rounded-xl font-bold text-sm sm:text-base text-[#1C1306] shadow-[0_8px_25px_rgba(201,154,93,0.35)] transition-all duration-300 hover:shadow-[0_12px_35px_rgba(201,154,93,0.5)] hover:scale-[1.02] active:scale-[0.98] border border-[#B07E3D] cursor-pointer"
+                className="group relative inline-flex items-center gap-3.5 px-6 sm:px-8 py-4 rounded-2xl font-extrabold text-sm sm:text-base text-[#1C1306] shadow-[0_10px_30px_rgba(201,154,93,0.38)] transition-all duration-300 hover:shadow-[0_15px_45px_rgba(201,154,93,0.6)] hover:scale-[1.02] active:scale-[0.98] border border-[#B07E3D] cursor-pointer overflow-hidden"
                 style={{
                   background:
-                    'linear-gradient(135deg, #F0DBB4 0%, #C99A5D 50%, #B07E3D 100%)'
+                    'linear-gradient(135deg, #FBF3E4 0%, #E8CA97 40%, #C99A5D 80%, #AD7937 100%)'
                 }}
               >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#1C1306"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M3 17c5-1 7-4 8-8 1-4 4-5 6-3l4 1-4 2c0 5-4 10-10 10H3l4-4M10 12C6 12 3 8 2 4c6 1 10 4 11 7" />
-                  <circle cx="16" cy="6.5" r="1.5" fill="#1C1306" />
-                </svg>
-                <span className="tracking-wide">
-                  {isArabic ? 'احجز جولة طيور الفراعنة' : 'Book Pharaohs Birds Tour'}
+                {/* Subtle golden shimmer overlay */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-out pointer-events-none" />
+
+                <span className="w-8 h-8 rounded-full bg-[#1C1306]/10 border border-[#1C1306]/20 flex items-center justify-center text-sm font-serif shadow-xs">
+                  𓅃
                 </span>
-                <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
+                
+                <span className="tracking-wide flex items-center gap-2">
+                  <span>{isArabic ? 'شاهد المزيد · صفحة الفراعنة' : 'See More · Pharaohs Birds'}</span>
+                  <span className="text-[11px] font-mono uppercase bg-[#1C1306] text-[#F4E8CE] px-2 py-0.5 rounded-full font-bold">
+                    {isArabic ? 'كامل الأسرار' : 'Full Page'}
+                  </span>
+                </span>
+
+                <div className="w-8 h-8 rounded-full bg-[#1C1306] text-[#FAF4E6] flex items-center justify-center transition-all duration-300 group-hover:bg-[#8C5D23] group-hover:text-white group-hover:translate-x-1 rtl:group-hover:-translate-x-1 shadow-sm">
+                  <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+                </div>
+              </button>
+
+              {/* Fast secondary "See More" badge link */}
+              <button
+                onClick={onDiscoverClick}
+                type="button"
+                className="group inline-flex items-center gap-2 px-4 py-3.5 rounded-2xl border border-[#c99a5d]/60 bg-[#e5e7e5]/80 hover:bg-white text-[#5C4123] hover:text-[#1C140A] text-xs sm:text-sm font-bold tracking-wide transition-all shadow-xs hover:shadow-md cursor-pointer"
+              >
+                <span className="text-base text-[#c99a5d] group-hover:rotate-45 transition-transform">𓋹</span>
+                <span>{isArabic ? 'استكشف المحراب ↗' : 'Enter Sanctuary ↗'}</span>
               </button>
             </div>
 
@@ -421,6 +430,23 @@ export const PharaohsSection = ({
                     <div className="w-1.5 h-3 rounded-full bg-[#5C320E]/40" />
                   </div>
                 </div>
+              </div>
+
+              {/* Interactive Papyrus "See More" Portal Trigger */}
+              <div className="mt-4 text-center">
+                <button
+                  onClick={onDiscoverClick}
+                  type="button"
+                  className="group inline-flex items-center gap-2.5 px-5 py-2 rounded-full border border-[#c99a5d]/70 bg-[#FAF4E6]/90 hover:bg-white text-[#5C3C15] hover:text-[#1C140A] text-xs sm:text-sm font-bold shadow-xs hover:shadow-md transition-all cursor-pointer"
+                >
+                  <span className="text-[#c99a5d] text-base group-hover:scale-125 transition-transform">𓅃</span>
+                  <span>
+                    {isArabic
+                      ? 'هل تريد استكشاف كافة البرديات واللوحات الجدارية؟ شاهد المزيد'
+                      : 'Want to discover all murals, steles & avian lore? See More'}
+                  </span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#c99a5d] rtl:rotate-180 group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform" />
+                </button>
               </div>
             </div>
           </div>
