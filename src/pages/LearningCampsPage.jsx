@@ -241,70 +241,126 @@ export const LearningCampsPage = () => {
   const isAlternate = activeTab % 2 === 1;
 
   // ============================================================
-  // SPIRAL RIVER RIBBON: Scroll-Linked Stream (Nile Blue)
-  // Starts strictly at 0% at the top of the page, tracks at eye level,
-  // and reaches 100% at the very bottom.
+  // SPIRAL RIVER RIBBON: Ultra-Smooth GPU Stream (Nile Blue)
+  // Starts strictly at 0% at the top, glides smoothly with lerp damping,
+  // and reaches 100% at the bottom of the section.
   // ============================================================
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const containerRef = useRef(null);
+  const activePathRef = useRef(null);
+  const haloPathRef = useRef(null);
+  const pathLengthRef = useRef(6670);
 
   // Meandering spiral path coordinates starting gracefully AFTER the navbar (top-right, Y=95)
   const ribbonD =
     "M 860,95 C 940,180 960,320 890,460 C 820,600 560,660 320,640 C 100,620 30,780 70,960 C 120,1160 420,1240 740,1220 C 960,1200 990,1400 910,1560 C 800,1740 520,1780 280,1720 C 80,1660 20,1840 50,2000 C 90,2180 370,2260 700,2240 C 930,2220 970,2420 890,2580 C 800,2740 540,2800 300,2740 C 100,2700 40,2880 120,3000 C 200,3120 420,3170 500,3200";
 
-  // Track scroll position
+  // Measure path length and run butter-smooth Lerp scroll animation
   useEffect(() => {
-    let ticking = false;
+    // 1. Measure real SVG path geometry
+    if (activePathRef.current) {
+      try {
+        const measured = activePathRef.current.getTotalLength();
+        if (measured && measured > 100) {
+          pathLengthRef.current = measured;
+        }
+      } catch (e) {
+        // Fallback to exact calculated bezier length
+        pathLengthRef.current = 6670;
+      }
+    }
+
+    const totalLen = pathLengthRef.current;
+    if (activePathRef.current) {
+      activePathRef.current.style.strokeDasharray = `${totalLen}px`;
+      activePathRef.current.style.strokeDashoffset = `${totalLen}px`;
+    }
+    if (haloPathRef.current) {
+      haloPathRef.current.style.strokeDasharray = `${totalLen}px`;
+      haloPathRef.current.style.strokeDashoffset = `${totalLen}px`;
+    }
+
+    // 2. Ultra-smooth Lerp Damping Engine
+    let currentProgress = 0;
+    let targetProgress = 0;
+    let rafId = null;
+
+    const renderLoop = () => {
+      const diff = targetProgress - currentProgress;
+      if (Math.abs(diff) > 0.0003) {
+        currentProgress += diff * 0.11; // 11% silky smooth damping per frame
+        const len = pathLengthRef.current;
+        const offset = Math.max(0, len * (1 - currentProgress));
+        if (activePathRef.current) {
+          activePathRef.current.style.strokeDashoffset = `${offset}px`;
+        }
+        if (haloPathRef.current) {
+          haloPathRef.current.style.strokeDashoffset = `${offset}px`;
+        }
+        rafId = requestAnimationFrame(renderLoop);
+      } else {
+        currentProgress = targetProgress;
+        const len = pathLengthRef.current;
+        const offset = Math.max(0, len * (1 - currentProgress));
+        if (activePathRef.current) {
+          activePathRef.current.style.strokeDashoffset = `${offset}px`;
+        }
+        if (haloPathRef.current) {
+          haloPathRef.current.style.strokeDashoffset = `${offset}px`;
+        }
+        rafId = null;
+      }
+    };
+
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrollY = window.scrollY || window.pageYOffset;
-          const docHeight = document.documentElement.scrollHeight;
-          const winHeight = window.innerHeight;
-          const maxScroll = docHeight - winHeight;
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const winHeight = window.innerHeight;
+      const scrollY = window.scrollY || window.pageYOffset;
+      const docHeight = document.documentElement.scrollHeight;
+      const maxDocScroll = docHeight - winHeight;
 
-          if (maxScroll <= 0) {
-            setScrollProgress(1);
-            ticking = false;
-            return;
-          }
+      if (scrollY <= 5) {
+        targetProgress = 0;
+      } else if (
+        rect.bottom <= winHeight + 120 ||
+        (maxDocScroll > 0 && scrollY >= maxDocScroll - 60)
+      ) {
+        // Reached the bottom of the camps section / above footer
+        targetProgress = 1;
+      } else {
+        const maxTravel = rect.height - winHeight - 120;
+        if (maxTravel > 0) {
+          const ratio = Math.min(1, Math.max(0, -rect.top / maxTravel));
+          // Eye-level sinusoidal lead keeping glowing tip naturally in view
+          targetProgress = Math.min(1, Math.max(0, ratio + 0.12 * Math.sin(ratio * Math.PI)));
+        } else {
+          targetProgress = 1;
+        }
+      }
 
-          // 1. Strictly 0 at the top so the ribbon starts from its very beginning
-          if (scrollY <= 5) {
-            setScrollProgress(0);
-            ticking = false;
-            return;
-          }
-
-          // 2. Reaches 100% when nearing or reaching the bottom
-          if (scrollY >= maxScroll - 50) {
-            setScrollProgress(1);
-            ticking = false;
-            return;
-          }
-
-          // 3. Eye-level smooth progress:
-          // Uses sinusoidal lead (+14%) so the illuminated tip naturally tracks in the viewer's field of view
-          const ratio = Math.min(1, Math.max(0, scrollY / maxScroll));
-          const lead = 0.14;
-          const progress = Math.min(1, Math.max(0, ratio + lead * Math.sin(ratio * Math.PI)));
-          setScrollProgress(progress);
-          ticking = false;
-        });
-        ticking = true;
+      if (!rafId) {
+        rafId = requestAnimationFrame(renderLoop);
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll();
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
     };
   }, []);
 
   return (
-    <div className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
+    <div
+      ref={containerRef}
+      className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden"
+    >
       
       {/* CSS Smooth Crossover Transitions */}
       <style>{`
@@ -376,39 +432,39 @@ export const LearningCampsPage = () => {
             vectorEffect="non-scaling-stroke"
           />
 
-          {/* 2. Outer Glowing Cyan Halo (follows viewer eye level) */}
+          {/* 2. Outer Glowing Cyan Halo (Smooth RAF Damped) */}
           <path
-            pathLength="1000"
+            ref={haloPathRef}
             d={ribbonD}
             fill="none"
             stroke="#1cb8d1"
-            strokeWidth="11"
+            strokeWidth="12"
             strokeOpacity="0.32"
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
             filter="url(#ribbon-bloom)"
             style={{
-              strokeDasharray: 1000,
-              strokeDashoffset: 1000 * (1 - scrollProgress),
-              transition: 'stroke-dashoffset 0.08s ease-out'
+              strokeDasharray: '6670px',
+              strokeDashoffset: '6670px',
+              willChange: 'stroke-dashoffset'
             }}
           />
 
           {/* 3. Core Illuminated Nile Blue Ribbon (Pure Ribbon Stream) */}
           <path
-            pathLength="1000"
+            ref={activePathRef}
             d={ribbonD}
             fill="none"
             stroke="url(#spiral-active-grad)"
-            strokeWidth="5.5"
+            strokeWidth="6"
             strokeLinecap="round"
             strokeLinejoin="round"
             vectorEffect="non-scaling-stroke"
             style={{
-              strokeDasharray: 1000,
-              strokeDashoffset: 1000 * (1 - scrollProgress),
-              transition: 'stroke-dashoffset 0.08s ease-out'
+              strokeDasharray: '6670px',
+              strokeDashoffset: '6670px',
+              willChange: 'stroke-dashoffset'
             }}
           />
         </svg>
