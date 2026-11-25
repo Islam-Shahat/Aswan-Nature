@@ -241,52 +241,53 @@ export const LearningCampsPage = () => {
   const isAlternate = activeTab % 2 === 1;
 
   // ============================================================
-  // SPIRAL RIVER RIBBON: Eye-Level Scroll-Linked Stream (Nile Blue)
+  // SPIRAL RIVER RIBBON: Scroll-Linked Stream (Nile Blue)
+  // Starts strictly at 0% at the top of the page, tracks at eye level,
+  // and reaches 100% at the very bottom.
   // ============================================================
-  const [scrollProgress, setScrollProgress] = useState(0.08);
-  const containerRef = useRef(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
-  // Meandering spiral path coordinates starting cleanly AFTER the navbar (Y=165)
+  // Meandering spiral path coordinates starting gracefully AFTER the navbar (top-right, Y=95)
   const ribbonD =
-    "M 520,165 C 740,220 880,340 830,480 C 770,620 540,680 320,650 C 100,620 30,780 70,960 C 120,1160 420,1240 740,1220 C 960,1200 990,1400 910,1560 C 800,1740 520,1780 280,1720 C 80,1660 20,1840 50,2000 C 90,2180 370,2260 700,2240 C 930,2220 970,2420 890,2580 C 800,2740 540,2800 300,2740 C 100,2700 40,2880 120,3000 C 200,3120 420,3170 500,3200";
+    "M 860,95 C 940,180 960,320 890,460 C 820,600 560,660 320,640 C 100,620 30,780 70,960 C 120,1160 420,1240 740,1220 C 960,1200 990,1400 910,1560 C 800,1740 520,1780 280,1720 C 80,1660 20,1840 50,2000 C 90,2180 370,2260 700,2240 C 930,2220 970,2420 890,2580 C 800,2740 540,2800 300,2740 C 100,2700 40,2880 120,3000 C 200,3120 420,3170 500,3200";
 
-  // Track scroll position to draw the ribbon at viewer eye level all the way to the end of the page
+  // Track scroll position
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          if (containerRef.current) {
-            const rect = containerRef.current.getBoundingClientRect();
-            const winHeight = window.innerHeight;
-            // Eye level sits comfortably at ~55% of the viewport height
-            const eyeInContainer = winHeight * 0.55 - rect.top;
-            const totalH = rect.height;
+          const scrollY = window.scrollY || window.pageYOffset;
+          const docHeight = document.documentElement.scrollHeight;
+          const winHeight = window.innerHeight;
+          const maxScroll = docHeight - winHeight;
 
-            if (totalH > 0) {
-              // Reached or scrolled past bottom
-              if (rect.bottom <= winHeight + 60) {
-                setScrollProgress(1);
-              } else {
-                const rawProgress = eyeInContainer / totalH;
-                // Minimum initial trace of 8% so start is visible near top, max 100%
-                setScrollProgress(Math.min(1, Math.max(0.08, rawProgress)));
-              }
-            }
-          } else {
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const progress =
-              docHeight > 0
-                ? Math.min(
-                    1,
-                    Math.max(
-                      0.08,
-                      (window.scrollY + window.innerHeight * 0.55) / document.documentElement.scrollHeight
-                    )
-                  )
-                : 0.08;
-            setScrollProgress(progress);
+          if (maxScroll <= 0) {
+            setScrollProgress(1);
+            ticking = false;
+            return;
           }
+
+          // 1. Strictly 0 at the top so the ribbon starts from its very beginning
+          if (scrollY <= 5) {
+            setScrollProgress(0);
+            ticking = false;
+            return;
+          }
+
+          // 2. Reaches 100% when nearing or reaching the bottom
+          if (scrollY >= maxScroll - 50) {
+            setScrollProgress(1);
+            ticking = false;
+            return;
+          }
+
+          // 3. Eye-level smooth progress:
+          // Uses sinusoidal lead (+14%) so the illuminated tip naturally tracks in the viewer's field of view
+          const ratio = Math.min(1, Math.max(0, scrollY / maxScroll));
+          const lead = 0.14;
+          const progress = Math.min(1, Math.max(0, ratio + lead * Math.sin(ratio * Math.PI)));
+          setScrollProgress(progress);
           ticking = false;
         });
         ticking = true;
@@ -303,10 +304,7 @@ export const LearningCampsPage = () => {
   }, []);
 
   return (
-    <div
-      ref={containerRef}
-      className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden"
-    >
+    <div className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
       
       {/* CSS Smooth Crossover Transitions */}
       <style>{`
