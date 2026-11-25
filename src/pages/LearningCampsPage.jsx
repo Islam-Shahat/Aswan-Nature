@@ -213,16 +213,8 @@ export const LearningCampsPage = () => {
   return (
     <div className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
       
-      {/* CSS Floating Animations */}
+      {/* CSS Smooth Crossover Transitions */}
       <style>{`
-        @keyframes float-soft {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-10px) rotate(3deg); }
-        }
-        @keyframes float-soft-alt {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(10px) rotate(-3deg); }
-        }
         @media (min-width: 1024px) {
           .glide-panel-photo {
             transition: transform 1.25s cubic-bezier(0.25, 1, 0.4, 1), box-shadow 1.25s ease;
@@ -239,28 +231,7 @@ export const LearningCampsPage = () => {
             transform: translateX(-100%);
           }
         }
-        .animate-float-soft {
-          animation: float-soft 5s ease-in-out infinite;
-        }
-        .animate-float-soft-alt {
-          animation: float-soft-alt 6s ease-in-out infinite;
-        }
       `}</style>
-
-      {/* Decorative Floating Colorful Stickers */}
-      <div className="absolute top-28 left-6 sm:left-12 animate-float-soft pointer-events-none select-none z-10 hidden sm:block">
-        <div className="px-3.5 py-2 rounded-2xl bg-[#0a515b] text-white font-extrabold text-xs shadow-lg rotate-[-8deg] border-2 border-white flex items-center gap-1.5">
-          <span>🔭</span>
-          <span>{isAr ? 'مستكشفو النيل' : 'Junior Rangers'}</span>
-        </div>
-      </div>
-
-      <div className="absolute top-36 right-6 sm:right-14 animate-float-soft-alt pointer-events-none select-none z-10 hidden sm:block">
-        <div className="px-3.5 py-2 rounded-2xl bg-[#c99a5d] text-[#1C1306] font-extrabold text-xs shadow-lg rotate-[8deg] border-2 border-white flex items-center gap-1.5">
-          <span>⭐</span>
-          <span>{isAr ? 'أمان ١٠٠٪ للأطفال' : '100% Kid Safe'}</span>
-        </div>
-      </div>
 
       {/* Ambient Nature Lights */}
       <div className="absolute top-10 left-1/4 w-96 h-96 rounded-full bg-[#0a515b]/8 blur-3xl pointer-events-none" />
