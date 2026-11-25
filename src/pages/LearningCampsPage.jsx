@@ -23,6 +23,8 @@ export const LearningCampsPage = () => {
   const { currentLang, handleOpenBooking } = useOutletContext();
   const isAr = currentLang === 'AR';
 
+  // Active camp track tab
+  const [activeTab, setActiveTab] = useState(0);
   // Selected scrapbook photo for full zoom
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
@@ -119,6 +121,8 @@ export const LearningCampsPage = () => {
       lightBg: 'bg-[#1EAA13]/10'
     }
   ];
+
+  const currentCamp = camps[activeTab];
 
   // Scrapbook moments (Real kids in action)
   const scrapbookPhotos = [
@@ -241,9 +245,17 @@ export const LearningCampsPage = () => {
       <div className="max-w-6xl mx-auto px-5 sm:px-8 relative z-10">
 
         {/* ============================================================ */}
-        {/* 1. PLAYFUL HERO HEADER (Clean, Direct & Beautiful) */}
+        {/* 1. PLAYFUL HERO HEADER WITH REAL POLAROIDS */}
         {/* ============================================================ */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border-2 border-[#CBDCCB] shadow-xs mb-4 cursor-default">
+            <span className="text-base">🏕️</span>
+            <span className="text-xs sm:text-sm font-extrabold text-[#0a515b] tracking-wide uppercase">
+              {isAr ? 'معسكرات الطبيعة التفاعلية للأطفال' : 'WILD NATURE CAMPS FOR KIDS'}
+            </span>
+            <span className="text-base">✨</span>
+          </div>
+
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.12] mb-4 font-heading text-[#16241B]">
             {isAr ? 'حيث تبدأ أعظم مغامرات الطفولة.. ' : 'Where Real Childhood Adventures.. '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0a515b] via-[#10705f] to-[#21c715]">
@@ -251,81 +263,138 @@ export const LearningCampsPage = () => {
             </span>
           </h1>
 
-          <p className="text-sm sm:text-base lg:text-lg text-[#4E6254] max-w-2xl mx-auto font-medium leading-relaxed">
+          <p className="text-sm sm:text-base lg:text-lg text-[#4E6254] max-w-xl mx-auto font-medium leading-relaxed mb-6">
             {isAr
               ? 'معسكرات مليئة بالبهجة والمرح! نُسلّم أطفالك مناظير حقيقية ليرصدوا أندر الطيور بأنفسهم في بيئة آمنة ١٠٠٪ وبإشراف مرشدين متخصصين.'
               : 'Joyful, hands-on river camps! Kids get real binoculars to spot rare Nile wildlife themselves, guided safely by passionate naturalists.'}
           </p>
+
+          {/* Quick Action Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={() => handleOpenBooking(isAr ? 'معسكر المستكشف الصغير' : 'Junior River Rangers')}
+              className="px-8 py-3.5 rounded-full bg-[#0a515b] hover:bg-[#073b42] text-white font-extrabold text-sm sm:text-base shadow-lg hover:shadow-xl transition-all cursor-pointer active:scale-95 flex items-center gap-2"
+            >
+              <span>{isAr ? 'احجز مقعد طفلك الآن 🎒' : 'Book Explorer Spot 🎒'}</span>
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
+            </button>
+
+            <a
+              href="#scrapbook"
+              className="px-6 py-3.5 rounded-full bg-white hover:bg-[#F0F5EC] text-[#0a515b] border-2 border-[#CBDCCB] font-extrabold text-xs sm:text-sm shadow-xs transition-all flex items-center gap-2"
+            >
+              <Camera className="w-4 h-4 text-[#21c715]" />
+              <span>{isAr ? 'شاهد صور الأطفال في المعسكر' : 'View Kids Photos'}</span>
+            </a>
+          </div>
         </div>
 
         {/* ============================================================ */}
-        {/* 2. THE 3 CAMP TRACKS (All 3 Visible in a Clean 3-Column Grid) */}
+        {/* 2. INTERACTIVE 3-CAMP DISCOVERY HUB (Tabs + Real Photos) */}
         {/* ============================================================ */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-20">
-          {camps.map((camp) => (
-            <div
-              key={camp.id}
-              className="bg-white rounded-3xl sm:rounded-[32px] border-2 border-[#CBDCCB] shadow-md hover:shadow-2xl hover:border-[#0a515b] transition-all duration-300 flex flex-col justify-between overflow-hidden group"
-            >
-              {/* Card Photo Header */}
-              <div className="relative h-60 w-full overflow-hidden bg-[#EAF0E5]">
+        <div className="mb-20">
+          {/* Tab Buttons */}
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-6 overflow-x-auto pb-2 px-1">
+            {camps.map((camp, idx) => (
+              <button
+                key={camp.id}
+                onClick={() => setActiveTab(idx)}
+                className={`flex items-center gap-2.5 px-4 sm:px-6 py-3 rounded-2xl font-extrabold text-xs sm:text-sm transition-all duration-300 cursor-pointer shadow-xs active:scale-95 whitespace-nowrap ${
+                  activeTab === idx
+                    ? `${camp.themeBg} text-white shadow-lg scale-105`
+                    : 'bg-white hover:bg-[#F0F5EC] text-[#3A4E40] border border-[#CBDCCB]'
+                }`}
+              >
+                <span className="text-xl">{camp.emoji}</span>
+                <span>{isAr ? camp.nameAr : camp.nameEn}</span>
+              </button>
+            ))}
+          </div>
+
+          {/* Active Camp Card with REAL Photo */}
+          <div className="bg-white rounded-3xl sm:rounded-[36px] border-2 border-[#CBDCCB] shadow-xl overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
+              
+              {/* Left / Top: Real Photo from the Camps */}
+              <div className="lg:col-span-6 relative min-h-[280px] sm:min-h-[360px] overflow-hidden group">
                 <img
-                  src={camp.image}
-                  alt={camp.nameEn}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108"
+                  src={currentCamp.image}
+                  alt={currentCamp.nameEn}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-106"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
-                {/* Floating Badge */}
+                {/* Top Badge */}
                 <div className="absolute top-4 left-4 rtl:left-auto rtl:right-4">
-                  <span className="px-3.5 py-1.5 rounded-full bg-white text-[#16241B] font-black text-xs shadow-md border border-[#CBDCCB] flex items-center gap-1.5">
-                    <span>{camp.emoji}</span>
-                    <span>{isAr ? camp.tagAr : camp.tagEn}</span>
+                  <span className="px-4 py-1.5 rounded-full bg-white text-[#16241B] font-black text-xs shadow-md border border-[#CBDCCB] flex items-center gap-1.5">
+                    <span>{currentCamp.emoji}</span>
+                    <span>{isAr ? currentCamp.tagAr : currentCamp.tagEn}</span>
                   </span>
                 </div>
 
-                {/* Duration Tag */}
-                <div className="absolute bottom-3 left-4 rtl:left-auto rtl:right-4 text-white text-xs font-bold flex items-center gap-1.5">
-                  <Clock className="w-3.5 h-3.5 text-[#21c715]" />
-                  <span>{isAr ? camp.durationAr : camp.durationEn}</span>
+                {/* Bottom Real Photo Caption */}
+                <div className="absolute bottom-4 left-4 right-4 text-white">
+                  <div className="text-xs font-mono font-bold text-[#4bf319] block mb-0.5">
+                    📸 {isAr ? 'صورة حقيقية من معسكراتنا في أسوان' : 'Real Photo from Aswan Nature Camps'}
+                  </div>
+                  <div className="text-sm font-extrabold drop-shadow-sm">
+                    {isAr ? currentCamp.captionAr : currentCamp.captionEn}
+                  </div>
                 </div>
               </div>
 
-              {/* Card Body */}
-              <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
+              {/* Right / Bottom: Camp Details (Concise, punchy, zero fluff) */}
+              <div className="lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between">
                 <div>
-                  <div className="text-xs font-mono font-bold text-[#0a515b] mb-1">
-                    {isAr ? camp.ageAr : camp.ageEn}
+                  {/* Meta pills */}
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#0a515b]/10 text-[#0a515b] text-xs font-bold">
+                      <Users className="w-3.5 h-3.5" />
+                      <span>{isAr ? currentCamp.ageAr : currentCamp.ageEn}</span>
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-[#21c715]/15 text-[#167010] text-xs font-bold">
+                      <Clock className="w-3.5 h-3.5" />
+                      <span>{isAr ? currentCamp.durationAr : currentCamp.durationEn}</span>
+                    </span>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-black text-[#16241B] mb-3 leading-snug">
-                    {isAr ? camp.nameAr : camp.nameEn}
+
+                  <h3 className="text-2xl sm:text-3xl font-black text-[#16241B] mb-3 leading-snug">
+                    {isAr ? currentCamp.nameAr : currentCamp.nameEn}
                   </h3>
-                  <p className="text-xs sm:text-sm text-[#4E6254] leading-relaxed mb-6 font-normal">
-                    {isAr ? camp.descAr : camp.descEn}
+
+                  <p className="text-sm sm:text-base text-[#4E6254] leading-relaxed mb-6 font-normal">
+                    {isAr ? currentCamp.descAr : currentCamp.descEn}
                   </p>
 
-                  {/* Perks Checklist */}
-                  <div className="space-y-2.5 mb-7">
-                    {(isAr ? camp.perksAr : camp.perksEn).map((perk, pIdx) => (
-                      <div key={pIdx} className="flex items-start gap-2.5 text-xs text-[#2A4030]">
-                        <CheckCircle2 className="w-4 h-4 text-[#21c715] shrink-0 mt-0.5" />
-                        <span className="font-medium">{perk}</span>
+                  {/* 3 Clear Perks */}
+                  <div className="space-y-2.5 mb-8">
+                    {(isAr ? currentCamp.perksAr : currentCamp.perksEn).map((perk, pIdx) => (
+                      <div
+                        key={pIdx}
+                        className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAFDF8] border border-[#E2E8DC] hover:border-[#21c715] transition-colors"
+                      >
+                        <div className="w-6 h-6 rounded-full bg-[#21c715]/15 text-[#21c715] flex items-center justify-center shrink-0 font-bold text-xs">
+                          ✓
+                        </div>
+                        <span className="text-xs sm:text-sm font-bold text-[#16241B]">
+                          {perk}
+                        </span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Direct Action Button for this camp */}
+                {/* Booking Action */}
                 <button
-                  onClick={() => handleOpenBooking(isAr ? camp.nameAr : camp.nameEn)}
-                  className={`w-full py-3.5 px-6 rounded-2xl ${camp.themeBg} hover:opacity-95 text-white font-black text-xs sm:text-sm shadow-md hover:shadow-xl transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-2 group/btn`}
+                  onClick={() => handleOpenBooking(isAr ? currentCamp.nameAr : currentCamp.nameEn)}
+                  className={`w-full py-4 px-6 rounded-2xl ${currentCamp.themeBg} hover:opacity-95 text-white font-black text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-2 group/btn`}
                 >
-                  <span>{isAr ? 'احجز هذا المعسكر 🎒' : 'Reserve Spot 🎒'}</span>
+                  <span>{isAr ? 'احجز هذا المعسكر لطفلك 🎒' : 'Book This Camp Track 🎒'}</span>
                   <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1" />
                 </button>
               </div>
             </div>
-          ))}
+          </div>
         </div>
 
         {/* ============================================================ */}
