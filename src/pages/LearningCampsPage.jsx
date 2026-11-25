@@ -223,44 +223,21 @@ export const LearningCampsPage = () => {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
           50% { transform: translateY(10px) rotate(-3deg); }
         }
-        @keyframes camp-fade-slide-left {
-          0% {
-            opacity: 0;
-            transform: translateX(-35px);
+        @media (min-width: 1024px) {
+          .glide-panel-photo {
+            transition: transform 1.25s cubic-bezier(0.25, 1, 0.4, 1), box-shadow 1.25s ease;
+            will-change: transform;
           }
-          100% {
-            opacity: 1;
-            transform: translateX(0);
+          .glide-panel-photo.alt-active {
+            transform: translateX(100%);
           }
-        }
-        @keyframes camp-fade-slide-right {
-          0% {
-            opacity: 0;
-            transform: translateX(35px);
+          .glide-panel-details {
+            transition: transform 1.25s cubic-bezier(0.25, 1, 0.4, 1);
+            will-change: transform;
           }
-          100% {
-            opacity: 1;
-            transform: translateX(0);
+          .glide-panel-details.alt-active {
+            transform: translateX(-100%);
           }
-        }
-        @keyframes camp-card-enter {
-          0% {
-            opacity: 0;
-            transform: scale(0.985);
-          }
-          100% {
-            opacity: 1;
-            transform: scale(1);
-          }
-        }
-        .animate-camp-card {
-          animation: camp-card-enter 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .animate-slide-from-left {
-          animation: camp-fade-slide-left 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-        .animate-slide-from-right {
-          animation: camp-fade-slide-right 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .animate-float-soft {
           animation: float-soft 5s ease-in-out infinite;
@@ -313,29 +290,25 @@ export const LearningCampsPage = () => {
         {/* 2. AUTO-PLAYING SHOWCASE CARD (Flips automatically every 10s) */}
         {/* ============================================================ */}
         <div className="mb-20">
-          <div
-            key={currentCamp.id}
-            className="bg-white rounded-3xl sm:rounded-[36px] border-2 border-[#CBDCCB] shadow-xl overflow-hidden animate-camp-card"
-          >
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
+          <div className="bg-white rounded-3xl sm:rounded-[36px] border-2 border-[#CBDCCB] shadow-xl overflow-hidden p-2 sm:p-2.5">
+            <div className="flex flex-col lg:flex-row items-stretch relative min-h-[420px]" dir="ltr">
               
-              {/* Photo Column: Alternates sides on desktop every 10s */}
+              {/* Photo Panel: Smoothly glides across and over the details panel */}
               <div
-                className={`lg:col-span-6 relative min-h-[320px] sm:min-h-[420px] overflow-hidden group order-1 ${
-                  isAlternate
-                    ? 'lg:order-2 animate-slide-from-right'
-                    : 'lg:order-1 animate-slide-from-left'
+                className={`w-full lg:w-1/2 relative min-h-[320px] sm:min-h-[420px] overflow-hidden group z-20 rounded-2xl sm:rounded-[28px] shadow-2xl glide-panel-photo ${
+                  isAlternate ? 'alt-active' : ''
                 }`}
               >
                 <img
+                  key={currentCamp.image}
                   src={currentCamp.image}
                   alt={currentCamp.nameEn}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-106"
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-106 animate-in fade-in duration-1000"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent pointer-events-none" />
 
                 {/* Bottom Real Photo Caption */}
-                <div className="absolute bottom-4 left-4 right-4 text-white">
+                <div className="absolute bottom-4 left-4 right-4 text-white pointer-events-none" dir={isAr ? 'rtl' : 'ltr'}>
                   <div className="text-xs font-mono font-bold text-[#4bf319] block mb-0.5">
                     📸 {isAr ? 'صورة حقيقية من معسكراتنا في أسوان' : 'Real Photo from Aswan Nature Camps'}
                   </div>
@@ -345,50 +318,52 @@ export const LearningCampsPage = () => {
                 </div>
               </div>
 
-              {/* Camp Details Column: Alternates opposite to the photo */}
+              {/* Details Panel: Smoothly glides underneath to the other side */}
               <div
-                className={`lg:col-span-6 p-6 sm:p-10 flex flex-col justify-between order-2 ${
-                  isAlternate
-                    ? 'lg:order-1 animate-slide-from-left'
-                    : 'lg:order-2 animate-slide-from-right'
+                className={`w-full lg:w-1/2 p-6 sm:p-10 flex flex-col justify-between bg-white z-10 glide-panel-details ${
+                  isAlternate ? 'alt-active' : ''
                 }`}
+                dir={isAr ? 'rtl' : 'ltr'}
               >
-                <div>
-                  <h3 className="text-2xl sm:text-3xl font-black text-[#16241B] mb-3 leading-snug">
-                    {isAr ? currentCamp.nameAr : currentCamp.nameEn}
-                  </h3>
+                <div key={currentCamp.id} className="animate-in fade-in duration-700 flex flex-col justify-between h-full">
+                  <div>
+                    <h3 className="text-2xl sm:text-3xl font-black text-[#16241B] mb-3 leading-snug">
+                      {isAr ? currentCamp.nameAr : currentCamp.nameEn}
+                    </h3>
 
-                  <p className="text-sm sm:text-base text-[#4E6254] leading-relaxed mb-6 font-normal">
-                    {isAr ? currentCamp.descAr : currentCamp.descEn}
-                  </p>
+                    <p className="text-sm sm:text-base text-[#4E6254] leading-relaxed mb-6 font-normal">
+                      {isAr ? currentCamp.descAr : currentCamp.descEn}
+                    </p>
 
-                  {/* 3 Clear Perks */}
-                  <div className="space-y-2.5 mb-8">
-                    {(isAr ? currentCamp.perksAr : currentCamp.perksEn).map((perk, pIdx) => (
-                      <div
-                        key={pIdx}
-                        className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAFDF8] border border-[#E2E8DC] hover:border-[#21c715] transition-colors"
-                      >
-                        <div className="w-6 h-6 rounded-full bg-[#21c715]/15 text-[#21c715] flex items-center justify-center shrink-0 font-bold text-xs">
-                          ✓
+                    {/* 3 Clear Perks */}
+                    <div className="space-y-2.5 mb-8">
+                      {(isAr ? currentCamp.perksAr : currentCamp.perksEn).map((perk, pIdx) => (
+                        <div
+                          key={pIdx}
+                          className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAFDF8] border border-[#E2E8DC] hover:border-[#21c715] transition-colors"
+                        >
+                          <div className="w-6 h-6 rounded-full bg-[#21c715]/15 text-[#21c715] flex items-center justify-center shrink-0 font-bold text-xs">
+                            ✓
+                          </div>
+                          <span className="text-xs sm:text-sm font-bold text-[#16241B]">
+                            {perk}
+                          </span>
                         </div>
-                        <span className="text-xs sm:text-sm font-bold text-[#16241B]">
-                          {perk}
-                        </span>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* Booking Action */}
-                <button
-                  onClick={() => handleOpenBooking(isAr ? currentCamp.nameAr : currentCamp.nameEn)}
-                  className={`w-full py-4 px-6 rounded-2xl ${currentCamp.themeBg} hover:opacity-95 text-white font-black text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-2 group/btn`}
-                >
-                  <span>{isAr ? 'احجز هذا المعسكر لطفلك 🎒' : 'Book This Camp Track 🎒'}</span>
-                  <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1" />
-                </button>
+                  {/* Booking Action */}
+                  <button
+                    onClick={() => handleOpenBooking(isAr ? currentCamp.nameAr : currentCamp.nameEn)}
+                    className={`w-full py-4 px-6 rounded-2xl ${currentCamp.themeBg} hover:opacity-95 text-white font-black text-sm sm:text-base shadow-lg hover:shadow-xl transition-all duration-200 cursor-pointer active:scale-95 flex items-center justify-center gap-2 group/btn`}
+                  >
+                    <span>{isAr ? 'احجز هذا المعسكر لطفلك 🎒' : 'Book This Camp Track 🎒'}</span>
+                    <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1" />
+                  </button>
+                </div>
               </div>
+
             </div>
           </div>
         </div>
