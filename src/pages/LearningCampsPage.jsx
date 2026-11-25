@@ -19,6 +19,178 @@ import {
   X
 } from 'lucide-react';
 
+// 3 Primary Camp Tracks featuring real photos
+const camps = [
+  {
+    id: 'junior',
+    emoji: '🏕️',
+    nameAr: 'معسكر المستكشف الصغير',
+    nameEn: 'Junior River Rangers',
+    ageAr: 'الأعمار: ٧ - ١٤ سنة',
+    ageEn: 'Ages: 7–14 Years',
+    durationAr: 'يومان (عطلة نهاية الأسبوع)',
+    durationEn: '2 Days / Weekend',
+    tagAr: 'الأكثر حماساً وطلباً ⭐',
+    tagEn: 'Most Popular for Kids ⭐',
+    descAr: 'مغامرة برية حقيقية! يتسلّم طفلك منظاره الخاص، ويتعلم رصد الطيور والتعرف على آثار الحيوانات فوق جزر النيل الهادئة بأمان تام.',
+    descEn: 'A true river safari! Kids receive real field binoculars, learn to spot elusive kingfishers, and decode nature clues on safe river isles.',
+    image: '/camps-images/kids-binoculars.jpg',
+    captionAr: 'أطفالنا يرصدون الطيور بالمناظير في الجزيرة',
+    captionEn: 'Kids spotting river birds with real field scopes',
+    perksAr: [
+      'منظار ميداني حقيقي وسجل استكشاف لكل طفل',
+      'مرافقة متخصصة بنسبة مرشد لكل ٤ أطفال',
+      'تتويج رسمي بوسام حارس النيل ودبلوم المستكشف'
+    ],
+    perksEn: [
+      'Real child-friendly binoculars & waterproof field journal',
+      'Strict 1:4 guide-to-child ratio for maximum attention & safety',
+      'Official Junior River Ranger medal and ceremony diploma'
+    ],
+    themeColor: '#0a515b',
+    themeBg: 'bg-[#0a515b]',
+    lightBg: 'bg-[#0a515b]/10'
+  },
+  {
+    id: 'family',
+    emoji: '👨‍👩‍👧‍👦',
+    nameAr: 'خلوة الاستكشاف العائلي',
+    nameEn: 'Family Island Retreat',
+    ageAr: 'للعائلات وجميع الأعمار',
+    ageEn: 'All Ages / Families',
+    durationAr: 'يوم كامل (٦ ساعات تفاعلية)',
+    durationEn: 'Full Day (6 Hours)',
+    tagAr: 'تجربة أسرية لا تُنسى 🌿',
+    tagEn: 'Family Adventure 🌿',
+    descAr: 'افصلوا عن الشاشات والروتين! قارب بيئي خاص لعائلتك يبحر بين جزر الشلال الأول، مع ألعاب رصد الطبيعة وغداء نوبي لذيذ على جزيرة خاصة.',
+    descEn: 'Disconnect from screens! A private chartered eco-boat for your family exploring serene Nile islets, with fun spotting quests and fresh island lunch.',
+    image: '/camps-images/kids-telescope.jpg',
+    captionAr: 'استكشاف عائلي للتلسكوب وأعشاش الطيور',
+    captionEn: 'Family nature quest with field telescope',
+    perksAr: [
+      'قارب خاص بالكامل للعائلة مع قائد نوبي خبير',
+      'تحديات وألعاب استكشافية تجمع الأبناء والآباء',
+      'غداء نوبي طازج على جزيرة نيلية مظللة'
+    ],
+    perksEn: [
+      '100% Private chartered boat with experienced captain',
+      'Fun multi-generational bird identification challenges',
+      'Authentic fresh Nubian picnic lunch on a secluded island'
+    ],
+    themeColor: '#c99a5d',
+    themeBg: 'bg-[#c99a5d]',
+    lightBg: 'bg-[#c99a5d]/15'
+  },
+  {
+    id: 'school',
+    emoji: '🎓',
+    nameAr: 'رحلات المدارس والجامعات',
+    nameEn: 'School Field Safaris',
+    ageAr: 'المدارس والمجموعات الطلابية',
+    ageEn: 'Schools & Student Groups',
+    durationAr: 'برامج علمية مخصصة',
+    durationEn: 'Custom Tailored Safaris',
+    tagAr: 'تعليم تطبيقي ومنهجي 🔬',
+    tagEn: 'Curriculum Aligned 🔬',
+    descAr: 'الفصل التعليمي الأوسع في الهواء الطلق! تجارب تفاعلية لدراسة جودة مياه النيل ومسارات هجرة الطيور العالمية بمرافقة باحثين بيئيين.',
+    descEn: 'The greatest classroom without walls! Interactive hands-on freshwater ecology, bird banding science, and biodiversity surveys.',
+    image: '/camps-images/kids-circle.jpg',
+    captionAr: 'حلقة نقاش وتجارب بيئية حية في المحمية',
+    captionEn: 'Outdoor biology circle & field experiments',
+    perksAr: [
+      'تجارب معملية مبسطة في الطبيعة وجمع عينات المياه',
+      'محتوى متوافق مع مناهج العلوم الدولية (IB / Cambridge)',
+      'تأمين أمني وطبي كامل بنسبة أمان ١٠٠٪'
+    ],
+    perksEn: [
+      'Hands-on water quality testing & biodiversity census',
+      'Aligned with international IB & Cambridge biology criteria',
+      'Complete medical risk-assessment & child safeguarding'
+    ],
+    themeColor: '#1EAA13',
+    themeBg: 'bg-[#1EAA13]',
+    lightBg: 'bg-[#1EAA13]/10'
+  }
+];
+
+// Scrapbook moments (Real kids in action)
+const scrapbookPhotos = [
+  {
+    src: '/camps-images/kids-binoculars.jpg',
+    titleAr: 'رصد الطيور بالمناظير',
+    titleEn: 'Field Binoculars Session',
+    sticker: '🔭 8X Zoom!',
+    rotate: '-rotate-2'
+  },
+  {
+    src: '/camps-images/kids-cards.jpg',
+    titleAr: 'بطاقات توثيق الطيور',
+    titleEn: 'Species Identification Cards',
+    sticker: '⭐ Super Smart!',
+    rotate: 'rotate-2'
+  },
+  {
+    src: '/camps-images/kids-smiling.jpg',
+    titleAr: 'ابتسامات المستكشفين',
+    titleEn: 'Joy of Discovery',
+    sticker: '😄 Big Smiles!',
+    rotate: '-rotate-1'
+  },
+  {
+    src: '/camps-images/kids-telescope.jpg',
+    titleAr: 'تلسكوب المحميات الطبيعية',
+    titleEn: 'Tripod Telescope Spotting',
+    sticker: '🦅 Eagle Eyes!',
+    rotate: 'rotate-3'
+  },
+  {
+    src: '/camps-images/kids-outdoor.jpg',
+    titleAr: 'تتبع آثار الحيوانات في الرمال',
+    titleEn: 'Wildlife Footprint Tracking',
+    sticker: '🐾 Animal Tracks!',
+    rotate: '-rotate-2'
+  },
+  {
+    src: '/camps-images/kids-circle.jpg',
+    titleAr: 'حلقة حكايات النيل الاستكشافية',
+    titleEn: 'Nature Circle & Lore',
+    sticker: '🌿 Nature Club!',
+    rotate: 'rotate-1'
+  }
+];
+
+// 4 Explorer Gear items given to each child
+const kitItems = [
+  {
+    emoji: '🔭',
+    titleAr: 'منظار الصغار الحقيقي',
+    titleEn: 'Real 8X Binoculars',
+    descAr: 'خفيف ومقاوم للصدمات لتقريب الطيور 8 أضعاف',
+    descEn: 'Kid-sized shockproof optics with crystal clear focus'
+  },
+  {
+    emoji: '📖',
+    titleAr: 'سجل الطبيعة المقاوم للماء',
+    titleEn: 'Waterproof Journal',
+    descAr: 'لتدوين الملاحظات وجمع أختام الطيور المكتشفة',
+    descEn: 'Logbook with bird checklists & nature stickers'
+  },
+  {
+    emoji: '🎨',
+    titleAr: 'ألوان الرسم المائية',
+    titleEn: 'Island Art Set',
+    descAr: 'ألوان آمنة لرسم الطبيعة على ضفاف الجزيرة',
+    descEn: 'Non-toxic watercolors for riverbank sketching'
+  },
+  {
+    emoji: '🏅',
+    titleAr: 'وسام حارس النيل الذهبي',
+    titleEn: 'Ranger Medal & Diploma',
+    descAr: 'ميدالية رسمية معتمدة يتسلمها الطفل في حفل الغروب',
+    descEn: 'Official engraved metal badge & graduation diploma'
+  }
+];
+
 export const LearningCampsPage = () => {
   const { currentLang, handleOpenBooking } = useOutletContext();
   const isAr = currentLang === 'AR';
@@ -32,184 +204,12 @@ export const LearningCampsPage = () => {
       setActiveTab((prev) => (prev + 1) % camps.length);
     }, 10000);
     return () => clearInterval(timer);
-  }, [camps.length]);
+  }, []);
 
   // Selected scrapbook photo for full zoom
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
-  // 3 Primary Camp Tracks featuring real photos
-  const camps = [
-    {
-      id: 'junior',
-      emoji: '🏕️',
-      nameAr: 'معسكر المستكشف الصغير',
-      nameEn: 'Junior River Rangers',
-      ageAr: 'الأعمار: ٧ - ١٤ سنة',
-      ageEn: 'Ages: 7–14 Years',
-      durationAr: 'يومان (عطلة نهاية الأسبوع)',
-      durationEn: '2 Days / Weekend',
-      tagAr: 'الأكثر حماساً وطلباً ⭐',
-      tagEn: 'Most Popular for Kids ⭐',
-      descAr: 'مغامرة برية حقيقية! يتسلّم طفلك منظاره الخاص، ويتعلم رصد الطيور والتعرف على آثار الحيوانات فوق جزر النيل الهادئة بأمان تام.',
-      descEn: 'A true river safari! Kids receive real field binoculars, learn to spot elusive kingfishers, and decode nature clues on safe river isles.',
-      image: '/camps-images/kids-binoculars.jpg',
-      captionAr: 'أطفالنا يرصدون الطيور بالمناظير في الجزيرة',
-      captionEn: 'Kids spotting river birds with real field scopes',
-      perksAr: [
-        'منظار ميداني حقيقي وسجل استكشاف لكل طفل',
-        'مرافقة متخصصة بنسبة مرشد لكل ٤ أطفال',
-        'تتويج رسمي بوسام حارس النيل ودبلوم المستكشف'
-      ],
-      perksEn: [
-        'Real child-friendly binoculars & waterproof field journal',
-        'Strict 1:4 guide-to-child ratio for maximum attention & safety',
-        'Official Junior River Ranger medal and ceremony diploma'
-      ],
-      themeColor: '#0a515b',
-      themeBg: 'bg-[#0a515b]',
-      lightBg: 'bg-[#0a515b]/10'
-    },
-    {
-      id: 'family',
-      emoji: '👨‍👩‍👧‍👦',
-      nameAr: 'خلوة الاستكشاف العائلي',
-      nameEn: 'Family Island Retreat',
-      ageAr: 'للعائلات وجميع الأعمار',
-      ageEn: 'All Ages / Families',
-      durationAr: 'يوم كامل (٦ ساعات تفاعلية)',
-      durationEn: 'Full Day (6 Hours)',
-      tagAr: 'تجربة أسرية لا تُنسى 🌿',
-      tagEn: 'Family Adventure 🌿',
-      descAr: 'افصلوا عن الشاشات والروتين! قارب بيئي خاص لعائلتك يبحر بين جزر الشلال الأول، مع ألعاب رصد الطبيعة وغداء نوبي لذيذ على جزيرة خاصة.',
-      descEn: 'Disconnect from screens! A private chartered eco-boat for your family exploring serene Nile islets, with fun spotting quests and fresh island lunch.',
-      image: '/camps-images/kids-telescope.jpg',
-      captionAr: 'استكشاف عائلي للتلسكوب وأعشاش الطيور',
-      captionEn: 'Family nature quest with field telescope',
-      perksAr: [
-        'قارب خاص بالكامل للعائلة مع قائد نوبي خبير',
-        'تحديات وألعاب استكشافية تجمع الأبناء والآباء',
-        'غداء نوبي طازج على جزيرة نيلية مظللة'
-      ],
-      perksEn: [
-        '100% Private chartered boat with experienced captain',
-        'Fun multi-generational bird identification challenges',
-        'Authentic fresh Nubian picnic lunch on a secluded island'
-      ],
-      themeColor: '#c99a5d',
-      themeBg: 'bg-[#c99a5d]',
-      lightBg: 'bg-[#c99a5d]/15'
-    },
-    {
-      id: 'school',
-      emoji: '🎓',
-      nameAr: 'رحلات المدارس والجامعات',
-      nameEn: 'School Field Safaris',
-      ageAr: 'المدارس والمجموعات الطلابية',
-      ageEn: 'Schools & Student Groups',
-      durationAr: 'برامج علمية مخصصة',
-      durationEn: 'Custom Tailored Safaris',
-      tagAr: 'تعليم تطبيقي ومنهجي 🔬',
-      tagEn: 'Curriculum Aligned 🔬',
-      descAr: 'الفصل التعليمي الأوسع في الهواء الطلق! تجارب تفاعلية لدراسة جودة مياه النيل ومسارات هجرة الطيور العالمية بمرافقة باحثين بيئيين.',
-      descEn: 'The greatest classroom without walls! Interactive hands-on freshwater ecology, bird banding science, and biodiversity surveys.',
-      image: '/camps-images/kids-circle.jpg',
-      captionAr: 'حلقة نقاش وتجارب بيئية حية في المحمية',
-      captionEn: 'Outdoor biology circle & field experiments',
-      perksAr: [
-        'تجارب معملية مبسطة في الطبيعة وجمع عينات المياه',
-        'محتوى متوافق مع مناهج العلوم الدولية (IB / Cambridge)',
-        'تأمين أمني وطبي كامل بنسبة أمان ١٠٠٪'
-      ],
-      perksEn: [
-        'Hands-on water quality testing & biodiversity census',
-        'Aligned with international IB & Cambridge biology criteria',
-        'Complete medical risk-assessment & child safeguarding'
-      ],
-      themeColor: '#1EAA13',
-      themeBg: 'bg-[#1EAA13]',
-      lightBg: 'bg-[#1EAA13]/10'
-    }
-  ];
-
-  const currentCamp = camps[activeTab];
-
-  // Scrapbook moments (Real kids in action)
-  const scrapbookPhotos = [
-    {
-      src: '/camps-images/kids-binoculars.jpg',
-      titleAr: 'رصد الطيور بالمناظير',
-      titleEn: 'Field Binoculars Session',
-      sticker: '🔭 8X Zoom!',
-      rotate: '-rotate-2'
-    },
-    {
-      src: '/camps-images/kids-cards.jpg',
-      titleAr: 'بطاقات توثيق الطيور',
-      titleEn: 'Species Identification Cards',
-      sticker: '⭐ Super Smart!',
-      rotate: 'rotate-2'
-    },
-    {
-      src: '/camps-images/kids-smiling.jpg',
-      titleAr: 'ابتسامات المستكشفين',
-      titleEn: 'Joy of Discovery',
-      sticker: '😄 Big Smiles!',
-      rotate: '-rotate-1'
-    },
-    {
-      src: '/camps-images/kids-telescope.jpg',
-      titleAr: 'تلسكوب المحميات الطبيعية',
-      titleEn: 'Tripod Telescope Spotting',
-      sticker: '🦅 Eagle Eyes!',
-      rotate: 'rotate-3'
-    },
-    {
-      src: '/camps-images/kids-outdoor.jpg',
-      titleAr: 'تتبع آثار الحيوانات في الرمال',
-      titleEn: 'Wildlife Footprint Tracking',
-      sticker: '🐾 Animal Tracks!',
-      rotate: '-rotate-2'
-    },
-    {
-      src: '/camps-images/kids-circle.jpg',
-      titleAr: 'حلقة حكايات النيل الاستكشافية',
-      titleEn: 'Nature Circle & Lore',
-      sticker: '🌿 Nature Club!',
-      rotate: 'rotate-1'
-    }
-  ];
-
-  // 4 Explorer Gear items given to each child
-  const kitItems = [
-    {
-      emoji: '🔭',
-      titleAr: 'منظار الصغار الحقيقي',
-      titleEn: 'Real 8X Binoculars',
-      descAr: 'خفيف ومقاوم للصدمات لتقريب الطيور 8 أضعاف',
-      descEn: 'Kid-sized shockproof optics with crystal clear focus'
-    },
-    {
-      emoji: '📖',
-      titleAr: 'سجل الطبيعة المقاوم للماء',
-      titleEn: 'Waterproof Journal',
-      descAr: 'لتدوين الملاحظات وجمع أختام الطيور المكتشفة',
-      descEn: 'Logbook with bird checklists & nature stickers'
-    },
-    {
-      emoji: '🎨',
-      titleAr: 'ألوان الرسم المائية',
-      titleEn: 'Island Art Set',
-      descAr: 'ألوان آمنة لرسم الطبيعة على ضفاف الجزيرة',
-      descEn: 'Non-toxic watercolors for riverbank sketching'
-    },
-    {
-      emoji: '🏅',
-      titleAr: 'وسام حارس النيل الذهبي',
-      titleEn: 'Ranger Medal & Diploma',
-      descAr: 'ميدالية رسمية معتمدة يتسلمها الطفل في حفل الغروب',
-      descEn: 'Official engraved metal badge & graduation diploma'
-    }
-  ];
+  const currentCamp = camps[activeTab] || camps[0];
 
   return (
     <div className="pt-26 sm:pt-32 pb-24 bg-[#FAFDF8] min-h-screen text-[#16241B] selection:bg-[#21c715] selection:text-white relative overflow-hidden">
