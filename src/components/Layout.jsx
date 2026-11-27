@@ -9,6 +9,7 @@ import { AdminConceptModal } from './AdminConceptModal';
 import { TourDetailModal } from './TourDetailModal';
 import { FlyingBirdCompanion } from './FlyingBirdCompanion';
 import { ScrollToTop } from './ScrollToTop';
+import { toursData } from '../data/toursData';
 
 export const Layout = () => {
   const location = useLocation();
@@ -26,16 +27,85 @@ export const Layout = () => {
   const [adminOpen, setAdminOpen] = useState(false);
   const [detailTourId, setDetailTourId] = useState(null);
 
-  // Sync language with document direction
+  // Dynamic SEO metadata sync across routes and language
   useEffect(() => {
-    if (currentLang === 'AR') {
-      document.documentElement.dir = 'rtl';
-      document.documentElement.lang = 'ar';
-    } else {
-      document.documentElement.dir = 'ltr';
-      document.documentElement.lang = 'en';
+    const isAr = currentLang === 'AR';
+    document.documentElement.dir = isAr ? 'rtl' : 'ltr';
+    document.documentElement.lang = isAr ? 'ar' : 'en';
+
+    let pageTitle = isAr
+      ? 'طبيعة أسوان | رحلات رصد الطيور وسفاري النيل والحياة البرية في أسوان'
+      : 'Aswan Nature | Birdwatching, Nile Wildlife Safaris & Eco Tours in Aswan, Egypt';
+    let pageDesc = isAr
+      ? 'اكتشف الحياة البرية والطيور النادرة في أسوان عبر رحلات القوارب البيئية الهادئة، طيور الفراعنة، محمية سالوجا وغزال، ومعسكرات الطبيعة التعليمية للأطفال.'
+      : 'Discover the hidden wildlife of Aswan with authentic Nile birdwatching boat safaris, Pharaohs Birds Alive tours, Saluga & Ghazal protected island expeditions, and children outdoor learning camps.';
+
+    const path = location.pathname;
+    if (path === '/tours') {
+      pageTitle = isAr
+        ? 'رحلات وجولات رصد الطيور في أسوان | طبيعة أسوان'
+        : 'Nile Birdwatching & Eco Tours in Aswan | Aswan Nature';
+      pageDesc = isAr
+        ? 'استكشف رحلات رصد الطيور المتخصصة والقوارب البيئية الهادئة في جزر الشلال الأول وبحيرة خزان أسوان.'
+        : 'Explore private birdwatching expeditions, silent eco-boats, and wildlife photography tours across the First Cataract and Aswan Reservoir.';
+    } else if (path.startsWith('/tours/')) {
+      const tourId = path.replace('/tours/', '');
+      const tour = toursData[tourId];
+      if (tour) {
+        pageTitle = isAr
+          ? `${tour.titleAr || tour.titleEn} | رحلات طبيعة أسوان`
+          : `${tour.titleEn} | Aswan Nature Tours`;
+        pageDesc = isAr
+          ? (tour.descAr || tour.descEn || pageDesc)
+          : (tour.descEn || pageDesc);
+      }
+    } else if (path === '/pharaohs') {
+      pageTitle = isAr
+        ? 'طيور الفراعنة الحية | التراث الطبيعي لمصر القديمة | طبيعة أسوان'
+        : 'Pharaohs Birds Alive | Ancient Egyptian Avian Heritage | Aswan Nature';
+      pageDesc = isAr
+        ? 'تتبع رموز الطيور في جداريات ومعابد مصر القديمة وعلاقتها بالطيور الحية المحلقة في نيل أسوان ومحمياتها الطبيعية.'
+        : 'Trace ancient Egyptian bird symbolism to live species flying along the Nile in Aswan. Experience history through living wildlife.';
+    } else if (path === '/camps') {
+      pageTitle = isAr
+        ? 'معسكرات الطبيعة والتعليم الميداني للأطفال والشباب | طبيعة أسوان'
+        : 'Youth & Kids Outdoor Nature Learning Camps | Aswan Nature';
+      pageDesc = isAr
+        ? 'معسكرات تفاعلية في قلب الطبيعة، جلسات رصد بالمناظير الميدانية واستكشاف للحياة البرية للأطفال والناشئين في أسوان.'
+        : 'Interactive nature camps, binocular field sessions, and wildlife exploration workshops for curious young minds in Aswan.';
+    } else if (path === '/gallery') {
+      pageTitle = isAr
+        ? 'معرض صور الطيور والحياة البرية في أسوان | طبيعة أسوان'
+        : 'Aswan Wildlife & Avian Photography Gallery | Aswan Nature';
+      pageDesc = isAr
+        ? 'صور فوتوغرافية احترافية لصائد السمك، اللقلق أصفر المنقار، الإوز المصري والجوارح في جزر ومحميات نيل أسوان.'
+        : 'High-resolution photographs of Kingfishers, Yellow-billed Storks, Egyptian Geese, and raptors captured along the Nile in Aswan.';
+    } else if (path === '/contact' || path === '/booking') {
+      pageTitle = isAr
+        ? 'تواصل معنا واحجز رحلتك النيلية | طبيعة أسوان'
+        : 'Contact Us & Book Your Nile Tour | Aswan Nature';
+      pageDesc = isAr
+        ? 'احجز جولتك الخاصة لرصد الطيور أو معسكر الطبيعة في أسوان. أسعار خاصة للمصريين وحجوزات المجموعات.'
+        : 'Reserve your bespoke Nile birdwatching tour or nature camp in Aswan. Special rates for Egyptians and private group bookings.';
     }
-  }, [currentLang]);
+
+    document.title = pageTitle;
+
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.setAttribute('content', pageDesc);
+
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', pageTitle);
+
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.setAttribute('content', pageDesc);
+
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute('content', `https://aswan-nature.vercel.app${path}`);
+
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (canonicalLink) canonicalLink.setAttribute('href', `https://aswan-nature.vercel.app${path}`);
+  }, [currentLang, location.pathname]);
 
   const handleOpenBooking = (tourName = 'Nile Birds Tour', egyptian = false) => {
     setSelectedTour(tourName);
