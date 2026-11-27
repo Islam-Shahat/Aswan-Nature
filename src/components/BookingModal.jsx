@@ -1,15 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { X, CheckCircle, Calendar, Users, Send } from 'lucide-react';
 
-
-
-
-
-
-
-
-
-
+// Google Sheets Web App URL for Tour Reservations
+const BOOKING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzoQXM1ZSqgYmvhl2dqkuRKpWWkYpbKZP1VpjMNTKhHuduJmh8TUqt-fbcF_X98HzbHGQ/exec';
 
 export const BookingModal = ({
   isOpen,
@@ -28,6 +21,8 @@ export const BookingModal = ({
   const [email, setEmail] = useState('');
   const [isEgyptian, setIsEgyptian] = useState(isEgyptianDefault);
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   useEffect(() => {
     setTour(initialTour);
@@ -47,9 +42,42 @@ export const BookingModal = ({
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitError('');
+
+    if (!BOOKING_SCRIPT_URL) {
+      setSubmitted(true);
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const payload = new FormData();
+      payload.append('tour', tour);
+      payload.append('date', date);
+      payload.append('guests', guests);
+      payload.append('name', name);
+      payload.append('phone', phone);
+      payload.append('email', email);
+      payload.append('isEgyptian', isEgyptian ? 'Yes' : 'No');
+      payload.append('lang', currentLang);
+
+      await fetch(BOOKING_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: payload
+      });
+      setSubmitted(true);
+    } catch {
+      setSubmitError(
+        currentLang === 'AR'
+          ? 'تعذر إرسال الحجز حالياً، يرجى المحاولة لاحقاً أو التواصل عبر واتساب.'
+          : 'Failed to submit reservation. Please try again or reach out via WhatsApp.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const today = new Date().toISOString().split('T')[0];
@@ -60,14 +88,14 @@ export const BookingModal = ({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full text-gray-400 hover:text-black hover:bg-gray-100 transition-colors"
-          aria-label="Close">
-          
+          className="absolute top-5 right-5 p-2 rounded-full text-gray-400 hover:text-black hover:bg-gray-100 transition-colors cursor-pointer"
+          aria-label="Close"
+        >
           <X className="w-5 h-5" />
         </button>
 
-        {!submitted ?
-        <div>
+        {!submitted ? (
+          <div>
             <div className="mb-6">
               <span className="text-xs uppercase tracking-widest text-[#56725F] font-bold block mb-1">
                 {currentLang === 'AR' ? 'تجارب طبيعة أسوان' : 'ASWAN NATURE EXPERIENCES'}
@@ -76,9 +104,9 @@ export const BookingModal = ({
                 {currentLang === 'AR' ? 'احجز رحلتك الاستكشافية' : 'Book Your Nature Tour'}
               </h3>
               <p className="text-xs sm:text-sm text-[#5B6F61] mt-1">
-                {currentLang === 'AR' ?
-              'احجز مقعدك على صفحة النيل بصحبة نخبة من خبراء رصد الطيور والحياة البرية المحليين.' :
-              'Reserve your spot on the Nile with expert local ornithologists and naturalists.'}
+                {currentLang === 'AR'
+                  ? 'احجز مقعدك على صفحة النيل بصحبة نخبة من خبراء رصد الطيور والحياة البرية المحليين.'
+                  : 'Reserve your spot on the Nile with expert local ornithologists and naturalists.'}
               </p>
             </div>
 
@@ -88,11 +116,11 @@ export const BookingModal = ({
                   {currentLang === 'AR' ? 'اختر الجولة / التجربة' : 'Select Experience / Tour'}
                 </label>
                 <select
-                value={tour}
-                onChange={(e) => setTour(e.target.value)}
-                className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-4 py-3 text-sm text-[#142318] font-medium focus:ring-2 focus:ring-[#2BE019] focus:outline-none"
-                required>
-                
+                  value={tour}
+                  onChange={(e) => setTour(e.target.value)}
+                  className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-4 py-3 text-sm text-[#142318] font-medium focus:ring-2 focus:ring-[#2BE019] focus:outline-none"
+                  required
+                >
                   <option value="Nile Birds Tour">
                     {currentLang === 'AR' ? 'جولة طيور النيل (٣ ساعات · جزر الشلال الأول)' : 'Nile Birds Tour (3 hours · First Cataract Islands)'}
                   </option>
@@ -117,13 +145,13 @@ export const BookingModal = ({
                     {currentLang === 'AR' ? 'التاريخ' : 'Date'}
                   </label>
                   <input
-                  type="date"
-                  min={today}
-                  value={date}
-                  onChange={(e) => setDate(e.target.value)}
-                  className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-3 py-3 text-sm text-[#142318] font-medium focus:ring-2 focus:ring-[#2BE019] focus:outline-none"
-                  required />
-                
+                    type="date"
+                    min={today}
+                    value={date}
+                    onChange={(e) => setDate(e.target.value)}
+                    className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-3 py-3 text-sm text-[#142318] font-medium focus:ring-2 focus:ring-[#2BE019] focus:outline-none"
+                    required
+                  />
                 </div>
 
                 <div>
@@ -131,15 +159,15 @@ export const BookingModal = ({
                     {currentLang === 'AR' ? 'عدد الأفراد' : 'Guests'}
                   </label>
                   <select
-                  value={guests}
-                  onChange={(e) => setGuests(e.target.value)}
-                  className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-3 py-3 text-sm text-[#142318] font-medium focus:ring-2 focus:ring-[#2BE019] focus:outline-none">
-                  
-                    {Array.from({ length: 12 }, (_, i) => i + 1).map((n) =>
-                  <option key={n} value={`${n} ${n === 1 ? 'guest' : 'guests'}`}>
+                    value={guests}
+                    onChange={(e) => setGuests(e.target.value)}
+                    className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-3 py-3 text-sm text-[#142318] font-medium focus:ring-2 focus:ring-[#2BE019] focus:outline-none"
+                  >
+                    {Array.from({ length: 12 }, (_, i) => i + 1).map((n) => (
+                      <option key={n} value={`${n} ${n === 1 ? 'guest' : 'guests'}`}>
                         {currentLang === 'AR' ? `${n} ${n === 1 ? 'فرد' : 'أفراد'}` : `${n} ${n === 1 ? 'guest' : 'guests'}`}
                       </option>
-                  )}
+                    ))}
                   </select>
                 </div>
               </div>
@@ -149,13 +177,13 @@ export const BookingModal = ({
                   {currentLang === 'AR' ? 'الاسم بالكامل' : 'Full Name'}
                 </label>
                 <input
-                type="text"
-                placeholder={currentLang === 'AR' ? 'أحمد محمد' : 'Dr. Sarah Connor'}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-4 py-2.5 text-sm text-[#142318] focus:ring-2 focus:ring-[#2BE019] focus:outline-none"
-                required />
-              
+                  type="text"
+                  placeholder={currentLang === 'AR' ? 'أحمد محمد' : 'Dr. Sarah Connor'}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-4 py-2.5 text-sm text-[#142318] focus:ring-2 focus:ring-[#2BE019] focus:outline-none"
+                  required
+                />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -164,13 +192,14 @@ export const BookingModal = ({
                     {currentLang === 'AR' ? 'رقم الهاتف / واتساب' : 'Phone / WhatsApp'}
                   </label>
                   <input
-                  type="tel"
-                  placeholder="+20 1..."
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-4 py-2.5 text-sm text-[#142318] focus:ring-2 focus:ring-[#2BE019] focus:outline-none"
-                  required />
-                
+                    type="tel"
+                    placeholder="+20 1..."
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    dir="ltr"
+                    className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-4 py-2.5 text-sm text-[#142318] focus:ring-2 focus:ring-[#2BE019] focus:outline-none"
+                    required
+                  />
                 </div>
 
                 <div>
@@ -178,43 +207,59 @@ export const BookingModal = ({
                     {currentLang === 'AR' ? 'البريد الإلكتروني' : 'Email Address'}
                   </label>
                   <input
-                  type="email"
-                  placeholder="name@domain.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-4 py-2.5 text-sm text-[#142318] focus:ring-2 focus:ring-[#2BE019] focus:outline-none"
-                  required />
-                
+                    type="email"
+                    placeholder="name@domain.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    dir="ltr"
+                    className="w-full bg-[#F6FAF4] border border-[#DEE6DB] rounded-xl px-4 py-2.5 text-sm text-[#142318] focus:ring-2 focus:ring-[#2BE019] focus:outline-none"
+                    required
+                  />
                 </div>
               </div>
 
               {/* Special Egyptian Rates Checkbox */}
               <div className="p-3 bg-[#EEF5E9] rounded-xl border border-[#D5E4CE] flex items-center gap-3">
                 <input
-                type="checkbox"
-                id="egyptianCheck"
-                checked={isEgyptian}
-                onChange={(e) => setIsEgyptian(e.target.checked)}
-                className="w-4 h-4 text-[#2BE019] rounded focus:ring-[#2BE019] border-gray-300" />
-              
+                  type="checkbox"
+                  id="egyptianCheck"
+                  checked={isEgyptian}
+                  onChange={(e) => setIsEgyptian(e.target.checked)}
+                  className="w-4 h-4 text-[#2BE019] rounded focus:ring-[#2BE019] border-gray-300 cursor-pointer"
+                />
                 <label htmlFor="egyptianCheck" className="text-xs text-[#2A4331] font-medium cursor-pointer">
-                  {currentLang === 'AR' ?
-                'أحمل الجنسية المصرية / إقامة مصرية سارية (لتطبيق تخفيض الأسعار المحلية).' :
-                'I qualify for Egyptian resident / national subsidized rates (Valid ID required).'}
+                  {currentLang === 'AR'
+                    ? 'أحمل الجنسية المصرية / إقامة مصرية سارية (لتطبيق تخفيض الأسعار المحلية).'
+                    : 'I qualify for Egyptian resident / national subsidized rates (Valid ID required).'}
                 </label>
               </div>
 
+              {submitError && (
+                <p className="text-xs font-semibold text-red-600 bg-red-50 border border-red-200 rounded-xl px-4 py-2.5">
+                  {submitError}
+                </p>
+              )}
+
               <button
-              type="submit"
-              className="w-full flex items-center justify-center gap-2 bg-[#1EAA13] hover:bg-[#18930F] text-[#0A1810] font-bold py-3.5 px-6 rounded-xl shadow-md transition-all duration-200 mt-2 cursor-pointer">
-              
-                <span>{currentLang === 'AR' ? 'تأكيد طلب الحجز' : 'Submit Reservation Request'}</span>
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full flex items-center justify-center gap-2 bg-[#1EAA13] hover:bg-[#18930F] disabled:opacity-60 disabled:cursor-not-allowed text-[#0A1810] font-bold py-3.5 px-6 rounded-xl shadow-md transition-all duration-200 mt-2 cursor-pointer"
+              >
+                <span>
+                  {isSubmitting
+                    ? currentLang === 'AR'
+                      ? 'جاري الإرسال...'
+                      : 'Submitting...'
+                    : currentLang === 'AR'
+                    ? 'تأكيد طلب الحجز'
+                    : 'Submit Reservation Request'}
+                </span>
                 <Send className="w-4 h-4 rtl:rotate-180 text-white" />
               </button>
             </form>
-          </div> :
-
-        <div className="py-8 text-center space-y-4">
+          </div>
+        ) : (
+          <div className="py-8 text-center space-y-4">
             <div className="w-16 h-16 rounded-full bg-[#E7F8E3] border border-[#2BE019] text-[#229915] flex items-center justify-center mx-auto">
               <CheckCircle className="w-8 h-8" />
             </div>
@@ -224,25 +269,25 @@ export const BookingModal = ({
             </h3>
 
             <p className="text-xs sm:text-sm text-[#5B6F61] max-w-sm mx-auto leading-relaxed">
-              {currentLang === 'AR' ?
-            `شكراً لك يا ${name}. سيتواصل معك فريق طبيعة أسوان عبر الواتساب أو الهاتف لتأكيد موعد الجولة وتفاصيل نقطة الالتقاء.` :
-            `Thank you, ${name}. Our local nature team will contact you via WhatsApp / Phone to confirm boat departure time and logistics.`}
+              {currentLang === 'AR'
+                ? `شكراً لك يا ${name}. سيتواصل معك فريق طبيعة أسوان عبر الواتساب أو الهاتف لتأكيد موعد الجولة وتفاصيل نقطة الالتقاء.`
+                : `Thank you, ${name}. Our local nature team will contact you via WhatsApp / Phone to confirm boat departure time and logistics.`}
             </p>
 
             <div className="pt-4">
               <button
-              onClick={() => {
-                setSubmitted(false);
-                onClose();
-              }}
-              className="bg-[#122318] text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-[#213829] transition-colors">
-              
+                onClick={() => {
+                  setSubmitted(false);
+                  onClose();
+                }}
+                className="bg-[#122318] text-white px-6 py-2.5 rounded-xl text-xs font-bold hover:bg-[#213829] transition-colors cursor-pointer"
+              >
                 {currentLang === 'AR' ? 'إغلاق' : 'Close'}
               </button>
             </div>
           </div>
-        }
+        )}
       </div>
-    </div>);
-
+    </div>
+  );
 };
