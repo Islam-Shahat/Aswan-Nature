@@ -1,11 +1,82 @@
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { ArrowRight, Sparkles, Compass, Eye, Shield } from 'lucide-react';
+import { ArrowRight, Sparkles, Compass, Eye, Shield, Clock, MapPin, Anchor } from 'lucide-react';
 
 export const PharaohsPage = () => {
   const { currentLang, handleOpenBooking } = useOutletContext();
   const isAr = currentLang === 'AR';
 
+  // Three Sacred Pharaonic Expeditions (Exact specification from design)
+  const pharaonicTours = [
+    {
+      id: 'hapi-tour',
+      nameEn: 'Hapi Tour',
+      nameAr: 'جولة حابي',
+      eyebrowEn: 'GOD OF THE NILE INUNDATION',
+      eyebrowAr: 'إله فيضان النيل المبارك',
+      price: '$ 50',
+      priceUnit: '/person',
+      priceAr: '٥٠ $',
+      priceUnitAr: 'للشخص',
+      durationEn: '3–4 Hours',
+      durationAr: '٣–٤ ساعات',
+      zoneEn: 'NILE ZONE (FIRST CATARACT ISLANDS)',
+      zoneAr: 'منطقة النيل (جزر الشلال الأول)',
+      startingPointEn: 'Ferial Garden Marina',
+      startingPointAr: 'مرسى حديقة فريال',
+      image: '/assets/pharaonic-birds-fresco.jpg',
+      descEn:
+        'Connect the sacred river birds of Aswan with Hapi, the Ancient Egyptian deity of the life-giving annual flood. Combines a 2-hour birding cruise with 1–2 hours relaxing at a direct Nile-front venue enjoying traditional Nubian Jabana coffee.',
+      descAr:
+        'اربط بين طيور النيل الحية ورمزيتها لدى الإله حابي مجلب الخير وفيضان النيل السنوي. تجمع الرحلة بين ساعتي إبحار ورصد للطيور مع جلسة نيلية مريحة لمدة ساعة إلى ساعتين لتناول قهوة الجبنة النوبية وسماع الحكايات التراثية.'
+    },
+    {
+      id: 'horus-tour',
+      nameEn: 'Horus Tour',
+      nameAr: 'جولة حورس',
+      eyebrowEn: 'THE FALCON & TEMPLE RELIEFS',
+      eyebrowAr: 'الصقر حورس ونقوش المعابد',
+      price: '$ 55',
+      priceUnit: '/person',
+      priceAr: '٥٥ $',
+      priceUnitAr: 'للشخص',
+      durationEn: '3 Hours',
+      durationAr: '٣ ساعات',
+      zoneEn: 'RESERVOIR ZONE (FACING PHILAE TEMPLE)',
+      zoneAr: 'منطقة الخزان (المقابلة لمعبد فيلة)',
+      startingPointEn: 'Batanioun (Miraya) Marina near Nubia Museum',
+      startingPointAr: 'مرسى بطنيون (المرايا) قرب متحف النوبة',
+      image: '/assets/horus-falcon-fresco.jpg',
+      descEn:
+        'A divine cultural voyage on the Reservoir. Cruise the serene waters for raptors and soaring birds, then disembark for 1 hour at the scenic Soleil Café (Eco Nubia) with unobstructed panoramic views facing Philae Temple, enjoying traditional drinks and divine falcon lore.',
+      descAr:
+        'رحلة أسطورية في مسطح الخزان الهادئ. تبدأ بجولة رصد الصقور والجوارح، ثم النزول لمدة ساعة في كافيه سوليل الشهير (إيكو نوبيا) بإطلالة بانورامية لا تُنسى في مواجهة معبد فيلة، مع المشروبات وحكايات الإله حورس.'
+    },
+    {
+      id: 'isis-tour',
+      nameEn: 'Isis Tour (Full-Day Flagship)',
+      nameAr: 'جولة إيزيس الكبرى (الرحلة الشاملة)',
+      eyebrowEn: 'THE SACRED BIRDS OF PHILAE',
+      eyebrowAr: 'طيور فيلة المقدسة',
+      price: '$ 110',
+      priceUnit: '/person',
+      priceAr: '١١٠ $',
+      priceUnitAr: 'للشخص',
+      durationEn: '8 Hours',
+      durationAr: '٨ ساعات',
+      zoneEn: 'RESERVOIR ZONE (PHILAE TEMPLE & BASIN)',
+      zoneAr: 'منطقة الخزان (معبد وحوض فيلة)',
+      startingPointEn: 'Batanioun (Miraya) Marina',
+      startingPointAr: 'مرسى بطنيون (المرايا)',
+      image: '/assets/sacred-ibis-fresco.jpg',
+      descEn:
+        'Our premier all-inclusive flagship expedition. Combines a 1.5–2 hour specialized Philae Temple tour decoding bird hieroglyphs and reliefs, live reservoir birdwatching to spot surviving species, and a gourmet lunch at Soleil Restaurant facing the temple.',
+      descAr:
+        'رحلتنا الشاملة الكبرى. تجمع بين جولة متخصصة لساعة ونصف إلى ساعتين داخل معبد فيلة لفك شفرات نقوش الطيور الهيروغليفية، ورصد حي لطيور الخزان، وغداء فاخر بمطعم سوليل بمواجهة المعبد.'
+    }
+  ];
+
+  // Authentic Papyrus Exhibits
   const exhibits = [
     {
       id: 'meidum-geese',
@@ -98,131 +169,166 @@ export const PharaohsPage = () => {
     {
       glyph: '𓅠',
       deityAr: 'تحوت رب المعرفة (Djehuty)',
-      deityEn: 'Thoth the Wise',
-      speciesAr: 'أبو منجل المقدس وأبو ملعقة',
-      speciesEn: 'Sacred Ibis & Spoonbill',
-      significanceAr: 'راعي الحكمة واللغة المكتوبة ومقياس النيل وسجلات الخلود.',
-      significanceEn: 'Patron of scribes, sacred hieroglyphic writing, and lunar cycles.',
-      spottingAr: 'يستقر في الخيران الهادئة بين القصب ومحميات النيل.',
-      spottingEn: 'Paces along tranquil reed-lined marsh shallows.'
+      deityEn: 'Thoth (Djehuty)',
+      speciesAr: 'أبو منجل المقدس والبلشون الأبيض',
+      speciesEn: 'Sacred Ibis & Little Egret',
+      significanceAr: 'رب الحكمة والكتابة والتوثيق والرياضيات؛ بوصلة مواسم الزراعة وفيضان النيل.',
+      significanceEn: 'God of wisdom, reckoning, and scribal writing; herald of the fertile inundation.',
+      spottingAr: 'يرعى في المياه الضحلة وضفاف جزيرة إلفنتين ومحمية سالوجا.',
+      spottingEn: 'Forages in shallow bays around Elephantine and Saluga.'
     },
     {
       glyph: '𓅄',
-      deityAr: 'طائر البينو (Bennu)',
-      deityEn: 'The Bennu Heron',
-      speciesAr: 'البلشون الرمادي وبلشون الليل',
-      speciesEn: 'Grey & Goliath Heron',
-      significanceAr: 'طائر الخلق والبعث وأصل أسطورة العنقاء الفينيقية؛ أول كائن صعد من مياه النون الأزلية.',
-      significanceEn: 'The primordial avian soul of Ra, the cosmic prototype of the Phoenix.',
-      spottingAr: 'يقف متأملاً بثبات مهيب على حواف الصخور النيلية فجراً.',
-      spottingEn: 'Perches motionless on dawn granite boulders.'
+      deityAr: 'رع-حوراختي (Ra-Horakhty)',
+      deityEn: 'Ra-Horakhty (Solar Falcon)',
+      speciesAr: 'عقاب السهوب وعقاب النيل النساري',
+      speciesEn: 'Osprey & Steppe Eagle',
+      significanceAr: 'إله الشمس المشرقة على الأفق؛ رمز النور الساطع والقدرة والحياة المتجددة.',
+      significanceEn: 'The rising sun of the two horizons; supreme celestial power and continuous renewal.',
+      spottingAr: 'يرصد على حواف المنحدرات الصخرية في بحيرة خزان أسوان القديم.',
+      spottingEn: 'Perches on mountain clifftops across the Aswan Reservoir.'
     },
     {
       glyph: '𓅂',
-      deityAr: 'إوزة آمون الكبرى (Gengen-Wer)',
-      deityEn: 'The Great Cackler',
-      speciesAr: 'الوز المصري النيلي (Egyptian Goose)',
-      speciesEn: 'Egyptian Goose (Alopochen aegyptiaca)',
-      significanceAr: 'رمز الخصوبة وصوت البداية الكونية في أساطير طيبة؛ حارس مياه الفيضان المباركة.',
-      significanceEn: 'Celestial harbinger of fertility whose call broke cosmic silence.',
-      spottingAr: 'تسبح في عائلات مهيبة حول جزر أسوان والجزر الرملية.',
-      spottingEn: 'Nests along sandy islets and secluded Nile channels.'
+      deityAr: 'جب رب الأرض (Geb)',
+      deityEn: 'Geb (The Great Cackler)',
+      speciesAr: 'الإوز المصري وإوز الحقول البري',
+      speciesEn: 'Egyptian Goose & Greylag',
+      significanceAr: 'أبو الملوك ورب خصب الأرض والنباتات؛ الإوزة النيلية الكبرى التي باضت البيضة الكونية.',
+      significanceEn: 'Father of gods and sovereign of the earth; whose primeval call created the cosmic egg.',
+      spottingAr: 'تسبح في أسراب هادئة بين الجزر المعزولة وأحواض نبات البردي.',
+      spottingEn: 'Swims in intimate pairs across quiet secluded cataracts.'
     }
   ];
 
   return (
-    <div
-      className="min-h-screen text-[#1C140A] selection:bg-[#c99a5d] selection:text-white pt-24 sm:pt-28 lg:pt-32 pb-20 relative overflow-hidden"
-      style={{
-        backgroundColor: '#f4e8ce',
-        backgroundImage: `
-          radial-gradient(ellipse at 50% 15%, rgba(255, 250, 240, 0.8) 0%, rgba(244, 232, 206, 0.85) 60%, rgba(228, 212, 182, 0.95) 100%),
-          radial-gradient(#c99a5d 0.8px, transparent 0.8px)
-        `,
-        backgroundSize: '100% 100%, 32px 32px'
-      }}
-    >
-      {/* Ancient Temple Architectural Cornice & Winged Sun of Thebes (Top Border) */}
-      <div className="w-full border-b-2 border-[#c99a5d]/70 bg-[#e5e7e5]/80 backdrop-blur-xs py-2 px-4 shadow-xs select-none">
-        <div className="max-w-7xl mx-auto flex items-center justify-between text-xs sm:text-sm font-serif tracking-[0.3em] uppercase text-[#7A5528]">
-          <div className="flex items-center gap-3">
-            <span className="text-[#c99a5d] text-base">𓋹</span>
-            <span className="hidden md:inline">𓅃 𓅂 𓅄</span>
-            <span>𓊽</span>
+    <div className="bg-[#FAF4E8] text-[#1C140A] min-h-screen pt-24 sm:pt-32 pb-24 selection:bg-[#C29352] selection:text-white">
+      {/* 1. HERO SECTION: THREE SACRED JOURNEYS (Matches Screenshot Exactly) */}
+      <section className="relative px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto pt-6 pb-20">
+        {/* Top Centered Header */}
+        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+          {/* Exclusive Pharaonic Journeys Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#D5C29F] bg-[#EFE4CF]/70 text-xs font-extrabold uppercase tracking-widest text-[#6D4F28] mb-5 shadow-xs">
+            <span className="text-[13px] leading-none">↓</span>
+            <span>{isAr ? 'رحلات فرعونية حصرية' : 'EXCLUSIVE PHARAONIC JOURNEYS'}</span>
           </div>
 
-          {/* Center Winged Horus Solar Seal (قرص الشمس المجنح) */}
-          <div className="flex items-center gap-2 sm:gap-3 text-center">
-            <span className="text-lg sm:text-2xl text-[#c99a5d] leading-none">𓍹</span>
-            <span className="text-sm sm:text-lg text-[#c99a5d] font-bold">𓅃</span>
-            <span className="font-extrabold text-[10px] sm:text-xs tracking-[0.22em] text-[#5C3C14]">
-              {isAr ? 'صرح طيور الفراعنة المقدسة · معابد النيل الخالد' : 'TEMPLE OF THE SACRED AVIAN SOULS · NILE SANCTUARY'}
+          {/* Main Title (Two Lines: Bold Dark Slate + Golden Italic Serif) */}
+          <h1 className="tracking-tight leading-[1.12] mb-3">
+            <span className="block text-3xl sm:text-5xl lg:text-[56px] font-black text-[#0A3F47] font-heading">
+              {isAr ? 'ثلاث رحلات مقدسة' : 'Three Sacred Journeys'}
             </span>
-            <span className="text-sm sm:text-lg text-[#c99a5d] font-bold">𓅃</span>
-            <span className="text-lg sm:text-2xl text-[#c99a5d] leading-none">𓍻</span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <span>𓊽</span>
-            <span className="hidden md:inline">𓅄 𓅂 𓅃</span>
-            <span className="text-[#c99a5d] text-base">𓋹</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Decorative Golden Solar Auras */}
-      <div className="absolute top-20 -right-24 w-[650px] h-[650px] bg-[#c99a5d]/18 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute top-1/2 -left-28 w-[600px] h-[600px] bg-[#c99a5d]/14 rounded-full blur-[140px] pointer-events-none" />
-
-      {/* Main Page Container */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 relative z-10 mt-8 sm:mt-12">
-        {/* Pharaonic Grand Entrance Header (Unconventional & Royal) */}
-        <div className="text-center max-w-4xl mx-auto mb-14 sm:mb-20">
-          {/* Royal Cartouche Hieroglyphic Ribbon */}
-          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full border-2 border-[#c99a5d] bg-[#FAF2DF] shadow-[0_4px_16px_rgba(201,154,93,0.2)] mb-6 select-none">
-            <span
-              className="text-2xl sm:text-3xl text-[#c99a5d] leading-none"
-              style={{ fontFamily: "'Segoe UI Historic', 'Noto Sans Egyptian Hieroglyphs', serif" }}
-            >
-              𓍹 𓅃 𓅂 𓅄 𓅠 𓊽 𓋹 𓍻
-            </span>
-            <span className="w-1.5 h-4 bg-[#c99a5d] rounded-full" />
-            <span className="text-xs sm:text-[13px] uppercase tracking-[0.24em] font-extrabold text-[#6A471C]">
-              {isAr ? 'إرث ٥٠٠٠ عام من التوثيق البيئي المقدس' : '5,000 YEARS OF SACRED AVIAN ARCHIVE'}
-            </span>
-          </div>
-
-          {/* Grand Pharaonic Heading */}
-          <h1 className="text-4xl sm:text-6xl lg:text-[76px] font-black tracking-[-0.03em] leading-[1.05] text-[#0a515b] font-heading mb-6">
-            <span className="block">
-              {isAr ? 'طيور الفراعنة حيّة' : 'Pharaohs Birds Alive'}
-            </span>
-            <span className="block font-serif italic font-normal text-[#c99a5d] drop-shadow-xs mt-2 text-3xl sm:text-5xl lg:text-[62px]">
-              {isAr ? 'بين نقوش المعابد وسماء النيل الخالد.' : 'Living Hieroglyphs Across Aswan Waters.'}
+            <span className="block text-2xl sm:text-4xl lg:text-[44px] font-serif italic text-[#C29352] font-normal mt-1 sm:mt-2">
+              {isAr ? 'في رحاب طيور الفراعنة الخالدة.' : "Walking Among Pharaohs' Birds."}
             </span>
           </h1>
 
-          {/* Pharaonic Scepter Divider */}
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-[2px] w-16 sm:w-28 bg-gradient-to-r from-transparent via-[#c99a5d] to-[#c99a5d]" />
-            <div className="w-9 h-9 rounded-full border-2 border-[#c99a5d] bg-[#e5e7e5] flex items-center justify-center text-[#c99a5d] text-base font-serif shadow-xs">
-              𓋹
-            </div>
-            <div className="h-[2px] w-16 sm:w-28 bg-gradient-to-l from-transparent via-[#c99a5d] to-[#c99a5d]" />
+          {/* Falcon Hieroglyph Center Divider */}
+          <div className="flex items-center justify-center gap-4 my-4 sm:my-5">
+            <div className="h-[1px] w-20 sm:w-28 bg-[#D8C7A5]" />
+            <span className="text-[#C29352] text-xl font-serif leading-none select-none">𓅃</span>
+            <div className="h-[1px] w-20 sm:w-28 bg-[#D8C7A5]" />
           </div>
 
-          <p className="text-base sm:text-xl text-[#4A3825] leading-relaxed max-w-3xl mx-auto font-normal">
+          {/* Subtitle Description */}
+          <p className="text-sm sm:text-base text-[#4E3E2E] leading-relaxed max-w-2xl mx-auto font-normal">
             {isAr
-              ? 'لم تكن الطيور عند أجدادنا مجرد كائنات عابرة؛ بل كانت أرواحاً مجنحة للآلهة، ورسل الخلود، وبوصلة فيضان النهر العظيم. استكشف كيف تنبض الفصائل ذاتها المنقوشة على جدران المعابد بالحياة والحرية اليوم في سماء أسوان.'
-              : 'To the ancient Egyptians, birds were celestial messengers and living hieroglyphs of eternity. Discover how the identical species carved thousands of years ago upon granite temple walls soar free right before your eyes in Aswan today.'}
+              ? 'ثلاث رحلات استكشافية نيلية فريدة تربط بين الطيور المقدسة المخلدة على جدران المعابد وتلك الفصائل الحية المحلقة بحرية في سماء أسوان اليوم.'
+              : 'Three unique Nile expeditions connecting the sacred birds immortalized on temple walls with the very same species soaring free above Aswan today.'}
           </p>
         </div>
 
-        {/* Section 1: The Interactive Royal Papyrus Scroll Sanctuary */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center mb-24 sm:mb-32">
-          {/* Left Narrative Column */}
+        {/* The 3 Cards Grid (Matches Screenshot Layout & Styling Exactly) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7 max-w-6xl mx-auto">
+          {pharaonicTours.map((tour) => (
+            <div
+              key={tour.id}
+              className="rounded-3xl overflow-hidden border border-[#E0D4BE] bg-[#FDFBF7] shadow-[0_8px_24px_rgba(40,25,10,0.06)] hover:shadow-[0_16px_36px_rgba(40,25,10,0.12)] hover:-translate-y-1.5 transition-all duration-300 flex flex-col group"
+            >
+              {/* Card Image Banner */}
+              <div className="relative h-60 sm:h-64 overflow-hidden bg-[#241A10]">
+                <img
+                  src={tour.image}
+                  alt={isAr ? tour.nameAr : tour.nameEn}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/30 pointer-events-none" />
+
+                {/* Overlaid Top-Right Badge */}
+                <div className="absolute top-3.5 right-3.5 rtl:right-auto rtl:left-3.5 pointer-events-none">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/65 backdrop-blur-md border border-white/10 text-[10.5px] font-bold text-[#E2D2B5] tracking-wider uppercase shadow-xs">
+                    <span className="text-xs text-[#E2D2B5]">𓅃</span>
+                    <span>{isAr ? tour.eyebrowAr : tour.eyebrowEn}</span>
+                  </span>
+                </div>
+
+                {/* Overlaid Bottom Pills (Price on Left, Duration on Right) */}
+                <div className="absolute bottom-3.5 inset-x-3.5 flex items-center justify-between pointer-events-none">
+                  {/* Left Pill: Price */}
+                  <div className="px-3 py-1 rounded-xl bg-[#FBF4E4] text-[#1C140A] text-xs font-black shadow-md border border-[#E8DAC2] flex items-baseline gap-1">
+                    <span>{isAr ? tour.priceAr : tour.price}</span>
+                    <span className="text-[10px] font-semibold text-[#66543F]">
+                      {isAr ? tour.priceUnitAr : tour.priceUnit}
+                    </span>
+                  </div>
+
+                  {/* Right Pill: Duration */}
+                  <div className="px-2.5 py-1 rounded-xl bg-black/75 backdrop-blur-md text-white text-[11px] font-bold shadow-md border border-white/15 flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-[#E2D2B5]" />
+                    <span>{isAr ? tour.durationAr : tour.durationEn}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Card Body Container */}
+              <div className="p-6 flex-1 flex flex-col justify-between">
+                <div>
+                  {/* Zone Meta */}
+                  <div className="text-[10.5px] sm:text-[11px] font-extrabold uppercase tracking-wider text-[#9C733E] flex items-center gap-1.5 mb-1.5">
+                    <Compass className="w-3.5 h-3.5 text-[#9C733E] shrink-0" />
+                    <span className="truncate">{isAr ? tour.zoneAr : tour.zoneEn}</span>
+                  </div>
+
+                  {/* Tour Title */}
+                  <h3 className="text-xl sm:text-2xl font-black text-[#1C140A] leading-tight mb-1.5 font-heading">
+                    {isAr ? tour.nameAr : tour.nameEn}
+                  </h3>
+
+                  {/* Starting Marina */}
+                  <div className="text-xs font-semibold text-[#6E5B45] flex items-center gap-1.5 mb-4">
+                    <Anchor className="w-3.5 h-3.5 text-[#0A3F47] shrink-0" />
+                    <span>{isAr ? tour.startingPointAr : tour.startingPointEn}</span>
+                  </div>
+
+                  {/* Description Paragraph */}
+                  <p className="text-xs sm:text-[13px] text-[#4E3E2E] leading-relaxed mb-6 font-normal">
+                    {isAr ? tour.descAr : tour.descEn}
+                  </p>
+                </div>
+
+                {/* Booking Button */}
+                <div className="pt-4 border-t border-[#EDE4D3]">
+                  <button
+                    onClick={() => handleOpenBooking(isAr ? tour.nameAr : tour.nameEn)}
+                    type="button"
+                    className="w-full py-3 px-4 rounded-xl bg-[#0A3F47] hover:bg-[#072F35] text-white text-xs font-black transition-all flex items-center justify-center gap-2 shadow-sm hover:shadow-md cursor-pointer active:scale-95 group/btn"
+                  >
+                    <span>{isAr ? 'احجز هذه الجولة الآن' : 'Book This Journey'}</span>
+                    <ArrowRight className="w-3.5 h-3.5 rtl:rotate-180 group-hover/btn:translate-x-1 rtl:group-hover/btn:-translate-x-1 transition-transform" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 2. THE PAPYRUS SCROLL SANCTUARY SECTION */}
+      <section className="px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto py-16 border-t border-[#E5DAC4]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          {/* Narrative Column */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#c99a5d]/60 bg-[#e5e7e5]/90 text-xs font-bold uppercase tracking-wider text-[#6F4B1F]">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#c99a5d]/60 bg-[#EFE4CF]/70 text-xs font-bold uppercase tracking-wider text-[#6F4B1F]">
               <Eye className="w-3.5 h-3.5 text-[#c99a5d]" />
               <span>{isAr ? 'مخطوطات بردي أثرية موثقة' : 'AUTHENTIC PAPYRUS EVIDENCE'}</span>
             </div>
@@ -231,23 +337,23 @@ export const PharaohsPage = () => {
               {isAr ? (
                 <>
                   من جدران المعابد <br />
-                  <span className="font-serif italic font-normal text-[#c99a5d]">
+                  <span className="font-serif italic font-normal text-[#C29352]">
                     إلى أحضان الطبيعة النيلية.
                   </span>
                 </>
               ) : (
                 <>
                   From Temple Frescoes <br />
-                  <span className="font-serif italic font-normal text-[#c99a5d]">
+                  <span className="font-serif italic font-normal text-[#C29352]">
                     To Pristine River Marshes.
                   </span>
                 </>
               )}
             </h2>
 
-            {/* Currently Inspected Exhibit Detail Tablet */}
-            <div className="p-6 rounded-2xl border-2 border-[#c99a5d]/70 bg-[#FAF1DF]/95 shadow-md relative overflow-hidden">
-              <div className="absolute top-2 right-3 rtl:right-auto rtl:left-3 text-4xl text-[#c99a5d]/30 font-serif select-none pointer-events-none">
+            {/* Exhibit Details Card */}
+            <div className="p-6 rounded-2xl border border-[#D5C29F] bg-[#FDFBF7] shadow-sm relative overflow-hidden">
+              <div className="absolute top-2 right-3 rtl:right-auto rtl:left-3 text-4xl text-[#c99a5d]/20 font-serif select-none pointer-events-none">
                 {activeExhibit.glyph}
               </div>
 
@@ -267,8 +373,8 @@ export const PharaohsPage = () => {
                 {isAr ? activeExhibit.descAr : activeExhibit.descEn}
               </p>
 
-              <div className="pt-3 border-t border-[#c99a5d]/30 flex items-start gap-2 text-xs text-[#5C3C17]">
-                <Compass className="w-4 h-4 text-[#c99a5d] shrink-0 mt-0.5" />
+              <div className="pt-3 border-t border-[#E5DAC4] flex items-start gap-2 text-xs text-[#5C3C17]">
+                <Compass className="w-4 h-4 text-[#C29352] shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold block mb-0.5">
                     {isAr ? 'موطن الرصد الحي في أسوان:' : 'Where to spot live in Aswan:'}
@@ -277,320 +383,96 @@ export const PharaohsPage = () => {
                 </div>
               </div>
             </div>
-
-            {/* Direct Booking CTA */}
-            <div className="pt-2">
-              <button
-                onClick={() => handleOpenBooking('Pharaohs Birds Alive Signature')}
-                type="button"
-                className="group w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl font-bold text-sm sm:text-base text-[#1C1306] shadow-[0_8px_25px_rgba(201,154,93,0.35)] transition-all duration-300 hover:shadow-[0_12px_35px_rgba(201,154,93,0.5)] hover:scale-[1.02] active:scale-[0.98] border border-[#B07E3D] cursor-pointer"
-                style={{
-                  background: 'linear-gradient(135deg, #F0DBB4 0%, #C99A5D 50%, #B07E3D 100%)'
-                }}
-              >
-                <span className="tracking-wide">
-                  {isAr ? 'احجز تجربة طيور الفراعنة الحصرية' : 'Book Signature Pharaohs Experience'}
-                </span>
-                <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
-              </button>
-            </div>
           </div>
 
-          {/* Right Column: Master Papyrus Parchment Scroll */}
+          {/* Papyrus Roll & Image Gallery */}
           <div className="lg:col-span-7">
-            <div className="relative pt-3 pb-3">
-              {/* TOP PAPYRUS PAPER SCROLL ROLL */}
-              <div
-                className="relative z-20 w-[calc(100%+16px)] -ml-2 sm:w-[calc(100%+24px)] sm:-ml-3 h-8 sm:h-9 rounded-full shadow-[0_8px_18px_rgba(20,10,3,0.35)] border border-[#8C6239]/60 overflow-hidden flex items-center justify-between px-3 sm:px-4 mb-[-12px]"
-                style={{
-                  backgroundImage: 'url(/assets/papyrus-parchment.jpg)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'top center'
-                }}
-              >
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background:
-                      'linear-gradient(180deg, rgba(55,28,8,0.5) 0%, rgba(95,50,18,0.15) 20%, rgba(255,245,225,0.45) 50%, rgba(110,65,25,0.2) 75%, rgba(45,20,5,0.55) 100%)'
-                  }}
+            <div className="relative rounded-2xl border-2 border-[#D5C29F] bg-[#FDFBF7] p-5 shadow-sm overflow-hidden">
+              <div className="relative h-72 sm:h-96 rounded-xl overflow-hidden mb-4 bg-[#241A10]">
+                <img
+                  src={activeExhibit.image}
+                  alt={isAr ? activeExhibit.nameAr : activeExhibit.nameEn}
+                  className="w-full h-full object-cover"
                 />
-                <div className="relative z-10 flex items-center">
-                  <div className="w-3.5 h-5 sm:h-6 rounded-full bg-[#D4B67D] border border-[#7A4B1A]/60 shadow-inner flex items-center justify-center">
-                    <div className="w-1.5 h-3 rounded-full bg-[#5C320E]/40" />
-                  </div>
-                </div>
-                <div className="relative z-10 flex items-center gap-2 text-[#3E220A] text-xs font-serif font-extrabold select-none tracking-[0.2em] uppercase opacity-90">
-                  <span className="text-[#8C6239]">𓋹</span>
-                  <span className="text-[10px] sm:text-[11px] tracking-widest text-[#2E1805]">
-                    {isAr ? 'سجل البردي الملكي لطير النيل' : 'ROYAL NILE PAPYRUS SCROLL'}
-                  </span>
-                  <span className="text-[#8C6239]">𓊽</span>
-                </div>
-                <div className="relative z-10 flex items-center">
-                  <div className="w-3.5 h-5 sm:h-6 rounded-full bg-[#D4B67D] border border-[#7A4B1A]/60 shadow-inner flex items-center justify-center">
-                    <div className="w-1.5 h-3 rounded-full bg-[#5C320E]/40" />
-                  </div>
-                </div>
               </div>
 
-              {/* The Ancient Egyptian Papyrus Parchment Container */}
-              <div
-                className="relative rounded-lg sm:rounded-xl p-3.5 sm:p-6 shadow-[0_22px_55px_rgba(140,98,40,0.25)] border-2 border-[#c99a5d] overflow-hidden group z-10"
-                style={{
-                  backgroundImage: 'url(/assets/papyrus-parchment.jpg)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              >
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background:
-                      'radial-gradient(ellipse at center, rgba(235, 215, 170, 0.05) 0%, rgba(85, 50, 15, 0.35) 85%, rgba(45, 22, 5, 0.6) 100%)'
-                  }}
-                />
-
-                {/* Papyrus Scroll Header Ribbon */}
-                <div className="relative z-10 flex items-center justify-between pb-3 mb-3 border-b border-[#7A4B1A]/35 text-[#3D250E]">
-                  <div className="flex items-center gap-2">
-                    <span className="text-base text-[#8C581F]">𓋹</span>
-                    <span className="text-[11px] sm:text-xs font-serif uppercase tracking-[0.22em] font-extrabold text-[#38200A]">
-                      {isAr ? 'مخطوطة طيور النيل البردية' : 'THE SACRED PAPYRUS ARCHIVE'}
-                    </span>
-                  </div>
-                  <div className="text-[10px] font-mono tracking-widest text-[#5E3710] uppercase bg-[#E8D4A8]/80 px-2.5 py-0.5 rounded border border-[#8C581F]/40 backdrop-blur-sm font-bold">
-                    {isAr ? 'بردية أثرية موثقة' : 'Authentic Papyrus'}
-                  </div>
-                </div>
-
-                {/* Main Active Fresco Display */}
-                <div className="relative rounded-xl lg:rounded-2xl overflow-hidden aspect-[16/10] bg-black shadow-[0_12px_30px_rgba(35,18,5,0.4)] border-2 border-[#8C581F]/50 z-10">
-                  <img
-                    src={activeExhibit.image}
-                    alt={isAr ? activeExhibit.nameAr : activeExhibit.nameEn}
-                    className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/30" />
-
-                  {/* Caption Plaque at Bottom */}
-                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6 z-10 text-left rtl:text-right bg-gradient-to-t from-black/95 via-black/80 to-transparent">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-2xl text-[#F0DBB4]">{activeExhibit.glyph}</span>
-                      <h3 className="text-lg sm:text-2xl font-extrabold text-white">
-                        {isAr ? activeExhibit.nameAr : activeExhibit.nameEn}
-                      </h3>
-                    </div>
-                    <div className="text-xs text-[#E5C365] font-serif mb-1">
-                      {isAr ? activeExhibit.titleAr : activeExhibit.titleEn}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Papyrus Scroll Thumbnails Selector */}
-                <div className="relative z-10 mt-4 pt-3.5 border-t border-[#7A4B1A]/35">
-                  <div className="text-[11px] uppercase tracking-wider text-[#3D230A] font-extrabold mb-2.5 flex items-center justify-between">
-                    <span className="flex items-center gap-1.5">
-                      <span className="text-[#8C581F]">𓅃</span>
-                      <span>{isAr ? 'شواهد البرديات الفرعونية' : 'PAPYRUS AVIAN SCROLLS'}</span>
-                    </span>
-                    <span className="text-[10px] text-[#5C3612] lowercase font-semibold">
-                      {isAr ? 'انقر للتبديل والفحص' : 'click to inspect'}
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-4 gap-2.5">
-                    {exhibits.map((item) => {
-                      const isSelected = item.id === activeExhibit.id;
-                      return (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => setActiveExhibit(item)}
-                          className={`group/thumb relative rounded-lg overflow-hidden p-1 border transition-all text-left rtl:text-right shadow-xs cursor-pointer ${
-                            isSelected
-                              ? 'border-[#8C4F18] bg-[#F7E7C4]/95 shadow-[0_0_12px_rgba(140,79,24,0.4)] ring-2 ring-[#c99a5d] scale-[1.02]'
-                              : 'border-[#7A4B1A]/40 bg-[#E8D4A8]/70 hover:bg-[#F2DFBA] hover:border-[#8C581F]'
-                          }`}
-                        >
-                          <div className="aspect-[4/3] rounded overflow-hidden mb-1 relative border border-[#7A4B1A]/20">
-                            <img
-                              src={item.image}
-                              alt={isAr ? item.nameAr : item.nameEn}
-                              className="w-full h-full object-cover group-hover/thumb:scale-110 transition-transform duration-300"
-                            />
-                            <div className="absolute bottom-0.5 right-0.5 rtl:right-auto rtl:left-0.5 bg-black/75 rounded px-1 text-[10px] text-[#F0DBB4]">
-                              {item.glyph}
-                            </div>
-                          </div>
-                          <div className="text-[10px] font-extrabold text-[#2B1604] truncate leading-tight">
-                            {isAr ? item.nameAr : item.nameEn}
-                          </div>
-                          <div className="text-[9px] text-[#7A4518] font-bold truncate">
-                            {isAr
-                              ? item.dynastyAr.split('·')[0].trim()
-                              : item.dynastyEn.split('·')[0].trim()}
-                          </div>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* BOTTOM PAPYRUS PAPER SCROLL ROLL */}
-              <div
-                className="relative z-20 w-[calc(100%+16px)] -ml-2 sm:w-[calc(100%+24px)] sm:-ml-3 h-8 sm:h-9 rounded-full shadow-[0_-8px_18px_rgba(20,10,3,0.35)] border border-[#8C6239]/60 overflow-hidden flex items-center justify-between px-3 sm:px-4 mt-[-12px]"
-                style={{
-                  backgroundImage: 'url(/assets/papyrus-parchment.jpg)',
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'bottom center'
-                }}
-              >
-                <div
-                  className="absolute inset-0 pointer-events-none"
-                  style={{
-                    background:
-                      'linear-gradient(0deg, rgba(55,28,8,0.5) 0%, rgba(95,50,18,0.15) 20%, rgba(255,245,225,0.45) 50%, rgba(110,65,25,0.2) 75%, rgba(45,20,5,0.55) 100%)'
-                  }}
-                />
-                <div className="relative z-10 flex items-center">
-                  <div className="w-3.5 h-5 sm:h-6 rounded-full bg-[#D4B67D] border border-[#7A4B1A]/60 shadow-inner flex items-center justify-center">
-                    <div className="w-1.5 h-3 rounded-full bg-[#5C320E]/40" />
-                  </div>
-                </div>
-                <div className="relative z-10 flex items-center gap-2 text-[#3E220A] text-xs font-serif font-extrabold select-none tracking-[0.2em] uppercase opacity-90">
-                  <span className="text-[#8C6239]">𓊽</span>
-                  <span className="text-[10px] sm:text-[11px] tracking-widest text-[#2E1805]">
-                    {isAr ? 'أرشيف طيور أسوان الفرعونية' : 'ASWAN ANCIENT BIRD SCROLLS'}
-                  </span>
-                  <span className="text-[#8C6239]">𓋹</span>
-                </div>
-                <div className="relative z-10 flex items-center">
-                  <div className="w-3.5 h-5 sm:h-6 rounded-full bg-[#D4B67D] border border-[#7A4B1A]/60 shadow-inner flex items-center justify-center">
-                    <div className="w-1.5 h-3 rounded-full bg-[#5C320E]/40" />
-                  </div>
-                </div>
+              {/* Exhibit Selector Thumbnails */}
+              <div className="grid grid-cols-4 gap-2.5">
+                {exhibits.map((ex) => {
+                  const isCurrent = ex.id === activeExhibit.id;
+                  return (
+                    <button
+                      key={ex.id}
+                      onClick={() => setActiveExhibit(ex)}
+                      type="button"
+                      className={`p-2 rounded-xl border text-center transition-all cursor-pointer ${
+                        isCurrent
+                          ? 'border-[#0A3F47] bg-[#0A3F47] text-white shadow-sm'
+                          : 'border-[#E0D4BE] bg-white hover:bg-[#FAF4E8] text-[#1C140A]'
+                      }`}
+                    >
+                      <span className="text-lg block leading-none mb-1 font-serif">{ex.glyph}</span>
+                      <span className="text-[10px] font-bold block truncate">
+                        {isAr ? ex.nameAr : ex.nameEn}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Section 2: Sacred Avian Hieroglyphic Pantheon (4 Pharaonic Temple Steles) */}
-        <div className="mb-20 sm:mb-28">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#c99a5d]/60 bg-[#e5e7e5]/90 text-xs font-bold uppercase tracking-wider text-[#6F4B1F] mb-3">
-              <Shield className="w-3.5 h-3.5 text-[#c99a5d]" />
-              <span>{isAr ? 'مجمع الآلهة وحماة السماء' : 'AVIAN PANTHEON OF ETERNITY'}</span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1C140A] tracking-tight">
-              {isAr ? 'أسرار الطيور في العقيدة المصرية القديمة' : 'Sacred Avian Guardians in Ancient Egyptian Cosmology'}
-            </h2>
+      {/* 3. SACRED AVIAN PANTHEON */}
+      <section className="px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto py-16 border-t border-[#E5DAC4]">
+        <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-[#D5C29F] bg-[#EFE4CF]/70 text-xs font-bold uppercase tracking-wider text-[#6F4B1F] mb-3">
+            <Shield className="w-3.5 h-3.5 text-[#C29352]" />
+            <span>{isAr ? 'مجمع الآلهة وحماة السماء' : 'AVIAN PANTHEON OF ETERNITY'}</span>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {pantheonDeities.map((item, idx) => (
-              <div
-                key={idx}
-                className="group relative p-6 sm:p-7 rounded-2xl border-2 border-[#c99a5d]/50 bg-[#FAF3E3] shadow-md hover:border-[#c99a5d] hover:bg-white hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  {/* Top Glyph Seal */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-14 h-14 rounded-2xl border-2 border-[#c99a5d] bg-[#e5e7e5] flex items-center justify-center text-3xl text-[#8C581F] shadow-xs group-hover:scale-110 transition-transform">
-                      {item.glyph}
-                    </div>
-                    <span className="text-xs font-serif font-extrabold text-[#c99a5d] px-2 py-1 rounded bg-[#FAF1DF] border border-[#c99a5d]/40">
-                      𓋹 Ankh
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-black text-[#1C140A] mb-1">
-                    {isAr ? item.deityAr : item.deityEn}
-                  </h3>
-
-                  <div className="text-xs font-bold text-[#8C6239] mb-3 pb-2.5 border-b border-[#c99a5d]/30">
-                    {isAr ? item.speciesAr : item.speciesEn}
-                  </div>
-
-                  <p className="text-xs sm:text-[13px] text-[#4A3825] leading-relaxed mb-4">
-                    {isAr ? item.significanceAr : item.significanceEn}
-                  </p>
-                </div>
-
-                <div className="pt-3 border-t border-[#c99a5d]/30 flex items-start gap-2 text-[11px] text-[#5C3C17]">
-                  <Compass className="w-3.5 h-3.5 text-[#c99a5d] shrink-0 mt-0.5" />
-                  <span>{isAr ? item.spottingAr : item.spottingEn}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Section 3: The Royal Temple Stele Booking Shrine */}
-        <div
-          className="relative rounded-3xl p-8 sm:p-12 lg:p-14 border-2 border-[#c99a5d] shadow-[0_25px_60px_rgba(140,98,40,0.25)] overflow-hidden text-center max-w-4xl mx-auto"
-          style={{
-            backgroundColor: '#FAF1DF',
-            backgroundImage: `
-              radial-gradient(ellipse at 50% 0%, rgba(255, 248, 235, 0.9) 0%, rgba(250, 241, 223, 0.95) 100%),
-              radial-gradient(#c99a5d 0.7px, transparent 0.7px)
-            `,
-            backgroundSize: '100% 100%, 24px 24px'
-          }}
-        >
-          {/* Top Hieroglyphic Inscription */}
-          <div className="text-2xl sm:text-3xl text-[#c99a5d] mb-4 tracking-widest font-serif select-none">
-            𓍹 𓅃 𓋹 𓊽 𓍻
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#0a515b] tracking-tight mb-4 font-heading">
-            {isAr ? 'عِش تجربة طيور الفراعنة الحصرية في أسوان' : 'Experience Pharaohs Birds Alive in Aswan'}
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1C140A] tracking-tight">
+            {isAr ? 'أسرار الطيور في العقيدة المصرية القديمة' : 'Sacred Avian Guardians in Ancient Egyptian Cosmology'}
           </h2>
-
-          <p className="text-base sm:text-lg text-[#553F28] leading-relaxed max-w-2xl mx-auto mb-8">
-            {isAr
-              ? 'رحلة نيلية استكشافية خاصة تصحبك فيها نخبة من علماء الطيور والبحارة النوبيين لرصد الطيور المقدسة في بيئاتها الأصلية مع مناظير متطورة وشاي نوبي أصيل.'
-              : 'A private Nile expedition guided by expert ornithologists and Nubian boat captains to observe the sacred birds in their untouched natural habitats with professional optics.'}
-          </p>
-
-          <button
-            onClick={() => handleOpenBooking('Pharaohs Birds Alive Signature')}
-            type="button"
-            className="group inline-flex items-center gap-3 px-9 py-4 rounded-full font-bold text-base text-[#1C1306] shadow-[0_10px_30px_rgba(201,154,93,0.45)] transition-all duration-300 hover:shadow-[0_14px_40px_rgba(201,154,93,0.6)] hover:scale-105 active:scale-95 border border-[#B07E3D] cursor-pointer"
-            style={{
-              background: 'linear-gradient(135deg, #F0DBB4 0%, #C99A5D 50%, #B07E3D 100%)'
-            }}
-          >
-            <Sparkles className="w-4 h-4 text-[#1C1306]" />
-            <span className="tracking-wide">
-              {isAr ? 'احجز التجربة الملكية الآن' : 'Reserve Royal Experience'}
-            </span>
-            <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1" />
-          </button>
         </div>
-      </div>
 
-      {/* Ancient Temple Architectural Bottom Border */}
-      <div className="w-full border-t-2 border-[#c99a5d]/70 bg-[#e5e7e5]/80 backdrop-blur-xs py-2 px-4 shadow-xs select-none mt-20 sm:mt-28">
-        <div className="max-w-7xl mx-auto flex items-center justify-between text-xs sm:text-sm font-serif tracking-[0.3em] uppercase text-[#7A5528]">
-          <div className="flex items-center gap-3">
-            <span className="text-[#c99a5d] text-base">𓋹</span>
-            <span className="hidden sm:inline">𓅃 𓅂 𓅄</span>
-            <span>𓊽</span>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {pantheonDeities.map((item, idx) => (
+            <div
+              key={idx}
+              className="p-6 rounded-2xl border border-[#E0D4BE] bg-[#FDFBF7] shadow-sm hover:border-[#0A3F47] hover:shadow-md transition-all flex flex-col justify-between"
+            >
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#EFE4CF] text-2xl text-[#8C581F] flex items-center justify-center font-serif">
+                    {item.glyph}
+                  </div>
+                  <span className="text-xs font-serif font-bold text-[#C29352] px-2 py-0.5 rounded bg-white border border-[#E0D4BE]">
+                    𓋹 Ankh
+                  </span>
+                </div>
 
-          <div className="font-extrabold text-[10px] sm:text-xs tracking-[0.25em] text-[#5C3C14] text-center">
-            {isAr ? 'حماة النيل الأبدي · إرث الحضارة المصرية الخالدة' : 'ETERNAL NILE GUARDIANS · TIMELESS EGYPTIAN SACRED LEGACY'}
-          </div>
+                <h3 className="text-lg font-black text-[#1C140A] mb-1">
+                  {isAr ? item.deityAr : item.deityEn}
+                </h3>
 
-          <div className="flex items-center gap-3">
-            <span>𓊽</span>
-            <span className="hidden sm:inline">𓅄 𓅂 𓅃</span>
-            <span className="text-[#c99a5d] text-base">𓋹</span>
-          </div>
+                <div className="text-xs font-bold text-[#8C6239] mb-3 pb-2 border-b border-[#EDE4D3]">
+                  {isAr ? item.speciesAr : item.speciesEn}
+                </div>
+
+                <p className="text-xs text-[#4E3E2E] leading-relaxed mb-4">
+                  {isAr ? item.significanceAr : item.significanceEn}
+                </p>
+              </div>
+
+              <div className="pt-3 border-t border-[#EDE4D3] flex items-start gap-2 text-[11px] text-[#5C3C17]">
+                <Compass className="w-3.5 h-3.5 text-[#C29352] shrink-0 mt-0.5" />
+                <span>{isAr ? item.spottingAr : item.spottingEn}</span>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      </section>
     </div>
   );
 };
