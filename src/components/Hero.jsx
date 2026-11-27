@@ -4,18 +4,34 @@ export const Hero = ({ onExploreTours, currentLang = 'EN' }) => {
   return (
     <section id="hero" className="relative min-h-screen h-[100dvh] bg-[#2c281a] text-white isolate overflow-hidden flex flex-col justify-between">
       {/* Background Nile Boat & Flying Birds in Aswan Image (mirrors dynamically based on language direction) */}
-      <img
-        className={`absolute inset-0 w-full h-full object-cover -z-30 transition-transform duration-700 ease-in-out ${
+      <picture
+        className={`absolute inset-0 w-full h-full -z-30 pointer-events-none select-none transition-transform duration-700 ease-in-out ${
           currentLang === 'AR' ? 'scale-x-[-1]' : 'scale-x-100'
         }`}
-        src="/assets/hero-aswan-nile.webp"
-        srcSet="/assets/hero-aswan-nile.webp 1280w, /assets/hero-aswan-nile-2x.webp 2560w"
-        sizes="100vw"
-        alt="Nile boat tour and flying birds in Aswan"
-        fetchPriority="high"
-        decoding="async"
-        style={{ objectPosition: '78% 30%' }}
-      />
+      >
+        <source
+          media="(max-width: 767px)"
+          srcSet="/assets/hero-aswan-nile-mobile.webp"
+          type="image/webp"
+        />
+        <source
+          media="(min-width: 768px)"
+          srcSet="/assets/hero-aswan-nile.webp 1280w, /assets/hero-aswan-nile-2x.webp 2560w"
+          sizes="100vw"
+          type="image/webp"
+        />
+        <img
+          className="w-full h-full object-cover"
+          src="/assets/hero-aswan-nile.webp"
+          alt="Nile boat tour and flying birds in Aswan"
+          fetchPriority="high"
+          loading="eager"
+          decoding="async"
+          width="1280"
+          height="714"
+          style={{ objectPosition: '78% 30%' }}
+        />
+      </picture>
       
       {/* Dynamic atmospheric gradient shade matching reading direction */}
       <div

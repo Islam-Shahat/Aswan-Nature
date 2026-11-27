@@ -1,9 +1,9 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
+import { HomePage } from './pages/HomePage';
 
-// Route-level code splitting to optimize bundle size and FCP/LCP
-const HomePage = lazy(() => import('./pages/HomePage').then(m => ({ default: m.HomePage })));
+// Route-level code splitting for subpages to optimize bundle size and FCP/LCP
 const ToursPage = lazy(() => import('./pages/ToursPage').then(m => ({ default: m.ToursPage })));
 const TourDetailPage = lazy(() => import('./pages/TourDetailPage').then(m => ({ default: m.TourDetailPage })));
 const PharaohsPage = lazy(() => import('./pages/PharaohsPage').then(m => ({ default: m.PharaohsPage })));

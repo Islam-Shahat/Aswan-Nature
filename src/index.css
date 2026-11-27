@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Outfit', 'DM Sans', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Outfit', 'Manrope', 'DM Sans', sans-serif;
+  --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
   --font-arabic: 'Alexandria', sans-serif;
   --font-serif: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
   --font-display: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;

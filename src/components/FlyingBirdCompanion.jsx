@@ -237,10 +237,14 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
           }}
         >
           <img
-            src="/assets/flying-bird.gif"
+            src="/assets/flying-bird.webp"
             alt="Flying bird companion"
             className="w-20 sm:w-28 md:w-36 lg:w-44 h-auto drop-shadow-[0_8px_18px_rgba(0,0,0,0.24)] hover:scale-105 transition-transform duration-200"
             draggable="false"
+            loading="lazy"
+            decoding="async"
+            width="176"
+            height="176"
           />
 
           {/* Interactive Tooltip on Hover (hidden on touch devices) */}
