@@ -77,16 +77,45 @@ export const GallerySection = ({ currentLang = 'EN' }) => {
           </Link>
         </div>
 
-        {/* 8-Photo Grid: Stacking cards only on mobile (< sm), pristine original grid on laptop/desktop (>= sm) */}
-        <div className="relative space-y-6 sm:space-y-0 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6">
+        {/* Mobile View: Clean Scroll-Stacking Cards (< sm) */}
+        <div className="block sm:hidden space-y-6 pb-6">
           {photos.map((photo, idx) => (
             <div
-              key={photo.title + idx}
+              key={`mobile-${photo.title}-${idx}`}
               onClick={() => setSelectedPhotoIndex(idx)}
               style={{
+                top: `calc(85px + ${idx * 6}px)`,
                 zIndex: 10 + idx,
               }}
-              className="sticky sm:static top-[90px] group relative aspect-[4/3] rounded-2xl overflow-hidden bg-black cursor-pointer shadow-[0_12px_36px_-8px_rgba(0,0,0,0.35)] sm:shadow-[0_6px_24px_-6px_rgba(0,0,0,0.08)] hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+              className="sticky group relative aspect-[4/3] rounded-2xl overflow-hidden bg-black cursor-pointer shadow-[0_12px_36px_-8px_rgba(0,0,0,0.35)] active:scale-[0.99] transition-transform duration-200"
+            >
+              <img
+                src={photo.src}
+                alt={photo.title}
+                loading="lazy"
+                className="w-full h-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-85" />
+
+              <div className="absolute bottom-4 left-4 right-4 text-white">
+                <span className="text-sm font-bold tracking-tight block line-clamp-1">
+                  {photo.title}
+                </span>
+                <span className="text-[11px] text-white/70 block line-clamp-1">
+                  {photo.location}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Laptop / Desktop / Tablet View (>= sm): Original 100% Clean Grid without sticky, z-index or overlaps */}
+        <div className="hidden sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {photos.map((photo, idx) => (
+            <div
+              key={`desktop-${photo.title}-${idx}`}
+              onClick={() => setSelectedPhotoIndex(idx)}
+              className="group relative aspect-[4/3] rounded-2xl overflow-hidden bg-black cursor-pointer shadow-[0_6px_24px_-6px_rgba(0,0,0,0.08)] hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
             >
               <img
                 src={photo.src}
