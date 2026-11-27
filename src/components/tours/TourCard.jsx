@@ -116,10 +116,12 @@ export const TourCard = ({
               </span>
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-black text-[#16241B] font-heading">
-                  ${tour.priceUsd}
+                  {tour.currency === 'EUR' || tour.priceEur ? `€${tour.priceEur}` : `$${tour.priceUsd}`}
                 </span>
                 <span className="text-xs font-bold text-[#66806C]">
-                  ({tour.priceEgp})
+                  {tour.pricePrivateTourEur
+                    ? (isAr ? `(خاصة: €${tour.pricePrivateTourEur})` : `(Private: €${tour.pricePrivateTourEur})`)
+                    : `(${tour.priceEgp})`}
                 </span>
               </div>
             </div>

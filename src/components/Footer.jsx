@@ -143,13 +143,13 @@ export const Footer = ({
                 </a>
               </div>
               <div>
-                <a href="tel:+201032403957" dir="ltr" className="hover:text-white transition-colors">
-                  +20 103 240 3957
+                <a href="tel:+201114711665" dir="ltr" className="hover:text-white transition-colors">
+                  +20 111 471 1665
                 </a>
               </div>
               <div>
-                <a href="mailto:info@aswannature.com" className="hover:text-white transition-colors">
-                  info@aswannature.com
+                <a href="mailto:fawzia.mohamed@aswannature.com" className="hover:text-white transition-colors">
+                  fawzia.mohamed@aswannature.com
                 </a>
               </div>
               <div className="pt-2 text-xs leading-relaxed text-[#819987]">

@@ -92,6 +92,46 @@ export const BookingDrawer = ({
 
   // Real-time Dynamic Price Calculation
   const priceBreakdown = useMemo(() => {
+    const isEuroTour = activeTour.currency === 'EUR' || !!activeTour.pricingTiers;
+
+    if (isEuroTour) {
+      let isPrivate = false;
+      let ratePerPerson = 60;
+      let totalEuro = 0;
+
+      if (totalGuests <= 3) {
+        isPrivate = true;
+        totalEuro = 230; // Private Tour (1–3 persons) = €230 per tour
+      } else if (totalGuests >= 8) {
+        ratePerPerson = 55; // Group Tour (8–20 persons) = €55 per person
+        totalEuro = (adults * 55) + Math.round(children * (55 * pricingConfig.childDiscountMultiplier));
+      } else {
+        ratePerPerson = 60; // Group Tour (4–7 persons) = €60 per person
+        totalEuro = (adults * 60) + Math.round(children * (60 * pricingConfig.childDiscountMultiplier));
+      }
+
+      // Est. in EGP at current ~52 rate
+      const approxEgp = Math.round(totalEuro * 52);
+
+      return {
+        isEuroTour: true,
+        isPrivate,
+        ratePerPerson,
+        currencySymbol: '€',
+        netTotalUsd: totalEuro,
+        netTotalEgp: approxEgp,
+        adultsSubtotalUsd: isPrivate ? 230 : adults * ratePerPerson,
+        childrenSubtotalUsd: isPrivate ? 0 : Math.round(children * (ratePerPerson * pricingConfig.childDiscountMultiplier)),
+        activitySubtotalUsd: 0,
+        activitySubtotalEgp: 0,
+        privateBoatUsd: 0,
+        privateBoatEgp: 0,
+        isGroupDiscount: false,
+        discountAmountUsd: 0,
+        discountAmountEgp: 0
+      };
+    }
+
     const baseRateUsd = activeTour.priceUsd;
     const baseRateEgp = activeTour.priceEgpNumber;
 
@@ -131,6 +171,8 @@ export const BookingDrawer = ({
     const netTotalEgp = grossTotalEgp - discountAmountEgp;
 
     return {
+      isEuroTour: false,
+      currencySymbol: '$',
       adultsSubtotalUsd,
       adultsSubtotalEgp,
       childrenSubtotalUsd,
@@ -707,17 +749,23 @@ export const BookingDrawer = ({
               <div className="space-y-1.5 text-xs text-[#556F5C] border-b border-[#F0F4EC] pb-3">
                 <div className="flex justify-between">
                   <span>
-                    {adults} {isAr ? 'بالغين' : 'Adults'} (${activeTour.priceUsd})
+                    {priceBreakdown.isPrivate
+                      ? (isAr ? 'جولة خاصة (١ - ٣ أفراد)' : 'Private Tour (1–3 persons)')
+                      : `${adults} ${isAr ? 'بالغين' : 'Adults'} (${priceBreakdown.currencySymbol}${priceBreakdown.isEuroTour ? priceBreakdown.ratePerPerson : activeTour.priceUsd})`}
                   </span>
-                  <span className="font-bold text-[#16241B]">${priceBreakdown.adultsSubtotalUsd}</span>
+                  <span className="font-bold text-[#16241B]">
+                    {priceBreakdown.currencySymbol}{priceBreakdown.adultsSubtotalUsd}
+                  </span>
                 </div>
 
-                {children > 0 && (
+                {children > 0 && !priceBreakdown.isPrivate && (
                   <div className="flex justify-between">
                     <span>
                       {children} {isAr ? 'أطفال (خصم ٥٠٪)' : 'Children (50% Off)'}
                     </span>
-                    <span className="font-bold text-[#16241B]">${priceBreakdown.childrenSubtotalUsd}</span>
+                    <span className="font-bold text-[#16241B]">
+                      {priceBreakdown.currencySymbol}{priceBreakdown.childrenSubtotalUsd}
+                    </span>
                   </div>
                 )}
 
@@ -730,7 +778,7 @@ export const BookingDrawer = ({
                   </div>
                 )}
 
-                {privateBoatUpgrade && (
+                {privateBoatUpgrade && !priceBreakdown.isEuroTour && (
                   <div className="flex justify-between text-[#0a515b]">
                     <span>{isAr ? 'ترقية قارب خاص' : 'Private Boat Upgrade'}</span>
                     <span className="font-bold">+$40</span>
@@ -753,7 +801,7 @@ export const BookingDrawer = ({
                   </span>
                   <div className="flex items-baseline gap-1.5">
                     <span className="text-2xl sm:text-3xl font-black text-[#0a515b] font-heading">
-                      ${priceBreakdown.netTotalUsd}
+                      {priceBreakdown.currencySymbol}{priceBreakdown.netTotalUsd}
                     </span>
                     <span className="text-xs font-bold text-[#66806C]">
                       (~{priceBreakdown.netTotalEgp.toLocaleString()} EGP)

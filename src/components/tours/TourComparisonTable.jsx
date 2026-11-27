@@ -62,7 +62,7 @@ export const TourComparisonTable = ({
                       {isAr ? tour.titleAr : tour.title}
                     </h4>
                     <div className="inline-block bg-[#0a515b]/10 text-[#0a515b] font-extrabold text-xs px-2.5 py-1 rounded-full mb-3">
-                      ${tour.priceUsd} <span className="text-[10px] font-normal">({tour.priceEgp})</span>
+                      {tour.currency === 'EUR' || tour.priceEur ? `€${tour.priceEur}` : `$${tour.priceUsd}`} <span className="text-[10px] font-normal">{tour.pricePrivateTourEur ? (isAr ? `(خاصة: €${tour.pricePrivateTourEur})` : `(Private: €${tour.pricePrivateTourEur})`) : `(${tour.priceEgp})`}</span>
                     </div>
                     <button
                       onClick={() => onSelectTour(tour.id)}

@@ -121,11 +121,51 @@ export const TourDetailModal = ({
                 {isAr ? 'السعر للشخص' : 'Price / Person'}
               </span>
               <div className="text-base font-black text-[#0a515b] flex items-baseline gap-1.5">
-                <span>${tour.priceUsd}</span>
-                <span className="text-xs font-semibold text-[#66806C]">({tour.priceEgp})</span>
+                <span>{tour.currency === 'EUR' || tour.priceEur ? `€${tour.priceEur}` : `$${tour.priceUsd}`}</span>
+                <span className="text-xs font-semibold text-[#66806C]">
+                  {tour.pricePrivateTourEur
+                    ? (isAr ? `(خاصة: €${tour.pricePrivateTourEur})` : `(Private: €${tour.pricePrivateTourEur})`)
+                    : `(${tour.priceEgp})`}
+                </span>
               </div>
             </div>
           </div>
+
+          {/* Official Pricing List Table if available */}
+          {tour.pricingTiers && tour.pricingTiers.length > 0 && (
+            <div className="rounded-2xl border border-[#DCE8D8] bg-[#F7FAF5] p-4 sm:p-5">
+              <div className="flex items-center justify-between mb-3 border-b border-[#E5EFE2] pb-2">
+                <h4 className="text-xs sm:text-sm uppercase tracking-wider font-extrabold text-[#16241B]">
+                  {isAr ? 'قائمة الأسعار الرسمية' : 'Official Pricing List'}
+                </h4>
+                <span className="text-[11px] font-bold text-[#0a515b] bg-[#0a515b]/10 px-2.5 py-0.5 rounded-full">
+                  Euro (€)
+                </span>
+              </div>
+
+              <div className="space-y-2">
+                {tour.pricingTiers.map((tier, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between text-xs sm:text-sm bg-white p-2.5 sm:p-3 rounded-xl border border-[#E9F0E6]"
+                  >
+                    <span className="font-bold text-[#2A3F30]">
+                      {isAr ? tier.tierAr || tier.typeAr : tier.tierEn || tier.typeEn}
+                    </span>
+                    <span className="font-black text-[#1EAA13] font-mono text-sm sm:text-base">
+                      {isAr ? `${tier.price} ${tier.unitAr ? `(${tier.unitAr})` : ''}` : `${tier.price} ${tier.unitEn ? `(${tier.unitEn})` : ''}`}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              {tour.pricingNoteEn && (
+                <p className="text-[11px] text-[#6E8274] mt-3 font-medium italic">
+                  * {isAr ? tour.pricingNoteAr : tour.pricingNoteEn}
+                </p>
+              )}
+            </div>
+          )}
 
           {/* Overview Description */}
           <div>

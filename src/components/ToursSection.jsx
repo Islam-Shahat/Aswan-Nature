@@ -27,30 +27,34 @@ export const ToursSection = ({
       image: '/assets/kingfisher.webp',
       alt: 'Nile Birds Tour wildlife photography',
       eyebrow: isAr ? 'النيل، عن قُرب' : 'THE NILE, A LITTLE CLOSER',
-      title: isAr ? 'جولة طيور النيل' : 'Nile Birds Tour',
+      title: isAr ? 'جولة رصد طيور النيل' : 'Nile Birdwatching Tour',
       desc: isAr
-        ? 'أبحر بين جزر الشلال الأول واكتشف الحياة الفطرية المذهلة على ضفاف النيل العظيم.'
-        : 'Drift between the First Cataract Islands and discover the extraordinary life along the Nile.',
+        ? 'رحلة استرخاء بالقارب لاكتشاف الطيور البديعة في نيل أسوان والموائل الطبيعية حول الشلال الأول.'
+        : 'Discover the beautiful birds of the Nile on a relaxing boat trip through Aswan scenic river landscapes.',
       highlight: isAr
-        ? 'رصد طائر الرفراف الأبقع، صياد السمك، والبلشون الصغير بين صخور الجرانيت التاريخية.'
-        : 'Close encounters with Pied Kingfishers, Little Egrets, and Cormorants along ancient granite channels.',
-      duration: isAr ? '٣ ساعات*' : '3 hours*',
-      location: isAr ? 'جزر الشلال الأول' : 'First Cataract Islands'
+        ? 'رصد وتصوير الطيور المقيمة والمهاجرة بين جزر الشلال الأول وأحواض القصب.'
+        : 'Observe and photograph resident & migratory birds around the First Cataract islands.',
+      duration: isAr ? 'ساعتان' : '2 hours',
+      location: isAr ? 'نهر النيل — كورنيش النيل' : 'Nile River – Corniche',
+      priceLabel: isAr ? 'تبدأ من ٥٥€ للشخص' : 'From €55 / person',
+      priceDetail: isAr ? 'خاصة: ٢٣٠€ (١-٣ أفراد)' : 'Private: €230 (1–3 pers)'
     },
     {
       id: 'aswan-reservoir',
       image: '/assets/stork.webp',
       alt: 'Aswan Reservoir Birds Tour wildlife photography',
       eyebrow: isAr ? 'ملاذ آمن للحياة البرية' : 'A HAVEN FOR WILDLIFE',
-      title: isAr ? 'جولة طيور خزان أسوان' : 'Aswan Reservoir Birds Tour',
+      title: isAr ? 'جولة رصد طيور خزان أسوان' : 'Reservoir Birdwatching Tour',
       desc: isAr
-        ? 'استكشف المياه الهادئة بين السد العالي وخزان أسوان القديم في منطقة دولية بالغة الأهمية للطيور.'
-        : 'Explore the quiet waters between the Old and High Dam, in an internationally important bird area.',
+        ? 'استمتع بمياه خزان أسوان الهادئة واكتشف تنوع الطيور النادرة والبيئة المائية العذراء.'
+        : 'Enjoy a boat trip through the peaceful waters between the High Dam and Old Aswan Dam.',
       highlight: isAr
-        ? 'أهدأ بقعة على النيل؛ ملاذ دولي لأندر الطيور المهاجرة في محمية مائية خالية من الضوضاء.'
-        : 'The quietest waters on the Nile, shelter to rare winter migrants in an internationally recognized wetland.',
-      duration: isAr ? '٣ ساعات*' : '3 hours*',
-      location: isAr ? 'خزان أسوان' : 'Aswan Reservoir'
+        ? 'أهدأ بقعة على النيل؛ ملاذ دولي لأندر الطيور المهاجرة والجوارح بدون صخب سياحي.'
+        : 'Diverse birdlife, important habitats, and peaceful landscapes between the two dams.',
+      duration: isAr ? 'ساعتان' : '2 hours',
+      location: isAr ? 'خزان أسوان — مرسى الخزان' : 'Aswan Reservoir Marina',
+      priceLabel: isAr ? 'تبدأ من ٥٥€ للشخص' : 'From €55 / person',
+      priceDetail: isAr ? 'خاصة: ٢٣٠€ (١-٣ أفراد)' : 'Private: €230 (1–3 pers)'
     },
     {
       id: 'special-birding',
@@ -65,7 +69,9 @@ export const ToursSection = ({
         ? 'رحلة استكشاف مخصصة VIP مع وجبة نوبية طازجة، مناظير متطورة، وجلسة تصوير وثائقية.'
         : 'Bespoke VIP journey with authentic fresh Nubian meal, high-powered spotting scopes, and field photo sessions.',
       duration: isAr ? '٦ ساعات' : '6 hours',
-      location: isAr ? 'النيل أو خزان أسوان' : 'Nile or Aswan Reservoir'
+      location: isAr ? 'النيل أو خزان أسوان' : 'Nile or Aswan Reservoir',
+      priceLabel: isAr ? 'طلب السعر' : 'Request price',
+      priceDetail: isAr ? 'أسعار خاصة للمصريين' : 'Special Egyptian rates'
     }
   ];
 
@@ -230,11 +236,11 @@ export const ToursSection = ({
                     }`}
                   >
                     <div>
-                      <div className="text-xs sm:text-sm font-bold text-[#16241B]">
-                        {isAr ? 'طلب السعر' : 'Request price'}
+                      <div className="text-xs sm:text-sm font-black text-[#16241B]">
+                        {tour.priceLabel || (isAr ? 'طلب السعر' : 'Request price')}
                       </div>
-                      <div className="text-[10.5px] text-[#7A8C7F]">
-                        {isAr ? 'أسعار خاصة للمصريين' : 'Special Egyptian rates'}
+                      <div className="text-[10.5px] font-semibold text-[#5A7361]">
+                        {tour.priceDetail || (isAr ? 'أسعار خاصة للمصريين' : 'Special Egyptian rates')}
                       </div>
                     </div>
 

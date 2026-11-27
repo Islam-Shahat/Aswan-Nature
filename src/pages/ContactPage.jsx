@@ -17,7 +17,8 @@ import {
 
 const WHATSAPP_NUMBER = '201144435547';
 const DISPLAY_PHONE = '+20 114 443 5547';
-const EMAIL_ADDRESS = 'info@aswannature.com';
+const SECOND_PHONE = '+20 111 471 1665';
+const EMAIL_ADDRESS = 'fawzia.mohamed@aswannature.com';
 
 // Google Sheets (Apps Script Web App) integration: paste your deployed Web App URL below
 const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwOTzZz0w4IGNqrNOy1xd-QlEW3YQ8PjsA2wTjKFefZpzbPJiVQrJ91ihcdlVOxW4_LJg/exec';
@@ -301,19 +302,19 @@ export const ContactPage = () => {
                   <ArrowUpRight className="w-4 h-4 text-[#B8D4D8] group-hover:text-[#48e714] transition-colors flex-shrink-0" />
                 </a>
 
-                {/* Meeting Base */}
+                {/* Meeting Base / Official Address */}
                 <div className="flex items-start gap-3.5 p-4 rounded-2xl bg-white/8 border border-white/10">
                   <div className="w-11 h-11 rounded-xl bg-white/12 flex items-center justify-center text-[#21c715] flex-shrink-0">
                     <MapPin className="w-5 h-5" />
                   </div>
                   <div>
                     <span className="text-xs text-[#B8D4D8] block font-semibold">
-                      {isAr ? 'موقعنا في أسوان' : 'Meeting Base'}
+                      {isAr ? 'موقعنا ومكتبنا في أسوان' : 'Official Location in Aswan'}
                     </span>
                     <span className="font-medium text-sm text-[#D9EAEC] block mt-0.5">
                       {isAr
-                        ? 'مرسى الشلال الأول وجزيرة إلفنتين، أسوان، مصر'
-                        : 'First Cataract Pier & Elephantine Island, Aswan, Egypt'}
+                        ? 'طريق خزان أسوان، أمام مستشفى سليمان، أسوان، مصر'
+                        : 'Aswan Reservoir road, in front of Soliman Hospital, Aswan, Egypt'}
                     </span>
                   </div>
                 </div>

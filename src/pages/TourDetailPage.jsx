@@ -156,13 +156,48 @@ export const TourDetailPage = () => {
             <div className="sticky top-24 bg-white rounded-3xl p-8 border border-[#E2E8DC] shadow-xl space-y-6">
               <div>
                 <span className="text-xs uppercase font-bold tracking-wider text-[#698570]">
-                  {isAr ? 'السعر للشخص' : 'Price per person'}
+                  {isAr ? 'السعر يبدأ من' : 'Starting From'}
                 </span>
                 <div className="flex items-baseline gap-2 mt-1">
-                  <span className="text-3xl font-extrabold text-[#16241B]">{tour.priceUsd}</span>
-                  <span className="text-sm font-semibold text-[#5B7763]">/ {tour.priceEgp} {isAr ? 'للمصريين' : 'for Egyptians'}</span>
+                  <span className="text-3xl font-extrabold text-[#16241B]">
+                    {tour.currency === 'EUR' || tour.priceEur ? `€${tour.priceEur}` : `$${tour.priceUsd}`}
+                  </span>
+                  <span className="text-sm font-semibold text-[#5B7763]">
+                    {tour.pricePrivateTourEur
+                      ? (isAr ? `(خاصة: €${tour.pricePrivateTourEur})` : `(Private: €${tour.pricePrivateTourEur})`)
+                      : `/ ${tour.priceEgp} ${isAr ? 'للمصريين' : 'for Egyptians'}`}
+                  </span>
                 </div>
               </div>
+
+              {/* Official Pricing List Table */}
+              {tour.pricingTiers && tour.pricingTiers.length > 0 && (
+                <div className="rounded-2xl border border-[#DCE8D8] bg-[#F7FAF5] p-4 space-y-2">
+                  <div className="flex items-center justify-between border-b border-[#E5EFE2] pb-1.5">
+                    <span className="text-xs font-black text-[#16241B] uppercase tracking-wider">
+                      {isAr ? 'قائمة الأسعار الرسمية' : 'Official Pricing List'}
+                    </span>
+                    <span className="text-[10px] font-bold text-[#0a515b] bg-[#0a515b]/10 px-2 py-0.5 rounded-full">
+                      Euro (€)
+                    </span>
+                  </div>
+                  {tour.pricingTiers.map((tier, idx) => (
+                    <div key={idx} className="flex items-center justify-between text-xs py-1 border-b border-[#EAEFE6] last:border-none">
+                      <span className="font-semibold text-[#2A3F30]">
+                        {isAr ? tier.tierAr || tier.typeAr : tier.tierEn || tier.typeEn}
+                      </span>
+                      <span className="font-black text-[#1EAA13] font-mono">
+                        {tier.price}
+                      </span>
+                    </div>
+                  ))}
+                  {tour.pricingNoteEn && (
+                    <p className="text-[10px] text-[#6E8274] pt-1 italic">
+                      * {isAr ? tour.pricingNoteAr : tour.pricingNoteEn}
+                    </p>
+                  )}
+                </div>
+              )}
 
               <div className="p-4 rounded-2xl bg-[#F0F6EE] border border-[#DEEADB] space-y-2 text-xs text-[#2A4432]">
                 <div className="flex items-center gap-2 font-bold text-[#16241B]">
