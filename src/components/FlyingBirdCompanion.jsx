@@ -220,9 +220,10 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
       dir="ltr"
       className="fixed inset-0 left-0 top-0 w-full h-full pointer-events-none z-40 overflow-hidden select-none"
     >
+      {/* Responsive Flying Bird: scaled for mobile, tablet, and desktop */}
       <div
         ref={birdRef}
-        className="hidden md:block absolute top-0 left-0 pointer-events-auto cursor-pointer will-change-transform group animate-bird-float"
+        className="block absolute top-0 left-0 pointer-events-none sm:pointer-events-auto cursor-pointer will-change-transform group animate-bird-float"
         style={{
           transform: `translate3d(${stateRef.current.currentX}px, ${stateRef.current.currentY}px, 0)`,
         }}
@@ -238,13 +239,13 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
           <img
             src="/assets/flying-bird.gif"
             alt="Flying bird companion"
-            className="w-28 sm:w-36 md:w-40 lg:w-44 h-auto drop-shadow-[0_10px_22px_rgba(0,0,0,0.24)] hover:scale-105 transition-transform duration-200"
+            className="w-20 sm:w-28 md:w-36 lg:w-44 h-auto drop-shadow-[0_8px_18px_rgba(0,0,0,0.24)] hover:scale-105 transition-transform duration-200"
             draggable="false"
           />
 
-          {/* Interactive Tooltip on Hover */}
+          {/* Interactive Tooltip on Hover (hidden on touch devices) */}
           <div
-            className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none absolute -bottom-7 whitespace-nowrap bg-black/85 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-lg border border-white/10 ${
+            className={`hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none absolute -bottom-7 whitespace-nowrap bg-black/85 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-1 rounded-full shadow-lg border border-white/10 ${
               isAr ? 'left-2' : 'right-2'
             }`}
           >
