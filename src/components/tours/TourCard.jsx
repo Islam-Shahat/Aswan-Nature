@@ -112,16 +112,16 @@ export const TourCard = ({
           <div className="flex items-center justify-between mb-4">
             <div>
               <span className="text-[10px] uppercase font-bold tracking-wider text-[#6B8572] block">
-                {isAr ? 'يبدأ من (للشخص)' : 'Starting From'}
+                {isAr ? 'يبدأ من (للمصريين)' : 'Starting From'}
               </span>
               <div className="flex items-baseline gap-2">
                 <span className="text-2xl font-black text-[#16241B] font-heading">
-                  {tour.currency === 'EUR' || tour.priceEur ? `€${tour.priceEur}` : `$${tour.priceUsd}`}
+                  {isAr ? `${tour.priceEgpNumber || 1500} ج.م` : `€${tour.priceEur || 55}`}
                 </span>
                 <span className="text-xs font-bold text-[#66806C]">
-                  {tour.pricePrivateTourEur
-                    ? (isAr ? `(خاصة: €${tour.pricePrivateTourEur})` : `(Private: €${tour.pricePrivateTourEur})`)
-                    : `(${tour.priceEgp})`}
+                  {isAr
+                    ? (tour.pricePrivateTourEgp ? `(خاصة: ${tour.pricePrivateTourEgp} ج.م)` : `(خاصة: 3,500 ج.م)`)
+                    : (tour.pricePrivateTourEur ? `(Private: €${tour.pricePrivateTourEur})` : '')}
                 </span>
               </div>
             </div>

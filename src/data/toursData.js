@@ -118,9 +118,10 @@ export const toursData = {
     priceDisplay: '€55 - €60',
     pricePrivateTourEur: 230,
     priceUsd: 60,
-    priceEgp: '2,900 EGP',
+    priceEgp: '1,500 ج.م',
     priceNumber: 55,
-    priceEgpNumber: 2900,
+    priceEgpNumber: 1500,
+    pricePrivateTourEgp: 3500,
     pricingTiers: [
       {
         tierEn: 'Group Tour (4–7 persons)',
@@ -144,8 +145,31 @@ export const toursData = {
         unitAr: 'للرحلة بالكامل'
       }
     ],
+    pricingTiersEgp: [
+      {
+        tierEn: 'Group Tour (4–7 persons)',
+        tierAr: 'مجموعة (٤ - ٧ أفراد)',
+        price: '1,500 ج.م',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Group Tour (8–20 persons)',
+        tierAr: 'مجموعة (٨ - ٢٠ فرداً)',
+        price: '1,200 ج.م',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Private Tour (1–3 persons)',
+        tierAr: 'جولة خاصة للمصريين (١ - ٣ أفراد)',
+        price: '3,500 ج.م',
+        unitEn: 'per tour',
+        unitAr: 'للرحلة بالكامل'
+      }
+    ],
     pricingNoteEn: 'Prices excluding hotel pickup and drop-off services.',
-    pricingNoteAr: 'الأسعار لا تشمل خدمات التوصيل من وإلى الفندق.',
+    pricingNoteAr: 'الأسعار خاصة بالمواطنين والمقيمين (يُرجى إبراز بطاقة الرقم القومي عند نقطة الانطلاق).',
     badge: 'Boat-Only • Engine-Off Quiet',
     badgeAr: 'بالقارب فقط • إطفاء المحرك للتأمل',
     eyebrow: 'FIRST CATARACT SERENITY',
@@ -244,9 +268,10 @@ export const toursData = {
     priceDisplay: '€55 - €60',
     pricePrivateTourEur: 230,
     priceUsd: 60,
-    priceEgp: '2,900 EGP',
+    priceEgp: '1,500 ج.م',
     priceNumber: 55,
-    priceEgpNumber: 2900,
+    priceEgpNumber: 1500,
+    pricePrivateTourEgp: 3500,
     pricingTiers: [
       {
         tierEn: 'Group Tour (4–7 persons)',
@@ -270,8 +295,31 @@ export const toursData = {
         unitAr: 'للرحلة بالكامل'
       }
     ],
+    pricingTiersEgp: [
+      {
+        tierEn: 'Group Tour (4–7 persons)',
+        tierAr: 'مجموعة (٤ - ٧ أفراد)',
+        price: '1,500 ج.م',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Group Tour (8–20 persons)',
+        tierAr: 'مجموعة (٨ - ٢٠ فرداً)',
+        price: '1,200 ج.م',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Private Tour (1–3 persons)',
+        tierAr: 'جولة خاصة للمصريين (١ - ٣ أفراد)',
+        price: '3,500 ج.م',
+        unitEn: 'per tour',
+        unitAr: 'للرحلة بالكامل'
+      }
+    ],
     pricingNoteEn: 'Prices excluding hotel pickup and drop-off services.',
-    pricingNoteAr: 'الأسعار لا تشمل خدمات التوصيل من وإلى الفندق.',
+    pricingNoteAr: 'الأسعار خاصة بالمواطنين والمقيمين (يُرجى إبراز بطاقة الرقم القومي عند نقطة الانطلاق).',
     badge: 'Land Stops • Mountain Raptors',
     badgeAr: 'نزول باليابسة • جوارح الجبال',
     eyebrow: 'RAPTORS & MOUNTAIN WETLAND',
@@ -363,9 +411,27 @@ export const toursData = {
     disembarkTypeAr: 'نعم — غداء بالجزيرة ونشاط بري مخصص لساعتين',
     boatOnly: false,
     priceUsd: 85,
-    priceEgp: '4,250 EGP',
+    priceEgp: '2,200 ج.م',
     priceNumber: 85,
-    priceEgpNumber: 4250,
+    priceEgpNumber: 2200,
+    pricePrivateTourEgp: 5000,
+    pricingTiersEgp: [
+      {
+        tierEn: 'Full Expedition with Lunch & Activity',
+        tierAr: 'رحلة متكاملة شاملة الغداء والنشاط',
+        price: '2,200 ج.م',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Private Chartered Boat (1–4 persons)',
+        tierAr: 'قارب خاص VIP للمصريين بالكامل',
+        price: '5,000 ج.م',
+        unitEn: 'per tour',
+        unitAr: 'للرحلة بالكامل'
+      }
+    ],
+    pricingNoteAr: 'الأسعار خاصة بالمواطنين والمقيمين (يُرجى إبراز بطاقة الرقم القومي عند نقطة الانطلاق).',
     badge: 'Full Day • 2h Custom Land Activity',
     badgeAr: 'يوم كامل • نشاط بري مخصص لساعتين',
     eyebrow: 'BIRDWATCHING + CUSTOM ADVENTURE',
@@ -455,9 +521,10 @@ export const toursData = {
     priceDisplay: '€55 - €60',
     pricePrivateTourEur: 230,
     priceUsd: 60,
-    priceEgp: '2,900 EGP',
+    priceEgp: '1,500 ج.م',
     priceNumber: 55,
-    priceEgpNumber: 2900,
+    priceEgpNumber: 1500,
+    pricePrivateTourEgp: 3500,
     pricingTiers: [
       {
         tierEn: 'Group Tour (4–7 persons)',
@@ -481,8 +548,31 @@ export const toursData = {
         unitAr: 'للرحلة بالكامل'
       }
     ],
+    pricingTiersEgp: [
+      {
+        tierEn: 'Group Tour (4–7 persons)',
+        tierAr: 'مجموعة (٤ - ٧ أفراد)',
+        price: '1,500 ج.م',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Group Tour (8–20 persons)',
+        tierAr: 'مجموعة (٨ - ٢٠ فرداً)',
+        price: '1,200 ج.م',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Private Tour (1–3 persons)',
+        tierAr: 'جولة خاصة للمصريين (١ - ٣ أفراد)',
+        price: '3,500 ج.م',
+        unitEn: 'per tour',
+        unitAr: 'للرحلة بالكامل'
+      }
+    ],
     pricingNoteEn: 'Prices excluding hotel pickup and drop-off services.',
-    pricingNoteAr: 'الأسعار لا تشمل خدمات التوصيل من وإلى الفندق.',
+    pricingNoteAr: 'الأسعار خاصة بالمواطنين والمقيمين (يُرجى إبراز بطاقة الرقم القومي عند نقطة الانطلاق).',
     badge: 'Pharaohs • Nile-Front Jabana Session',
     badgeAr: 'فراعنة • جلسة قهوة جبنة نيلية',
     eyebrow: 'GOD OF THE NILE INUNDATION',
@@ -565,9 +655,10 @@ export const toursData = {
     priceDisplay: '€55 - €60',
     pricePrivateTourEur: 230,
     priceUsd: 60,
-    priceEgp: '2,900 EGP',
+    priceEgp: '1,500 ج.م',
     priceNumber: 55,
-    priceEgpNumber: 2900,
+    priceEgpNumber: 1500,
+    pricePrivateTourEgp: 3500,
     pricingTiers: [
       {
         tierEn: 'Group Tour (4–7 persons)',
@@ -591,8 +682,31 @@ export const toursData = {
         unitAr: 'للرحلة بالكامل'
       }
     ],
+    pricingTiersEgp: [
+      {
+        tierEn: 'Group Tour (4–7 persons)',
+        tierAr: 'مجموعة (٤ - ٧ أفراد)',
+        price: '1,500 ج.م',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Group Tour (8–20 persons)',
+        tierAr: 'مجموعة (٨ - ٢٠ فرداً)',
+        price: '1,200 ج.م',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Private Tour (1–3 persons)',
+        tierAr: 'جولة خاصة للمصريين (١ - ٣ أفراد)',
+        price: '3,500 ج.م',
+        unitEn: 'per tour',
+        unitAr: 'للرحلة بالكامل'
+      }
+    ],
     pricingNoteEn: 'Prices excluding hotel pickup and drop-off services.',
-    pricingNoteAr: 'الأسعار لا تشمل خدمات التوصيل من وإلى الفندق.',
+    pricingNoteAr: 'الأسعار خاصة بالمواطنين والمقيمين (يُرجى إبراز بطاقة الرقم القومي عند نقطة الانطلاق).',
     badge: 'Soleil Café • Facing Philae Temple',
     badgeAr: 'كافيه سوليل • بمواجهة معبد فيلة',
     eyebrow: 'THE FALCON & TEMPLE RELIEFS',
@@ -675,9 +789,10 @@ export const toursData = {
     priceDisplay: '€55 - €60',
     pricePrivateTourEur: 230,
     priceUsd: 60,
-    priceEgp: '2,900 EGP',
+    priceEgp: '1,500 ج.م',
     priceNumber: 55,
-    priceEgpNumber: 2900,
+    priceEgpNumber: 1500,
+    pricePrivateTourEgp: 3500,
     pricingTiers: [
       {
         tierEn: 'Group Tour (4–7 persons)',
@@ -701,8 +816,31 @@ export const toursData = {
         unitAr: 'للرحلة بالكامل'
       }
     ],
+    pricingTiersEgp: [
+      {
+        tierEn: 'Group Tour (4–7 persons)',
+        tierAr: 'مجموعة (٤ - ٧ أفراد)',
+        price: '1,500 ج.م',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Group Tour (8–20 persons)',
+        tierAr: 'مجموعة (٨ - ٢٠ فرداً)',
+        price: '1,200 ج.م',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Private Tour (1–3 persons)',
+        tierAr: 'جولة خاصة للمصريين (١ - ٣ أفراد)',
+        price: '3,500 ج.م',
+        unitEn: 'per tour',
+        unitAr: 'للرحلة بالكامل'
+      }
+    ],
     pricingNoteEn: 'Prices excluding hotel pickup and drop-off services.',
-    pricingNoteAr: 'الأسعار لا تشمل خدمات التوصيل من وإلى الفندق.',
+    pricingNoteAr: 'الأسعار خاصة بالمواطنين والمقيمين (يُرجى إبراز بطاقة الرقم القومي عند نقطة الانطلاق).',
     badge: 'Flagship Full-Day • Specialized Temple Tour',
     badgeAr: 'الرحلة الشاملة • جولة طيور معبد فيلة',
     eyebrow: 'THE SACRED BIRDS OF PHILAE',

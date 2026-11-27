@@ -36,8 +36,8 @@ export const ToursSection = ({
         : 'Observe and photograph resident & migratory birds around the First Cataract islands.',
       duration: isAr ? 'ساعتان' : '2 hours',
       location: isAr ? 'نهر النيل — كورنيش النيل' : 'Nile River – Corniche',
-      priceLabel: isAr ? 'تبدأ من ٥٥€ للشخص' : 'From €55 / person',
-      priceDetail: isAr ? 'خاصة: ٢٣٠€ (١-٣ أفراد)' : 'Private: €230 (1–3 pers)'
+      priceLabel: isAr ? 'تبدأ من 1,200 ج.م للشخص' : 'From €55 / person',
+      priceDetail: isAr ? 'خاصة: 3,500 ج.م (١-٣ أفراد)' : 'Private: €230 (1–3 pers)'
     },
     {
       id: 'aswan-reservoir',
@@ -53,8 +53,8 @@ export const ToursSection = ({
         : 'Diverse birdlife, important habitats, and peaceful landscapes between the two dams.',
       duration: isAr ? 'ساعتان' : '2 hours',
       location: isAr ? 'خزان أسوان — مرسى الخزان' : 'Aswan Reservoir Marina',
-      priceLabel: isAr ? 'تبدأ من ٥٥€ للشخص' : 'From €55 / person',
-      priceDetail: isAr ? 'خاصة: ٢٣٠€ (١-٣ أفراد)' : 'Private: €230 (1–3 pers)'
+      priceLabel: isAr ? 'تبدأ من 1,200 ج.م للشخص' : 'From €55 / person',
+      priceDetail: isAr ? 'خاصة: 3,500 ج.م (١-٣ أفراد)' : 'Private: €230 (1–3 pers)'
     },
     {
       id: 'special-birding',

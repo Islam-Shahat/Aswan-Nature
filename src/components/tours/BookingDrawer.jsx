@@ -92,102 +92,77 @@ export const BookingDrawer = ({
 
   // Real-time Dynamic Price Calculation
   const priceBreakdown = useMemo(() => {
-    const isEuroTour = activeTour.currency === 'EUR' || !!activeTour.pricingTiers;
-
-    if (isEuroTour) {
+    // If Arabic mode: calculate strictly in Egyptian Pounds (EGP) for Egyptian citizens
+    if (isAr) {
       let isPrivate = false;
-      let ratePerPerson = 60;
-      let totalEuro = 0;
+      let ratePerPerson = activeTour.priceEgpNumber || 1500;
+      let totalEgp = 0;
 
       if (totalGuests <= 3) {
         isPrivate = true;
-        totalEuro = 230; // Private Tour (1–3 persons) = €230 per tour
+        totalEgp = activeTour.pricePrivateTourEgp || 3500;
       } else if (totalGuests >= 8) {
-        ratePerPerson = 55; // Group Tour (8–20 persons) = €55 per person
-        totalEuro = (adults * 55) + Math.round(children * (55 * pricingConfig.childDiscountMultiplier));
+        ratePerPerson = Math.round(ratePerPerson * 0.8); // 8+ group discount rate
+        totalEgp = (adults * ratePerPerson) + Math.round(children * (ratePerPerson * pricingConfig.childDiscountMultiplier));
       } else {
-        ratePerPerson = 60; // Group Tour (4–7 persons) = €60 per person
-        totalEuro = (adults * 60) + Math.round(children * (60 * pricingConfig.childDiscountMultiplier));
+        totalEgp = (adults * ratePerPerson) + Math.round(children * (ratePerPerson * pricingConfig.childDiscountMultiplier));
       }
 
-      // Est. in EGP at current ~52 rate
-      const approxEgp = Math.round(totalEuro * 52);
+      // Custom activity add-on if Special Tour
+      let activityTotal = 0;
+      if (activeTour.id === 'special-tour' && activeCustomActivity) {
+        activityTotal = totalGuests * (activeCustomActivity.priceEgp || 500);
+        totalEgp += activityTotal;
+      }
 
       return {
-        isEuroTour: true,
+        isEgyptianRate: true,
         isPrivate,
         ratePerPerson,
-        currencySymbol: '€',
-        netTotalUsd: totalEuro,
-        netTotalEgp: approxEgp,
-        adultsSubtotalUsd: isPrivate ? 230 : adults * ratePerPerson,
-        childrenSubtotalUsd: isPrivate ? 0 : Math.round(children * (ratePerPerson * pricingConfig.childDiscountMultiplier)),
-        activitySubtotalUsd: 0,
-        activitySubtotalEgp: 0,
-        privateBoatUsd: 0,
-        privateBoatEgp: 0,
-        isGroupDiscount: false,
-        discountAmountUsd: 0,
-        discountAmountEgp: 0
+        currencySymbol: 'ج.م',
+        netTotal: totalEgp,
+        adultsSubtotal: isPrivate ? (activeTour.pricePrivateTourEgp || 3500) : adults * ratePerPerson,
+        childrenSubtotal: isPrivate ? 0 : Math.round(children * (ratePerPerson * pricingConfig.childDiscountMultiplier)),
+        activitySubtotal: activityTotal,
+        isGroupDiscount: false
       };
     }
 
-    const baseRateUsd = activeTour.priceUsd;
-    const baseRateEgp = activeTour.priceEgpNumber;
+    // English mode: calculate strictly in Euro (€) for International guests
+    let isPrivate = false;
+    let ratePerPerson = 60;
+    let totalEuro = 0;
 
-    // Adults calculation
-    const adultsSubtotalUsd = adults * baseRateUsd;
-    const adultsSubtotalEgp = adults * baseRateEgp;
-
-    // Children (50% off)
-    const childRateUsd = baseRateUsd * pricingConfig.childDiscountMultiplier;
-    const childRateEgp = baseRateEgp * pricingConfig.childDiscountMultiplier;
-    const childrenSubtotalUsd = children * childRateUsd;
-    const childrenSubtotalEgp = children * childRateEgp;
-
-    // Custom activity add-on (if Special Tour)
-    let activitySubtotalUsd = 0;
-    let activitySubtotalEgp = 0;
-    if (activeTour.id === 'special-tour' && activeCustomActivity) {
-      activitySubtotalUsd = totalGuests * activeCustomActivity.priceUsd;
-      activitySubtotalEgp = totalGuests * activeCustomActivity.priceEgp;
+    if (totalGuests <= 3) {
+      isPrivate = true;
+      totalEuro = 230; // Private Tour (1–3 persons) = €230 per tour
+    } else if (totalGuests >= 8) {
+      ratePerPerson = 55; // Group Tour (8–20 persons) = €55 per person
+      totalEuro = (adults * 55) + Math.round(children * (55 * pricingConfig.childDiscountMultiplier));
+    } else {
+      ratePerPerson = 60; // Group Tour (4–7 persons) = €60 per person
+      totalEuro = (adults * 60) + Math.round(children * (60 * pricingConfig.childDiscountMultiplier));
     }
 
-    // Private boat upgrade
-    const privateBoatUsd = privateBoatUpgrade ? pricingConfig.privateBoatUpgradeUsd : 0;
-    const privateBoatEgp = privateBoatUpgrade ? pricingConfig.privateBoatUpgradeEgp : 0;
-
-    // Gross subtotal before discount
-    const grossTotalUsd = adultsSubtotalUsd + childrenSubtotalUsd + activitySubtotalUsd + privateBoatUsd;
-    const grossTotalEgp = adultsSubtotalEgp + childrenSubtotalEgp + activitySubtotalEgp + privateBoatEgp;
-
-    // 10% Group discount if total guests >= 5
-    const isGroupDiscount = totalGuests >= pricingConfig.groupDiscountMinGuests;
-    const discountAmountUsd = isGroupDiscount ? Math.round(grossTotalUsd * pricingConfig.groupDiscountRate) : 0;
-    const discountAmountEgp = isGroupDiscount ? Math.round(grossTotalEgp * pricingConfig.groupDiscountRate) : 0;
-
-    // Net Total
-    const netTotalUsd = grossTotalUsd - discountAmountUsd;
-    const netTotalEgp = grossTotalEgp - discountAmountEgp;
+    // Custom activity add-on if Special Tour
+    let activityTotalEuro = 0;
+    if (activeTour.id === 'special-tour' && activeCustomActivity) {
+      activityTotalEuro = totalGuests * (activeCustomActivity.priceUsd || 15);
+      totalEuro += activityTotalEuro;
+    }
 
     return {
-      isEuroTour: false,
-      currencySymbol: '$',
-      adultsSubtotalUsd,
-      adultsSubtotalEgp,
-      childrenSubtotalUsd,
-      childrenSubtotalEgp,
-      activitySubtotalUsd,
-      activitySubtotalEgp,
-      privateBoatUsd,
-      privateBoatEgp,
-      isGroupDiscount,
-      discountAmountUsd,
-      discountAmountEgp,
-      netTotalUsd,
-      netTotalEgp
+      isEgyptianRate: false,
+      isPrivate,
+      ratePerPerson,
+      currencySymbol: '€',
+      netTotal: totalEuro,
+      adultsSubtotal: isPrivate ? 230 : adults * ratePerPerson,
+      childrenSubtotal: isPrivate ? 0 : Math.round(children * (ratePerPerson * pricingConfig.childDiscountMultiplier)),
+      activitySubtotal: activityTotalEuro,
+      isGroupDiscount: false
     };
-  }, [activeTour, adults, children, totalGuests, activeCustomActivity, privateBoatUpgrade]);
+  }, [activeTour, adults, children, totalGuests, activeCustomActivity, isAr]);
 
   // Validation
   const validateForm = () => {
@@ -222,23 +197,40 @@ export const BookingDrawer = ({
     const discountText = priceBreakdown.isGroupDiscount ? `\n- Group Discount (10%): Applied (-$${priceBreakdown.discountAmountUsd})` : '';
 
     const text = encodeURIComponent(
-      `*Aswan Nature — Tour Booking Request*\n` +
-      `--------------------------------\n` +
-      `*Tour:* ${isAr ? activeTour.titleAr : activeTour.title} (${isAr ? activeTour.zoneLabelAr : activeTour.zoneLabelEn})\n` +
-      `*Starting Marina:* ${isAr ? activeTour.startingMarinaAr : activeTour.startingMarinaEn}\n` +
-      `*Date:* ${selectedDate}\n` +
-      `*Time Slot:* ${slotLabel}\n` +
-      `*Guests:* ${adults} Adults${children > 0 ? `, ${children} Children` : ''} (Total: ${totalGuests})\n` +
-      activityText +
-      boatUpgradeText +
-      discountText +
-      `\n*Estimated Total:* $${priceBreakdown.netTotalUsd} USD (~${priceBreakdown.netTotalEgp.toLocaleString()} EGP)\n` +
-      `--------------------------------\n` +
-      `*Guest Name:* ${fullName}\n` +
-      `*Phone/WhatsApp:* ${whatsappNumber}\n` +
-      (email ? `*Email:* ${email}\n` : '') +
-      (notes ? `*Notes:* ${notes}\n` : '') +
-      `\n_Sent directly from Aswan Nature Tours Portal_`
+      isAr
+        ? `*طلب حجز رحلة — أسوان ناتشر (أسعار المصريين)*\n` +
+          `--------------------------------\n` +
+          `*الرحلة:* ${activeTour.titleAr} (${activeTour.zoneLabelAr})\n` +
+          `*نقطة الانطلاق:* ${activeTour.startingMarinaAr}\n` +
+          `*التاريخ:* ${selectedDate}\n` +
+          `*الموعد:* ${slotLabel}\n` +
+          `*الضيوف:* ${adults} بالغين${children > 0 ? `، ${children} أطفال` : ''} (الإجمالي: ${totalGuests})\n` +
+          activityText +
+          `\n*إجمالي الحساب التقديري للمصريين:* ${priceBreakdown.netTotal.toLocaleString()} ج.م\n` +
+          `*ملاحظة:* يرجى إبراز بطاقة الرقم القومي المصري عند نقطة الانطلاق.\n` +
+          `--------------------------------\n` +
+          `*اسم العميل:* ${fullName}\n` +
+          `*الهاتف / واتساب:* ${whatsappNumber}\n` +
+          (email ? `*البريد الإلكتروني:* ${email}\n` : '') +
+          (notes ? `*ملاحظات:* ${notes}\n` : '') +
+          `\n_تم الإرسال من منصة حجز أسوان ناتشر_`
+        : `*Aswan Nature — Tour Booking Request*\n` +
+          `--------------------------------\n` +
+          `*Tour:* ${activeTour.title} (${activeTour.zoneLabelEn})\n` +
+          `*Starting Marina:* ${activeTour.startingMarinaEn}\n` +
+          `*Date:* ${selectedDate}\n` +
+          `*Time Slot:* ${slotLabel}\n` +
+          `*Guests:* ${adults} Adults${children > 0 ? `, ${children} Children` : ''} (Total: ${totalGuests})\n` +
+          activityText +
+          boatUpgradeText +
+          `\n*Estimated Total:* €${priceBreakdown.netTotal} EUR\n` +
+          `*Note:* Valid international passport required at boarding.\n` +
+          `--------------------------------\n` +
+          `*Guest Name:* ${fullName}\n` +
+          `*Phone/WhatsApp:* ${whatsappNumber}\n` +
+          (email ? `*Email:* ${email}\n` : '') +
+          (notes ? `*Notes:* ${notes}\n` : '') +
+          `\n_Sent directly from Aswan Nature Tours Portal_`
     );
 
     return `https://wa.me/201144435547?text=${text}`;
@@ -494,7 +486,7 @@ export const BookingDrawer = ({
                           {isAr ? 'البالغين' : 'Adults (12+ Years)'}
                         </div>
                         <div className="text-[11px] font-semibold text-[#647C6A]">
-                          ${activeTour.priceUsd} / {activeTour.priceEgp}
+                          {isAr ? `${activeTour.priceEgpNumber || 1500} ج.م` : `€${activeTour.priceEur || 55}`}
                         </div>
                       </div>
 
@@ -736,6 +728,16 @@ export const BookingDrawer = ({
                         className="w-full p-3 rounded-xl border-2 border-[#CBDCCB] focus:border-[#0a515b] focus:outline-hidden text-xs sm:text-sm font-semibold text-[#16241B] bg-white resize-none"
                       />
                     </div>
+
+                    {/* Verification Reminder Badge */}
+                    <div className="p-3 bg-[#EEF5E9] rounded-xl border border-[#D5E4CE] text-xs text-[#2A4331] flex items-center gap-2">
+                      <ShieldCheck className="w-4 h-4 text-[#1EAA13] shrink-0" />
+                      <span>
+                        {isAr
+                          ? 'أسعار الجنيه المصري مخصصة للمصريين والمقيمين (يُرجى إبراز بطاقة الرقم القومي عند نقطة الانطلاق).'
+                          : 'Valid passport required at boarding for international rate confirmation.'}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </>
@@ -750,11 +752,11 @@ export const BookingDrawer = ({
                 <div className="flex justify-between">
                   <span>
                     {priceBreakdown.isPrivate
-                      ? (isAr ? 'جولة خاصة (١ - ٣ أفراد)' : 'Private Tour (1–3 persons)')
-                      : `${adults} ${isAr ? 'بالغين' : 'Adults'} (${priceBreakdown.currencySymbol}${priceBreakdown.isEuroTour ? priceBreakdown.ratePerPerson : activeTour.priceUsd})`}
+                      ? (isAr ? 'جولة خاصة للمصريين (١ - ٣ أفراد)' : 'Private Tour (1–3 persons)')
+                      : `${adults} ${isAr ? 'بالغين' : 'Adults'} (${isAr ? `${priceBreakdown.ratePerPerson} ج.م` : `€${priceBreakdown.ratePerPerson}`})`}
                   </span>
                   <span className="font-bold text-[#16241B]">
-                    {priceBreakdown.currencySymbol}{priceBreakdown.adultsSubtotalUsd}
+                    {isAr ? `${priceBreakdown.adultsSubtotal.toLocaleString()} ج.م` : `€${priceBreakdown.adultsSubtotal}`}
                   </span>
                 </div>
 
@@ -764,31 +766,19 @@ export const BookingDrawer = ({
                       {children} {isAr ? 'أطفال (خصم ٥٠٪)' : 'Children (50% Off)'}
                     </span>
                     <span className="font-bold text-[#16241B]">
-                      {priceBreakdown.currencySymbol}{priceBreakdown.childrenSubtotalUsd}
+                      {isAr ? `${priceBreakdown.childrenSubtotal.toLocaleString()} ج.م` : `€${priceBreakdown.childrenSubtotal}`}
                     </span>
                   </div>
                 )}
 
-                {activeTour.id === 'special-tour' && activeCustomActivity && (
+                {priceBreakdown.activitySubtotal > 0 && activeTour.id === 'special-tour' && activeCustomActivity && (
                   <div className="flex justify-between">
                     <span className="truncate max-w-[280px]">
                       {isAr ? activeCustomActivity.titleAr : activeCustomActivity.titleEn} ({totalGuests}x)
                     </span>
-                    <span className="font-bold text-[#16241B]">+${priceBreakdown.activitySubtotalUsd}</span>
-                  </div>
-                )}
-
-                {privateBoatUpgrade && !priceBreakdown.isEuroTour && (
-                  <div className="flex justify-between text-[#0a515b]">
-                    <span>{isAr ? 'ترقية قارب خاص' : 'Private Boat Upgrade'}</span>
-                    <span className="font-bold">+$40</span>
-                  </div>
-                )}
-
-                {priceBreakdown.isGroupDiscount && (
-                  <div className="flex justify-between text-[#1EAA13] font-bold">
-                    <span>{isAr ? 'خصم المجموعات (١٠٪)' : '10% Group Discount'}</span>
-                    <span>-${priceBreakdown.discountAmountUsd}</span>
+                    <span className="font-bold text-[#16241B]">
+                      +{isAr ? `${priceBreakdown.activitySubtotal.toLocaleString()} ج.م` : `€${priceBreakdown.activitySubtotal}`}
+                    </span>
                   </div>
                 )}
               </div>
@@ -797,14 +787,11 @@ export const BookingDrawer = ({
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <span className="text-[10px] uppercase font-bold text-[#6B8572] block">
-                    {isAr ? 'المجموع التقديري الصافي' : 'Estimated Total'}
+                    {isAr ? 'المجموع للمصريين' : 'Estimated Total'}
                   </span>
                   <div className="flex items-baseline gap-1.5">
                     <span className="text-2xl sm:text-3xl font-black text-[#0a515b] font-heading">
-                      {priceBreakdown.currencySymbol}{priceBreakdown.netTotalUsd}
-                    </span>
-                    <span className="text-xs font-bold text-[#66806C]">
-                      (~{priceBreakdown.netTotalEgp.toLocaleString()} EGP)
+                      {isAr ? `${priceBreakdown.netTotal.toLocaleString()} ج.م` : `€${priceBreakdown.netTotal}`}
                     </span>
                   </div>
                 </div>

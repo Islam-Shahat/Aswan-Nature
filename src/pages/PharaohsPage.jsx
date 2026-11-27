@@ -628,15 +628,23 @@ export const PharaohsPage = () => {
                   <div className="absolute bottom-3 left-3 rtl:left-auto rtl:right-3 z-30 flex flex-col gap-1 items-start rtl:items-end">
                     <div className="inline-flex items-baseline gap-1 px-3 py-1.5 rounded-xl font-black text-[#1C1306] shadow-md border border-[#B07E3D]"
                       style={{ background: 'linear-gradient(135deg,#F0DBB4 0%,#C99A5D 60%,#B07E3D 100%)' }}>
-                      <span className="text-xs font-bold">{tour.currencySymbol || '€'}</span>
-                      <span className="text-xl sm:text-2xl leading-none">{tour.priceEur || tour.priceNumber || 55}</span>
-                      <span className="text-xs font-semibold opacity-80">{isAr ? 'للشخص' : '/person'}</span>
+                      <span className="text-xl sm:text-2xl leading-none">
+                        {isAr ? (tour.priceEgpNumber || 1500) : (tour.priceEur || 55)}
+                      </span>
+                      <span className="text-xs font-bold">
+                        {isAr ? 'ج.م' : '€'}
+                      </span>
+                      <span className="text-xs font-semibold opacity-80">
+                        {isAr ? 'للشخص' : '/person'}
+                      </span>
                     </div>
-                    {tour.pricePrivateTourEur && (
-                      <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-black/75 backdrop-blur-sm text-[10px] text-[#EAD4A0] font-bold">
-                        <span>{isAr ? `خاصة: €${tour.pricePrivateTourEur}` : `Private: €${tour.pricePrivateTourEur}`}</span>
-                      </div>
-                    )}
+                    <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-black/75 backdrop-blur-sm text-[10px] text-[#EAD4A0] font-bold">
+                      <span>
+                        {isAr
+                          ? `خاصة للمصريين: ${tour.pricePrivateTourEgp || '3,500'} ج.م`
+                          : `Private: €${tour.pricePrivateTourEur || 230}`}
+                      </span>
+                    </div>
                   </div>
 
                   {/* Duration + Marina badges bottom-right */}
