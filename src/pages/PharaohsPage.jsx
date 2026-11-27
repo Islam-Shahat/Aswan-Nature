@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { ArrowRight, Sparkles, Compass, Eye, Shield } from 'lucide-react';
+import { ArrowRight, Sparkles, Compass, Eye, Shield, Clock, MapPin, Anchor, Star, ScrollText } from 'lucide-react';
+import { TourDetailModal } from '../components/tours/TourDetailModal';
+import { BookingDrawer } from '../components/tours/BookingDrawer';
+import { toursData } from '../data/toursData';
 
 export const PharaohsPage = () => {
   const { currentLang, handleOpenBooking } = useOutletContext();
@@ -82,6 +85,18 @@ export const PharaohsPage = () => {
   ];
 
   const [activeExhibit, setActiveExhibit] = useState(exhibits[0]);
+
+  // Pharaonic Tours modal/booking state
+  const [detailTourId, setDetailTourId] = useState(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+  const [bookingTourId, setBookingTourId] = useState('hapi-tour');
+  const [isBookingDrawerOpen, setIsBookingDrawerOpen] = useState(false);
+
+  const pharaohsTours = [
+    toursData['hapi-tour'],
+    toursData['horus-tour'],
+    toursData['isis-tour'],
+  ];
 
   const pantheonDeities = [
     {
@@ -527,7 +542,181 @@ export const PharaohsPage = () => {
           </div>
         </div>
 
-        {/* Section 3: The Royal Temple Stele Booking Shrine */}
+        {/* ═══════════════════════════════════════════════════════════════
+            Section 3: Pharaonic Birding Tours — Three Sacred Journeys
+            ═══════════════════════════════════════════════════════════════ */}
+        <div className="mb-20 sm:mb-28">
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-[#c99a5d]/60 bg-[#e5e7e5]/90 text-xs font-bold uppercase tracking-wider text-[#6F4B1F] mb-4 select-none">
+              <Anchor className="w-3.5 h-3.5 text-[#c99a5d]" />
+              <span>{isAr ? 'الجولات الفرعونية الحصرية' : 'EXCLUSIVE PHARAONIC JOURNEYS'}</span>
+            </div>
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-[#0a515b] font-heading mb-4 leading-[1.08]">
+              {isAr ? (
+                <>
+                  <span className="block">ثلاثة مسارات مقدسة</span>
+                  <span className="block font-serif italic font-normal text-[#c99a5d] drop-shadow-xs mt-1 text-2xl sm:text-4xl">
+                    على خطى طيور الفراعنة.
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span className="block">Three Sacred Journeys</span>
+                  <span className="block font-serif italic font-normal text-[#c99a5d] drop-shadow-xs mt-1 text-2xl sm:text-4xl">
+                    Walking Among Pharaohs' Birds.
+                  </span>
+                </>
+              )}
+            </h2>
+            <div className="flex items-center justify-center gap-4 mb-5">
+              <div className="h-[2px] w-16 sm:w-24 bg-gradient-to-r from-transparent via-[#c99a5d] to-[#c99a5d]" />
+              <span className="text-[#c99a5d] text-xl font-serif select-none">𓅃</span>
+              <div className="h-[2px] w-16 sm:w-24 bg-gradient-to-l from-transparent via-[#c99a5d] to-[#c99a5d]" />
+            </div>
+            <p className="text-base sm:text-lg text-[#4A3825] leading-relaxed max-w-2xl mx-auto">
+              {isAr
+                ? 'ثلاث رحلات نيلية فريدة تربط بين الطيور المقدسة المنقوشة على جدران المعابد وتلك التي لا تزال تحلق حرة في سماء أسوان اليوم.'
+                : 'Three unique Nile expeditions connecting the sacred birds immortalized on temple walls with the very same species soaring free above Aswan today.'}
+            </p>
+          </div>
+
+          {/* Three Tour Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-7 items-stretch">
+            {pharaohsTours.map((tour) => (
+              <div
+                key={tour.id}
+                className="group relative flex flex-col rounded-3xl overflow-hidden shadow-[0_12px_40px_rgba(140,98,40,0.22)] border-2 border-[#c99a5d]/60 hover:border-[#c99a5d] hover:shadow-[0_20px_55px_rgba(140,98,40,0.35)] transition-all duration-500"
+                style={{ backgroundColor: '#FAF1DF' }}
+              >
+                {/* Fresco Image with Pharaonic Frame */}
+                <div className="relative overflow-hidden aspect-[16/10] shrink-0">
+                  {/* Papyrus top-roll decorative strip */}
+                  <div
+                    className="absolute top-0 inset-x-0 h-6 z-20 pointer-events-none"
+                    style={{
+                      backgroundImage: 'url(/assets/papyrus-parchment.jpg)',
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'top center',
+                      opacity: 0.85
+                    }}
+                  />
+                  <div className="absolute top-0 inset-x-0 h-6 z-20 pointer-events-none"
+                    style={{ background: 'linear-gradient(180deg,rgba(55,28,8,0.5) 0%,transparent 100%)' }}
+                  />
+
+                  <img
+                    src={tour.image}
+                    alt={isAr ? tour.titleAr : tour.title}
+                    className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-108"
+                  />
+
+                  {/* Dark cinematic scrim */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+
+                  {/* Hieroglyph badge top-right */}
+                  <div className="absolute top-3 right-3 rtl:right-auto rtl:left-3 z-30 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#1C1306]/75 backdrop-blur-sm border border-[#c99a5d]/50 select-none">
+                    <span className="text-[#E5C365] text-sm font-serif">
+                      {tour.id === 'hapi-tour' ? '𓅂' : tour.id === 'horus-tour' ? '𓅃' : '𓅠'}
+                    </span>
+                    <span className="text-[10px] font-bold tracking-widest uppercase text-[#EAD4A0]">
+                      {isAr ? tour.eyebrowAr : tour.eyebrow}
+                    </span>
+                  </div>
+
+                  {/* Price badge bottom-left */}
+                  <div className="absolute bottom-3 left-3 rtl:left-auto rtl:right-3 z-30">
+                    <div className="inline-flex items-baseline gap-1 px-3 py-1.5 rounded-xl font-black text-[#1C1306] shadow-md border border-[#B07E3D]"
+                      style={{ background: 'linear-gradient(135deg,#F0DBB4 0%,#C99A5D 60%,#B07E3D 100%)' }}>
+                      <span className="text-xs font-bold">$</span>
+                      <span className="text-xl sm:text-2xl leading-none">{tour.priceNumber}</span>
+                      <span className="text-xs font-semibold opacity-80">{isAr ? 'للشخص' : '/person'}</span>
+                    </div>
+                  </div>
+
+                  {/* Duration + Marina badges bottom-right */}
+                  <div className="absolute bottom-3 right-3 rtl:right-auto rtl:left-3 z-30 flex flex-col gap-1 items-end rtl:items-start">
+                    <div className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-black/60 backdrop-blur-sm text-[10px] text-[#EAD4A0] font-bold">
+                      <Clock className="w-3 h-3 shrink-0" />
+                      <span>{isAr ? tour.durationAr : tour.duration}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Card Body */}
+                <div className="flex flex-col flex-1 p-5 sm:p-6">
+                  {/* Zone pill */}
+                  <div className="flex items-center gap-1.5 mb-3">
+                    <MapPin className="w-3.5 h-3.5 text-[#c99a5d] shrink-0" />
+                    <span className="text-xs font-bold text-[#7A5528] uppercase tracking-wider">
+                      {isAr ? tour.zoneLabelAr : tour.zoneLabelEn}
+                    </span>
+                  </div>
+
+                  {/* Tour name */}
+                  <h3 className="text-xl sm:text-2xl font-black text-[#1C140A] mb-1 leading-tight font-heading">
+                    {isAr ? tour.titleAr : tour.title}
+                  </h3>
+
+                  {/* Marina info */}
+                  <div className="flex items-center gap-1.5 mb-3 pb-3 border-b border-[#c99a5d]/30">
+                    <Anchor className="w-3.5 h-3.5 text-[#8C6239] shrink-0" />
+                    <span className="text-xs text-[#5C3C17] font-semibold">
+                      {isAr ? tour.startingMarinaAr : tour.startingMarinaEn}
+                    </span>
+                  </div>
+
+                  {/* Description */}
+                  <p className="text-sm text-[#4A3825] leading-relaxed mb-4 flex-1">
+                    {isAr ? tour.descAr : tour.desc}
+                  </p>
+
+                  {/* Key highlights */}
+                  <div className="space-y-2 mb-5">
+                    {(isAr ? tour.keyDifferentiatorsAr : tour.keyDifferentiators).slice(0, 3).map((pt, i) => (
+                      <div key={i} className="flex items-start gap-2 text-xs text-[#4A3825]">
+                        <span className="text-[#c99a5d] text-sm font-serif shrink-0 mt-[-1px] select-none">𓋹</span>
+                        <span className="leading-snug">{pt}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Meals / drinks line */}
+                  <div className="flex items-start gap-2 text-xs text-[#5C3C17] mb-5 pb-4 border-b border-[#c99a5d]/25">
+                    <Star className="w-3.5 h-3.5 text-[#c99a5d] shrink-0 mt-0.5" />
+                    <span className="font-semibold italic leading-snug">
+                      {isAr ? tour.mealsDrinksAr : tour.mealsDrinksEn}
+                    </span>
+                  </div>
+
+                  {/* Action buttons — always at bottom */}
+                  <div className="mt-auto flex flex-col sm:flex-row gap-2.5">
+                    <button
+                      type="button"
+                      onClick={() => { setDetailTourId(tour.id); setIsDetailOpen(true); }}
+                      className="group/btn flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-[#c99a5d]/70 bg-[#FAF1DF] hover:bg-[#FFF8ED] hover:border-[#c99a5d] text-[#5C3C15] hover:text-[#1C140A] text-sm font-bold transition-all duration-200 shadow-xs hover:shadow-md cursor-pointer"
+                    >
+                      <ScrollText className="w-4 h-4 text-[#c99a5d]" />
+                      <span>{isAr ? 'عرض البرنامج' : 'View Itinerary'}</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => { setBookingTourId(tour.id); setIsBookingDrawerOpen(true); }}
+                      className="group/btn flex-1 inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold text-sm text-[#1C1306] shadow-[0_6px_20px_rgba(201,154,93,0.35)] hover:shadow-[0_10px_30px_rgba(201,154,93,0.5)] hover:scale-[1.02] active:scale-[0.98] border border-[#B07E3D] transition-all duration-200 cursor-pointer"
+                      style={{ background: 'linear-gradient(135deg,#F0DBB4 0%,#C99A5D 50%,#B07E3D 100%)' }}
+                    >
+                      <span>{isAr ? 'احجز الآن' : 'Book Now'}</span>
+                      <ArrowRight className="w-4 h-4 rtl:rotate-180 transition-transform group-hover/btn:translate-x-0.5 rtl:group-hover/btn:-translate-x-0.5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Section 4: The Royal Temple Stele Booking Shrine */}
         <div
           className="relative rounded-3xl p-8 sm:p-12 lg:p-14 border-2 border-[#c99a5d] shadow-[0_25px_60px_rgba(140,98,40,0.25)] overflow-hidden text-center max-w-4xl mx-auto"
           style={{
@@ -591,6 +780,29 @@ export const PharaohsPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Tour Detail Modal */}
+      {isDetailOpen && detailTourId && (
+        <TourDetailModal
+          tourId={detailTourId}
+          isOpen={isDetailOpen}
+          onClose={() => setIsDetailOpen(false)}
+          onBookNow={(id) => {
+            setIsDetailOpen(false);
+            setBookingTourId(id || detailTourId);
+            setIsBookingDrawerOpen(true);
+          }}
+          isAr={isAr}
+        />
+      )}
+
+      {/* Booking Drawer */}
+      <BookingDrawer
+        isOpen={isBookingDrawerOpen}
+        onClose={() => setIsBookingDrawerOpen(false)}
+        initialTourId={bookingTourId}
+        isAr={isAr}
+      />
     </div>
   );
 };
