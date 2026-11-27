@@ -77,13 +77,17 @@ export const GallerySection = ({ currentLang = 'EN' }) => {
           </Link>
         </div>
 
-        {/* 8-Photo Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {/* 8-Photo Grid: Sticky Stacking cards on mobile, grid on tablet & desktop */}
+        <div className="relative space-y-6 sm:space-y-0 sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-6 pb-6 sm:pb-0">
           {photos.map((photo, idx) => (
             <div
               key={photo.title + idx}
               onClick={() => setSelectedPhotoIndex(idx)}
-              className="group relative aspect-[4/3] rounded-2xl overflow-hidden bg-black cursor-pointer shadow-[0_6px_24px_-6px_rgba(0,0,0,0.08)] hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+              style={{
+                top: `calc(90px + ${idx * 8}px)`,
+                zIndex: 10 + idx,
+              }}
+              className="sticky sm:static group relative aspect-[4/3] rounded-2xl sm:rounded-2xl overflow-hidden bg-black cursor-pointer shadow-[0_12px_36px_-8px_rgba(0,0,0,0.35)] sm:shadow-[0_6px_24px_-6px_rgba(0,0,0,0.08)] hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 border border-white/20 sm:border-transparent"
             >
               <img
                 src={photo.src}
