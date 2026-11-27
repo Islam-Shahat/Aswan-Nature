@@ -17,8 +17,8 @@ export const LearningCampsSection = ({
           {/* Left Column: Image with caption matching Figma camp-image */}
           <div className="lg:col-span-6 relative min-h-[340px] lg:min-h-[460px] overflow-hidden group">
             <img
-              src="/assets/kingfisher.webp"
-              alt="Kingfisher from the Aswan Nature company collection"
+              src="/camps-images/kids-binoculars.jpg"
+              alt={currentLang === 'AR' ? 'أطفال يستكشفون الطيور بالمناظير' : 'Children birdwatching with field binoculars'}
               loading="lazy"
               className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" />
             
