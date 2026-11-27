@@ -449,10 +449,40 @@ export const toursData = {
     disembarkTypeEn: 'Yes — Direct Nile-Front Venue Seating',
     disembarkTypeAr: 'نعم — جلسة شاطئية مباشرة على ضفاف النيل',
     boatOnly: false,
-    priceUsd: 50,
-    priceEgp: '2,500 EGP',
-    priceNumber: 50,
-    priceEgpNumber: 2500,
+    currency: 'EUR',
+    currencySymbol: '€',
+    priceEur: 55,
+    priceDisplay: '€55 - €60',
+    pricePrivateTourEur: 230,
+    priceUsd: 60,
+    priceEgp: '2,900 EGP',
+    priceNumber: 55,
+    priceEgpNumber: 2900,
+    pricingTiers: [
+      {
+        tierEn: 'Group Tour (4–7 persons)',
+        tierAr: 'مجموعة (٤ - ٧ أفراد)',
+        price: '€60',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Group Tour (8–20 persons)',
+        tierAr: 'مجموعة (٨ - ٢٠ فرداً)',
+        price: '€55',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Private Tour (1–3 persons)',
+        tierAr: 'جولة خاصة (١ - ٣ أفراد)',
+        price: '€230',
+        unitEn: 'per tour',
+        unitAr: 'للرحلة بالكامل'
+      }
+    ],
+    pricingNoteEn: 'Prices excluding hotel pickup and drop-off services.',
+    pricingNoteAr: 'الأسعار لا تشمل خدمات التوصيل من وإلى الفندق.',
     badge: 'Pharaohs • Nile-Front Jabana Session',
     badgeAr: 'فراعنة • جلسة قهوة جبنة نيلية',
     eyebrow: 'GOD OF THE NILE INUNDATION',
@@ -529,10 +559,40 @@ export const toursData = {
     disembarkTypeEn: 'Yes — Soleil Café Facing Philae Temple',
     disembarkTypeAr: 'نعم — كافيه سوليل بمواجهة معبد فيلة',
     boatOnly: false,
-    priceUsd: 55,
-    priceEgp: '2,750 EGP',
+    currency: 'EUR',
+    currencySymbol: '€',
+    priceEur: 55,
+    priceDisplay: '€55 - €60',
+    pricePrivateTourEur: 230,
+    priceUsd: 60,
+    priceEgp: '2,900 EGP',
     priceNumber: 55,
-    priceEgpNumber: 2750,
+    priceEgpNumber: 2900,
+    pricingTiers: [
+      {
+        tierEn: 'Group Tour (4–7 persons)',
+        tierAr: 'مجموعة (٤ - ٧ أفراد)',
+        price: '€60',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Group Tour (8–20 persons)',
+        tierAr: 'مجموعة (٨ - ٢٠ فرداً)',
+        price: '€55',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Private Tour (1–3 persons)',
+        tierAr: 'جولة خاصة (١ - ٣ أفراد)',
+        price: '€230',
+        unitEn: 'per tour',
+        unitAr: 'للرحلة بالكامل'
+      }
+    ],
+    pricingNoteEn: 'Prices excluding hotel pickup and drop-off services.',
+    pricingNoteAr: 'الأسعار لا تشمل خدمات التوصيل من وإلى الفندق.',
     badge: 'Soleil Café • Facing Philae Temple',
     badgeAr: 'كافيه سوليل • بمواجهة معبد فيلة',
     eyebrow: 'THE FALCON & TEMPLE RELIEFS',
@@ -609,10 +669,40 @@ export const toursData = {
     disembarkTypeEn: 'Yes — Specialized Philae Tour + Soleil Lunch',
     disembarkTypeAr: 'نعم — جولة طيور معبد فيلة + غداء بمطعم سوليل',
     boatOnly: false,
-    priceUsd: 110,
-    priceEgp: '5,500 EGP',
-    priceNumber: 110,
-    priceEgpNumber: 5500,
+    currency: 'EUR',
+    currencySymbol: '€',
+    priceEur: 55,
+    priceDisplay: '€55 - €60',
+    pricePrivateTourEur: 230,
+    priceUsd: 60,
+    priceEgp: '2,900 EGP',
+    priceNumber: 55,
+    priceEgpNumber: 2900,
+    pricingTiers: [
+      {
+        tierEn: 'Group Tour (4–7 persons)',
+        tierAr: 'مجموعة (٤ - ٧ أفراد)',
+        price: '€60',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Group Tour (8–20 persons)',
+        tierAr: 'مجموعة (٨ - ٢٠ فرداً)',
+        price: '€55',
+        unitEn: 'per person',
+        unitAr: 'للشخص'
+      },
+      {
+        tierEn: 'Private Tour (1–3 persons)',
+        tierAr: 'جولة خاصة (١ - ٣ أفراد)',
+        price: '€230',
+        unitEn: 'per tour',
+        unitAr: 'للرحلة بالكامل'
+      }
+    ],
+    pricingNoteEn: 'Prices excluding hotel pickup and drop-off services.',
+    pricingNoteAr: 'الأسعار لا تشمل خدمات التوصيل من وإلى الفندق.',
     badge: 'Flagship Full-Day • Specialized Temple Tour',
     badgeAr: 'الرحلة الشاملة • جولة طيور معبد فيلة',
     eyebrow: 'THE SACRED BIRDS OF PHILAE',

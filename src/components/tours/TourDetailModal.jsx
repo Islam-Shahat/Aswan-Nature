@@ -261,10 +261,12 @@ export const TourDetailModal = ({
             </span>
             <div className="flex items-baseline gap-1.5">
               <span className="text-2xl font-black text-[#16241B] font-heading">
-                ${tour.priceUsd}
+                {tour.currency === 'EUR' || tour.priceEur ? `€${tour.priceEur}` : `$${tour.priceUsd}`}
               </span>
               <span className="text-xs font-semibold text-[#66806C]">
-                ({tour.priceEgp})
+                {tour.pricePrivateTourEur
+                  ? (isAr ? `(خاصة: €${tour.pricePrivateTourEur})` : `(Private: €${tour.pricePrivateTourEur})`)
+                  : `(${tour.priceEgp})`}
               </span>
             </div>
           </div>
