@@ -222,7 +222,7 @@ export const FlyingBirdCompanion = ({ currentLang = 'EN' }) => {
     >
       <div
         ref={birdRef}
-        className="absolute top-0 left-0 pointer-events-auto cursor-pointer will-change-transform group animate-bird-float"
+        className="hidden md:block absolute top-0 left-0 pointer-events-auto cursor-pointer will-change-transform group animate-bird-float"
         style={{
           transform: `translate3d(${stateRef.current.currentX}px, ${stateRef.current.currentY}px, 0)`,
         }}

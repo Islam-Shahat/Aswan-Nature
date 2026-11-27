@@ -91,9 +91,9 @@ export const Layout = () => {
         />
       )}
 
-      {/* Floating WhatsApp Button */}
+      {/* Floating WhatsApp Button - Responsive & adaptive for touch */}
       <a
-        className="fixed bottom-6 right-6 rtl:right-auto rtl:left-6 z-40 inline-flex items-center gap-2.5 px-5 py-3 rounded-full bg-[#183823]/95 backdrop-blur-md text-white border border-white/25 shadow-[0_8px_26px_rgba(10,24,16,0.38)] text-xs sm:text-[13.5px] font-semibold tracking-tight hover:bg-[#204c30] hover:border-[#48e714] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(72,231,20,0.28)] active:translate-y-0 active:scale-95 transition-all duration-300"
+        className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 rtl:right-auto rtl:left-4 rtl:sm:left-6 z-40 inline-flex items-center gap-2 sm:gap-2.5 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-[#183823]/95 backdrop-blur-md text-white border border-white/25 shadow-[0_8px_26px_rgba(10,24,16,0.38)] text-xs sm:text-[13.5px] font-semibold tracking-tight hover:bg-[#204c30] hover:border-[#48e714] hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(72,231,20,0.28)] active:translate-y-0 active:scale-95 transition-all duration-300"
         href="https://wa.me/201144435547"
         target="_blank"
         rel="noreferrer"

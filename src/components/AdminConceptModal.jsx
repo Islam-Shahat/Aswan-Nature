@@ -15,8 +15,8 @@ export const AdminConceptModal = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
-      <div className="relative w-full max-w-4xl bg-[#101D16] text-white rounded-3xl overflow-hidden border border-white/15 shadow-2xl flex flex-col md:flex-row max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
+      <div className="relative w-full max-w-4xl bg-[#101D16] text-white rounded-3xl overflow-hidden border border-white/15 shadow-2xl flex flex-col md:flex-row my-auto max-h-[92vh]">
         {/* Close Button */}
         <button
           onClick={onClose}

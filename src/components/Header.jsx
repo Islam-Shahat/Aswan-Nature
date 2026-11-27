@@ -95,9 +95,9 @@ export const Header = ({
           </span>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation (Laptops, Desktops: lg and above) */}
         <nav
-          className="relative z-10 hidden xl:flex items-center gap-1 2xl:gap-2 text-[14.5px] font-medium mx-2"
+          className="relative z-10 hidden lg:flex items-center gap-0.5 xl:gap-1.5 2xl:gap-2 text-[13.5px] xl:text-[14.5px] font-medium mx-1 xl:mx-2"
           aria-label="Main navigation"
         >
           {navItems.map((item) => {
@@ -109,7 +109,7 @@ export const Header = ({
               <Link
                 key={item.path}
                 to={item.path}
-                className={`relative px-4 py-2 rounded-full transition-all duration-300 ease-out whitespace-nowrap text-[14.5px] ${
+                className={`relative px-2.5 xl:px-4 py-2 rounded-full transition-all duration-300 ease-out whitespace-nowrap text-[13px] xl:text-[14.5px] ${
                   effectiveScrolled
                     ? isActive
                       ? 'font-bold text-[#112417] bg-[#E5F3E1] shadow-xs'
@@ -156,10 +156,10 @@ export const Header = ({
             <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 rtl:rotate-180 text-white stroke-[2.5]" />
           </button>
 
-          {/* Mobile Menu Toggle Button */}
+          {/* Mobile & Tablet Menu Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className={`xl:hidden p-2 rounded-full transition-colors duration-300 cursor-pointer ${
+            className={`lg:hidden p-2 rounded-full transition-colors duration-300 cursor-pointer ${
               effectiveScrolled
                 ? 'text-[#1D3222] hover:text-[#112417] hover:bg-[#EEF4EB]'
                 : 'text-white hover:bg-white/15'
