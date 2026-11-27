@@ -319,6 +319,8 @@ export const PharaohsSection = ({
                   <img
                     src={activeExhibit.image}
                     alt={isArabic ? activeExhibit.nameAr : activeExhibit.nameEn}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-center transition-all duration-700 group-hover:scale-105"
                   />
 
@@ -369,6 +371,8 @@ export const PharaohsSection = ({
                             <img
                               src={item.image}
                               alt={isArabic ? item.nameAr : item.nameEn}
+                              loading="lazy"
+                              decoding="async"
                               className="w-full h-full object-cover group-hover/thumb:scale-110 transition-transform duration-300"
                             />
                             <div className="absolute bottom-0.5 right-0.5 rtl:right-auto rtl:left-0.5 bg-black/75 rounded px-1 text-[10px] text-[#F0DBB4]">

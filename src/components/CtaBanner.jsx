@@ -36,6 +36,10 @@ export const CtaBanner = ({
           <img
             src="/assets/logo-official.png"
             alt="Aswan Nature Logo"
+            loading="lazy"
+            decoding="async"
+            width="64"
+            height="64"
             className="w-16 h-16 object-contain drop-shadow-md" />
           
         </div>
