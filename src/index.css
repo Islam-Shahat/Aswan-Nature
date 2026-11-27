@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'DM Sans', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Manrope', 'DM Sans', sans-serif;
+  --font-sans: 'Outfit', 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', 'Manrope', 'DM Sans', sans-serif;
   --font-arabic: 'Alexandria', sans-serif;
   --font-serif: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
   --font-display: 'Instrument Serif', 'Cormorant Garamond', Georgia, serif;
@@ -26,6 +26,82 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-heading);
+}
+
+/* ==========================================================================
+   Arabic Typography (Alexandria Only) - Scoped to Arabic / RTL Elements
+   ========================================================================== */
+
+/* Apply Alexandria to RTL and Arabic root and contextual containers */
+html[dir="rtl"],
+html[lang="ar"],
+[dir="rtl"],
+[lang="ar"],
+:lang(ar),
+.font-arabic,
+.arabic-text {
+  font-family: 'Alexandria', sans-serif !important;
+}
+
+/* Scoped Arabic headings typography: zero letter-spacing, tuned line-height */
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] h4,
+html[dir="rtl"] h5,
+html[dir="rtl"] h6,
+[lang="ar"] h1,
+[lang="ar"] h2,
+[lang="ar"] h3,
+[lang="ar"] h4,
+[lang="ar"] h5,
+[lang="ar"] h6 {
+  font-family: 'Alexandria', sans-serif !important;
+  letter-spacing: 0 !important;
+  line-height: 1.35;
+}
+
+html[dir="rtl"] h1,
+[lang="ar"] h1 {
+  line-height: 1.25;
+}
+
+html[dir="rtl"] h2,
+[lang="ar"] h2 {
+  line-height: 1.3;
+}
+
+/* Scoped Arabic paragraphs, labels, spans, and form controls */
+html[dir="rtl"] p,
+[lang="ar"] p {
+  font-family: 'Alexandria', sans-serif !important;
+  letter-spacing: normal !important;
+  line-height: 1.7;
+}
+
+html[dir="rtl"] span,
+html[dir="rtl"] a,
+html[dir="rtl"] label,
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] select,
+[lang="ar"] span,
+[lang="ar"] a,
+[lang="ar"] label,
+[lang="ar"] input,
+[lang="ar"] textarea,
+[lang="ar"] select {
+  font-family: 'Alexandria', sans-serif;
+  letter-spacing: normal !important;
+}
+
+/* Arabic buttons, badges, and interactive controls */
+html[dir="rtl"] button,
+html[dir="rtl"] .btn,
+[lang="ar"] button {
+  font-family: 'Alexandria', sans-serif !important;
+  letter-spacing: 0 !important;
+  line-height: 1.45;
 }
 
 /* Custom scrollbar */
