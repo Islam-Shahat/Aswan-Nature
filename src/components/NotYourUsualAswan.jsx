@@ -179,16 +179,16 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
               <div
                 key={card.id}
                 style={{
-                  top: `calc(90px + ${idx * 16}px)`,
+                  top: `calc(75px + ${idx * 12}px)`,
                   zIndex: 10 + idx,
                 }}
                 className={`sticky transition-all duration-300 ${
-                  !isLast ? 'mb-[20vh] sm:mb-[35vh] lg:mb-[48vh]' : 'mb-0'
+                  !isLast ? 'mb-[12vh] sm:mb-[25vh] lg:mb-[48vh]' : 'mb-0'
                 }`}
               >
-                {/* Large Card Shell with responsive padding and height */}
+                {/* Large Card Shell with responsive padding and compact mobile height */}
                 <div
-                  className={`relative rounded-2xl sm:rounded-3xl lg:rounded-[32px] p-5 sm:p-8 lg:p-12 xl:p-14 min-h-0 sm:min-h-[500px] lg:min-h-[590px] flex flex-col justify-center backdrop-blur-xs transition-transform duration-300 overflow-hidden ${card.bgClass}`}
+                  className={`relative rounded-2xl sm:rounded-3xl lg:rounded-[32px] p-4 sm:p-7 lg:p-12 xl:p-14 min-h-0 sm:min-h-[480px] lg:min-h-[590px] flex flex-col justify-center backdrop-blur-xs transition-transform duration-300 overflow-hidden ${card.bgClass}`}
                 >
                   {/* Subtle Gradient Glow in the center of the card (#0a515b) */}
                   <div
@@ -199,20 +199,20 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                     }`}
                   />
 
-                  <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-14 items-center my-auto">
+                  <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-3.5 sm:gap-6 lg:gap-10 xl:gap-14 items-center my-auto">
                     {/* Content Column (7 cols) */}
-                    <div className="lg:col-span-7 space-y-4 sm:space-y-6">
+                    <div className="lg:col-span-7 space-y-2.5 sm:space-y-5 lg:space-y-6">
                       {/* Top Header Badge & Number */}
                       <div className="flex items-center justify-between">
                         <span
-                          className={`inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-xs sm:text-[13px] font-bold tracking-wider uppercase ${card.tagBg}`}
+                          className={`inline-flex items-center gap-2 px-3 py-1 sm:px-4 sm:py-2 rounded-full text-[11px] sm:text-[13px] font-bold tracking-wider uppercase ${card.tagBg}`}
                         >
-                          <Icon className="w-4 h-4 stroke-[2.2]" />
+                          <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.2]" />
                           <span>{card.tag}</span>
                         </span>
 
                         <span
-                          className={`text-base sm:text-lg lg:text-xl font-extrabold tracking-wider font-mono ${
+                          className={`text-sm sm:text-lg lg:text-xl font-extrabold tracking-wider font-mono ${
                             isNight ? 'text-[#2BE019]' : 'text-[#0a515b]'
                           }`}
                         >
@@ -220,43 +220,43 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                         </span>
                       </div>
 
-                      {/* Main Card Title - Scaled Up */}
+                      {/* Main Card Title */}
                       <h3
-                        className={`text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-extrabold leading-[1.22] tracking-tight font-heading ${
+                        className={`text-xl sm:text-2xl lg:text-[34px] xl:text-[38px] font-extrabold leading-[1.2] tracking-tight font-heading ${
                           isNight ? 'text-white' : 'text-[#16241B]'
                         }`}
                       >
                         {card.title}
                       </h3>
 
-                      {/* Description - Scaled Up for Comfortable Reading */}
+                      {/* Description */}
                       <p
-                        className={`text-sm sm:text-base lg:text-[16.5px] xl:text-[17.5px] leading-[1.8] sm:leading-[1.85] ${
+                        className={`text-xs sm:text-sm lg:text-[16.5px] xl:text-[17.5px] leading-[1.65] sm:leading-[1.8] ${
                           isNight ? 'text-[#C5D8CA]' : 'text-[#445649]'
                         }`}
                       >
                         {card.desc}
                       </p>
 
-                      {/* Key Highlights / Modern Feature Tiles - Scaled Up */}
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                      {/* Key Highlights / Feature Tiles */}
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 pt-1">
                         {card.pills.map((pillText, pIdx) => (
                           <div
                             key={pIdx}
-                            className={`p-3.5 sm:p-4 rounded-2xl border transition-all duration-200 group/tile ${
+                            className={`p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border transition-all duration-200 group/tile ${
                               isNight
                                 ? 'bg-white/5 border-white/10 hover:border-[#2BE019]/50 text-white'
                                 : 'bg-white/95 border-[#0a515b]/20 hover:border-[#0a515b] shadow-2xs hover:shadow-xs text-[#16241B]'
                             }`}
                           >
-                            <div className="flex items-center gap-2 mb-2">
+                            <div className="flex items-center gap-1.5 sm:gap-2 mb-1 sm:mb-2">
                               <span
-                                className={`w-2 h-2 rounded-full ${
+                                className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
                                   isNight ? 'bg-[#2BE019]' : 'bg-[#0a515b]'
                                 } group-hover/tile:scale-125 transition-transform`}
                               />
                               <span
-                                className={`text-[11px] font-bold uppercase tracking-wider font-mono ${
+                                className={`text-[10px] sm:text-[11px] font-bold uppercase tracking-wider font-mono ${
                                   isNight ? 'text-[#2BE019]' : 'text-[#0a515b]'
                                 }`}
                               >
@@ -264,7 +264,7 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                               </span>
                             </div>
                             <p
-                              className={`text-xs sm:text-[13px] font-bold leading-snug ${
+                              className={`text-[11.5px] sm:text-[13px] font-bold leading-snug ${
                                 isNight ? 'text-[#E2EBE5]' : 'text-[#1D2E22]'
                               }`}
                             >
@@ -276,16 +276,16 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
 
                       {/* Scroll Hint on Cards Before the Last One */}
                       {!isLast && (
-                        <div className="pt-2 flex items-center gap-2.5 text-xs font-bold text-[#0a515b]/80 uppercase tracking-wider">
+                        <div className="pt-1 flex items-center gap-2 text-[11px] sm:text-xs font-bold text-[#0a515b]/80 uppercase tracking-wider">
                           <span>{isAr ? 'مرر للأسفل للكشف عن التالي' : 'Scroll down for next pillar'}</span>
-                          <ChevronDown className="w-4 h-4 animate-bounce text-[#0a515b]" />
+                          <ChevronDown className="w-3.5 h-3.5 animate-bounce text-[#0a515b]" />
                         </div>
                       )}
                     </div>
 
                     {/* Visual Column (5 cols) */}
                     <div className="lg:col-span-5 relative w-full overflow-hidden">
-                      <div className="relative aspect-[16/10] sm:aspect-[16/11] lg:aspect-[4/3.8] max-h-[260px] sm:max-h-[360px] lg:max-h-none rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl border-2 border-[#0a515b]/30 group">
+                      <div className="relative aspect-[16/9] sm:aspect-[16/11] lg:aspect-[4/3.8] max-h-[170px] sm:max-h-[300px] lg:max-h-none rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden shadow-lg border-2 border-[#0a515b]/30 group">
                         <img
                           src={card.image}
                           alt={card.title}
