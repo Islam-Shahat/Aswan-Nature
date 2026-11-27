@@ -53,7 +53,7 @@ export const BookingModal = ({
 
     setIsSubmitting(true);
     try {
-      const payload = new FormData();
+      const payload = new URLSearchParams();
       payload.append('tour', tour);
       payload.append('date', date);
       payload.append('guests', guests);
@@ -66,7 +66,10 @@ export const BookingModal = ({
       await fetch(BOOKING_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
-        body: payload
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: payload.toString()
       });
       setSubmitted(true);
     } catch {

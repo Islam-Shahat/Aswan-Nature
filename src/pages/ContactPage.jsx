@@ -98,7 +98,7 @@ export const ContactPage = () => {
 
     setIsSubmitting(true);
     try {
-      const payload = new FormData();
+      const payload = new URLSearchParams();
       payload.append('name', formData.name);
       payload.append('email', formData.email);
       payload.append('phone', formData.phone);
@@ -109,7 +109,10 @@ export const ContactPage = () => {
       await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
-        body: payload
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: payload.toString()
       });
       setFormSubmitted(true);
     } catch {
