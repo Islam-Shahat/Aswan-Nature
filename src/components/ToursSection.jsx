@@ -113,13 +113,13 @@ export const ToursSection = ({
     <section
       id="tours"
       ref={sectionRef}
-      className="relative h-[180vh] bg-[#F3F6EE] border-t border-[#E7ECE0]"
+      className="relative md:h-[180vh] bg-[#F3F6EE] border-t border-[#E7ECE0] py-14 md:py-0"
     >
-      {/* Pinned Sticky Stage - Stays locked in viewport while scrolling through the 3 cards */}
-      <div className="sticky top-0 min-h-screen h-[100dvh] flex flex-col justify-center overflow-hidden py-8 sm:py-12">
+      {/* On desktop: Pinned Sticky Stage. On mobile: Natural fluid flow */}
+      <div className="md:sticky md:top-0 md:min-h-screen md:h-[100dvh] flex flex-col justify-center overflow-visible md:overflow-hidden py-0 md:py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
           {/* Header with Nile Teal Gradient Divider (Matches Gallery style) */}
-          <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-6 sm:mb-8 px-4 sm:px-8 overflow-hidden">
+          <div className="w-full flex items-center justify-center gap-2 sm:gap-4 mb-8 sm:mb-10 px-4 sm:px-8 overflow-hidden">
             <div className="flex-1 h-[2px] bg-gradient-to-r from-transparent via-[#0a515b]/50 to-[#0a515b]" />
             <div className="w-1.5 h-1.5 rounded-full bg-[#0a515b] shrink-0 hidden sm:block" />
             <h2 className="px-3 sm:px-6 text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-[#16241B] shrink-0 text-center font-heading">
@@ -129,8 +129,8 @@ export const ToursSection = ({
             <div className="flex-1 h-[2px] bg-gradient-to-r from-[#0a515b] via-[#0a515b]/50 to-transparent" />
           </div>
 
-          {/* 3 Tour Cards - Smooth focus sequence (Center -> Right -> Left) */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-7 items-center">
+          {/* 3 Tour Cards - Scroll focus sequence on desktop, accessible stack on mobile */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-7 items-stretch md:items-center">
             {tours.map((tour) => {
               const isFocused = focusedId === tour.id;
 
@@ -146,8 +146,8 @@ export const ToursSection = ({
                   }}
                   className={`group relative bg-white rounded-3xl overflow-hidden cursor-pointer transition-all duration-400 ease-out flex flex-col justify-between ${
                     isFocused
-                      ? 'scale-[1.03] lg:scale-[1.05] z-30 border-2 border-[#0a515b] shadow-[0_25px_60px_-15px_rgba(10,81,91,0.22),0_10px_25px_rgba(0,0,0,0.06)]'
-                      : 'scale-[0.98] z-10 opacity-75 hover:opacity-95 hover:scale-[0.99] border border-[#E0E6DA] shadow-xs'
+                      ? 'md:scale-[1.03] lg:scale-[1.05] z-30 border-2 border-[#0a515b] shadow-[0_25px_60px_-15px_rgba(10,81,91,0.22),0_10px_25px_rgba(0,0,0,0.06)]'
+                      : 'md:scale-[0.98] z-10 md:opacity-75 hover:opacity-100 hover:scale-[1.01] md:hover:scale-[0.99] border border-[#E0E6DA] shadow-sm'
                   }`}
                 >
                   <div>

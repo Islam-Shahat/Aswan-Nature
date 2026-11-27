@@ -179,29 +179,29 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
               <div
                 key={card.id}
                 style={{
-                  top: `calc(125px + ${idx * 22}px)`,
+                  top: `calc(90px + ${idx * 16}px)`,
                   zIndex: 10 + idx,
                 }}
                 className={`sticky transition-all duration-300 ${
-                  !isLast ? 'mb-[35vh] sm:mb-[48vh]' : 'mb-0'
+                  !isLast ? 'mb-[20vh] sm:mb-[35vh] lg:mb-[48vh]' : 'mb-0'
                 }`}
               >
-                {/* Large Card Shell with increased height, padding, and center gradient glow */}
+                {/* Large Card Shell with responsive padding and height */}
                 <div
-                  className={`relative rounded-3xl sm:rounded-[32px] p-7 sm:p-10 lg:p-12 xl:p-14 min-h-[500px] sm:min-h-[550px] lg:min-h-[590px] flex flex-col justify-center backdrop-blur-xs transition-transform duration-300 overflow-hidden ${card.bgClass}`}
+                  className={`relative rounded-2xl sm:rounded-3xl lg:rounded-[32px] p-5 sm:p-8 lg:p-12 xl:p-14 min-h-0 sm:min-h-[500px] lg:min-h-[590px] flex flex-col justify-center backdrop-blur-xs transition-transform duration-300 overflow-hidden ${card.bgClass}`}
                 >
                   {/* Subtle Gradient Glow in the center of the card (#0a515b) */}
                   <div
-                    className={`absolute inset-0 rounded-3xl sm:rounded-[32px] pointer-events-none ${
+                    className={`absolute inset-0 rounded-2xl sm:rounded-3xl lg:rounded-[32px] pointer-events-none ${
                       isNight
                         ? 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.5)_0%,transparent_75%)]'
                         : 'bg-[radial-gradient(ellipse_at_center,rgba(10,81,91,0.15)_0%,rgba(10,81,91,0.02)_45%,transparent_75%)]'
                     }`}
                   />
 
-                  <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-center my-auto">
+                  <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-14 items-center my-auto">
                     {/* Content Column (7 cols) */}
-                    <div className="lg:col-span-7 space-y-5 sm:space-y-6">
+                    <div className="lg:col-span-7 space-y-4 sm:space-y-6">
                       {/* Top Header Badge & Number */}
                       <div className="flex items-center justify-between">
                         <span
@@ -283,13 +283,13 @@ export const NotYourUsualAswan = ({ currentLang = 'EN' }) => {
                       )}
                     </div>
 
-                    {/* Visual Column (5 cols) - Scaled Up Height */}
-                    <div className="lg:col-span-5 relative">
-                      <div className="relative aspect-[4/3] sm:aspect-[16/11] lg:aspect-[4/3.8] min-h-[300px] sm:min-h-[360px] lg:min-h-[440px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border-2 border-[#0a515b]/30 group">
+                    {/* Visual Column (5 cols) */}
+                    <div className="lg:col-span-5 relative w-full overflow-hidden">
+                      <div className="relative aspect-[16/10] sm:aspect-[16/11] lg:aspect-[4/3.8] max-h-[260px] sm:max-h-[360px] lg:max-h-none rounded-xl sm:rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl border-2 border-[#0a515b]/30 group">
                         <img
                           src={card.image}
                           alt={card.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                           loading="lazy"
                         />
                         {/* Clean atmospheric gradient overlay */}
