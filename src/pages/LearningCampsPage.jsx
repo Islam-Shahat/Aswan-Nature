@@ -62,9 +62,9 @@ const camps = [
     tagEn: 'Family Adventure 🌿',
     descAr: 'افصلوا عن الشاشات والروتين! قارب بيئي خاص لعائلتك يبحر بين جزر الشلال الأول، مع ألعاب رصد الطبيعة وغداء نوبي لذيذ على جزيرة خاصة.',
     descEn: 'Disconnect from screens! A private chartered eco-boat for your family exploring serene Nile islets, with fun spotting quests and fresh island lunch.',
-    image: '/camps-images/kids-telescope.jpg',
-    captionAr: 'استكشاف عائلي للتلسكوب وأعشاش الطيور',
-    captionEn: 'Family nature quest with field telescope',
+    image: '/camps-images/kids-outdoor.jpg',
+    captionAr: 'استكشاف عائلي ممتع في أحضان جزر النيل',
+    captionEn: 'Family nature quest on pristine Nile islands',
     perksAr: [
       'قارب خاص بالكامل للعائلة مع قائد نوبي خبير',
       'تحديات وألعاب استكشافية تجمع الأبناء والآباء',
@@ -165,10 +165,10 @@ const scrapbookPhotos = [
     rotate: '-rotate-1'
   },
   {
-    src: '/camps-images/kids-telescope.jpg',
-    titleAr: 'تلسكوب المحميات الطبيعية',
-    titleEn: 'Tripod Telescope Spotting',
-    sticker: '🦅 Eagle Eyes!',
+    src: '/camps-images/1-1-636x426.jpg',
+    titleAr: 'مغامرات الجزر والاستكشاف',
+    titleEn: 'Island Nature Exploration',
+    sticker: '🌿 Island Quest!',
     rotate: 'rotate-3'
   },
   {
